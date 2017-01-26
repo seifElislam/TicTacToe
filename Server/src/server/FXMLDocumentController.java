@@ -63,9 +63,10 @@ public class FXMLDocumentController implements Initializable {
             new PropertyValueFactory<Players,String>("score")
         );
         data = FXCollections.observableArrayList();
+        addPlayers();
         tableView.setItems(data);
     }
-
+    
     @FXML
     protected void handleToggleOnAction(ActionEvent t) {
         System.out.println("on");
@@ -76,7 +77,11 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("off");
     }
     public void addPlayers(){
-    //getallplayers method
+        TicTacToeDataBase db=new TicTacToeDataBase();
+        db.getallplayers().forEach((players) -> {
+            data.add(players);
+        });
+ 
     }
 
 }
