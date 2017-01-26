@@ -28,7 +28,7 @@ public class TicTacToeDataBase {
     }
 
     public TicTacToeDataBase() {
-signup("hadeer","mohamed","hader",10,"123456","pic/icon.png");
+
 
     }
     
@@ -168,6 +168,39 @@ picpath=rs.getString(1);
  }
  
     
+  
+    
+    
+    
+        
+public boolean checkIfUsernameExists(String username){
+  rs=null;
+    try {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "amira", "Amera_123");
+
+            Statement stmt = con.createStatement();
+
+            
+
+            
+            
+            
+            String queryString = "select * from players where username ='"+username+"'";
+        rs = stmt.executeQuery(queryString);
+        if (rs.next()){return true;}
+        
+         stmt.close();
+           con.close();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(TicTacToeDataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    return false;
+    
+    
+}
     
     
     
