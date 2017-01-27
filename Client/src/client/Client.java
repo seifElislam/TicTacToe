@@ -24,7 +24,12 @@ public class Client extends Application {
         Scene scene = new Scene(root,700,500);
         stage.setTitle("Sign In window");
         stage.setScene(scene);
+        scene.getStylesheets().add(Client.class.getResource("Login.css").toExternalForm());
         stage.show();
+        stage.setMinWidth(800);
+        stage.setMaxWidth(800);
+        stage.setMinHeight(600);
+        stage.setMaxHeight(600);
     }
 
     /**

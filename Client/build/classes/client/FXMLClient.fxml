@@ -6,26 +6,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane id="GridPane" alignment="center" hgap="50" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.FXMLClientController">
-    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-    <Text text="Welcome" 
+<GridPane id="GridPane"   hgap="5" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.FXMLClientController">
+    <padding><Insets top="100"  bottom="10" left="400" /></padding>
+    <Text fx:id="Welcome_txt" text="Welcome" textAlignment="right" 
         GridPane.columnIndex="0" GridPane.rowIndex="0"
         GridPane.columnSpan="2"/>
  
-    <Label text="User Name:"
-        GridPane.columnIndex="0" GridPane.rowIndex="1"/>
- 
-    <TextField 
+    <Label text="User Name:" textAlignment="right"
         GridPane.columnIndex="1" GridPane.rowIndex="1"/>
  
-    <Label text="Password:"
-        GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <TextField 
+        GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+ 
+    <Label text="Password:"  textAlignment="right"
+        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
  
     <PasswordField fx:id="passwordField" 
-        GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        GridPane.columnIndex="2" GridPane.rowIndex="2"/>
     
     <HBox spacing="10" alignment="bottom_right" 
-        GridPane.columnIndex="1" GridPane.rowIndex="4">
+        GridPane.columnIndex="2" GridPane.rowIndex="4">
         <Button text="Sign In"     
         onAction="#handleSignInButtonAction"/>
        
@@ -33,15 +33,18 @@
 </HBox>
 
 <HBox spacing="10" alignment="bottom_right" 
-        GridPane.columnIndex="0" GridPane.rowIndex="4">
+        GridPane.columnIndex="2" GridPane.rowIndex="6">
        
-        <Button text="Sign Up"     
+        <Button fx:id="signUp" text="Sign Up"     
         onAction="#handleSignUpButtonAction"/>
          
 </HBox>
 
 <Text fx:id="actiontarget"
-       GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+       GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+<stylesheets>
+    <URL value="@Login.css" />
+  </stylesheets>
     
 </GridPane>
 
