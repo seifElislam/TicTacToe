@@ -6,29 +6,30 @@
 package client;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
  *
- * @author mhesham
+ * @author seif
  */
 public class Client extends Application {
     
     @Override
-    public void start(Stage primaryStage) {
-       
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLClient.fxml"));
         
-        
+        Scene scene = new Scene(root,700,500);
+        stage.setTitle("Sign In window");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    
-    
-    
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
