@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+
+<GridPane fx:controller="signup.sinupController" 
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <padding> 
+        <Insets top="25" right="25" bottom="10" left="25"/>
+    </padding>
+    
+    <Label text="User Name:"
+            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+ 
+    <TextField 
+        id="big-yellow "
+        fx:id="userName"
+        GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    
+    
+    <Label id="record-sales" text="Password:"
+               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+ 
+    <PasswordField fx:id="userPassword" 
+                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+ 
+    <Label text="First Name:"
+            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField 
+        id="glass-grey"
+        fx:id="firstName"
+        GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    
+    <Label text="Last Name:"
+            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextField 
+        id="bevel-grey"
+        fx:id="lastName"
+        GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    
+    <Label text="Choose a Pic :"
+            GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+ 
+    <ImageView
+            fx:id="userPic"
+            fitHeight="150.0"
+            fitWidth="200.0"
+            layoutX="61.0"
+            layoutY="83.0"
+            pickOnBounds="true"
+            preserveRatio="true"
+            GridPane.columnIndex="1" 
+            GridPane.rowIndex="5"
+            >
+            <image>
+                <Image
+                    url="@img/userpic.png"
+                    backgroundLoading="true"
+                    />
+            </image>
+        </ImageView>
+    
+    <HBox spacing="10" alignment="bottom_right" 
+          GridPane.columnIndex="1" GridPane.rowIndex="8">
+        <Button  text="Sign In"     
+                 onAction="#handleButtonAction"/>
+    </HBox>
+    
+    <Text fx:id="heolow"
+          GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+    <stylesheets>
+        <URL value="@signup.css" />
+    </stylesheets>
+
+</GridPane>
