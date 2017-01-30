@@ -15,7 +15,12 @@ import server.Player;
 public class Players {
     public static DBConnection conn = new DBConnection();
     public static Player getPlayerInfo(String username){
-        return new Player();
+        Player player = new Player();
+        player.setID(1);
+        player.setUsername(username);
+        player.setFname("Ehab");
+        player.setLname("Gamal");
+        return player;
     }
     public static HashMap<Integer,Player> getAllPlayers(){
         //int id and player object
@@ -25,8 +30,11 @@ public class Players {
         return false;
     }
     public static boolean PlayerAuth(String username, String password){
-        if(PlayerExisted(username))
-            return true; //if existed check for username and pass validation
+        //if(PlayerExisted(username))
+        //    return true; //if existed check for username and pass validation
+        //return false;
+        if(username.equals("ehab") && password.equals("password"))
+            return true;
         return false;
     }
     public static boolean UpdatePlayer(Player player){

@@ -13,7 +13,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.net.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
 
 /**
  *
@@ -31,6 +35,11 @@ public class Server extends Application {
         this.portNumber = portNumber;
         this.maxConnections = maxConnections;
         running = runServer();
+        if(running){
+            System.out.println("Server started successfully!");
+            startCommunication();
+        }else
+            System.out.println("Server failed to start");
     }
     public boolean runServer(){
         try{
@@ -46,6 +55,8 @@ public class Server extends Application {
             try{
                 socket = serverSocket.accept();
                 new Session(socket);
+                System.out.print("New client connected @ ");
+                System.out.println(new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date()));
             }catch(IOException ioex){
                 //error cannot accept connections anymore - limit exceeded
             }
@@ -64,8 +75,11 @@ public class Server extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
-        new Server(5555,999);
+        //launch(args);
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Server port: ");
+        int portNumber = scanner.nextInt();
+        new Server(portNumber,999);
     }
     
 }

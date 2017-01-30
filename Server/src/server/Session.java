@@ -6,10 +6,7 @@
 package server;
 
 import assets.*;
-import DAL.Players;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -71,7 +68,7 @@ public class Session extends Thread{
         loggedIn = false;
         connected = false;
         connectedPlayers.remove(this);
-        allPlayers.get(player.getID()).setStatus("offline");
+        //allPlayers.get(player.getID()).setStatus("offline");
         closeConnection();
     }
     private void MessageHandler(Message message){
