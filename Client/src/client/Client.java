@@ -19,12 +19,13 @@ public class Client extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLClient.fxml"));
-        
+//        Parent root = FXMLLoader.load(getClass().getResource("FXMLClient.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Game.fxml"));
         Scene scene = new Scene(root,700,500);
-        stage.setTitle("Sign In window");
+//        stage.setTitle("Sign In window");
+        stage.setTitle("Game");
         stage.setScene(scene);
-        scene.getStylesheets().add(Client.class.getResource("Login.css").toExternalForm());
+        scene.getStylesheets().add(Client.class.getResource("Game.css").toExternalForm());
         stage.show();
         stage.setMinWidth(800);
         stage.setMaxWidth(800);

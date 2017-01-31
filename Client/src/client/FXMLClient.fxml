@@ -26,8 +26,8 @@
     
     <HBox spacing="10" alignment="bottom_right" 
         GridPane.columnIndex="2" GridPane.rowIndex="4">
-        <Button text="Sign In"     
-        onAction="#handleSignInButtonAction"/>
+        <Button text="Sign In"  onAction="#handleSignInButtonAction"/>   
+        
        
          
 </HBox>
@@ -35,8 +35,8 @@
 <HBox spacing="10" alignment="bottom_right" 
         GridPane.columnIndex="2" GridPane.rowIndex="6">
        
-        <Button fx:id="signUp" text="Sign Up"     
-        onAction="#handleSignUpButtonAction"/>
+        <Button fx:id="signUp" text="Sign Up" onAction="#handleSignUpButtonAction"/>    
+        
          
 </HBox>
 
