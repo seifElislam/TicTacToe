@@ -54,7 +54,7 @@ public class Session extends Thread{
         boolean playerAuth = DAL.Players.PlayerAuth(username, password);
         if(playerAuth){
             loggedIn = true;
-            player = DAL.Players.getPlayerInfo(username);
+            //player = DAL.Players.getPlayerInfo(username);
             loginResult.setData("signal", MsgSignal.SUCCESS);
             loginResult.setData("id", String.valueOf(player.getID()));
             loginResult.setData("username", player.getUsername());
