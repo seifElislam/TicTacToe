@@ -8,7 +8,7 @@
 }
 #GridPane2 {
     
-  -fx-background-image: url("wall.jpg") ;
+  -fx-background-image: url("../images/wall.jpg") ;
      -fx-background-repeat: no-repeat;
      -fx-background-position:left  ;
      -fx-margin-top: 50px;  
@@ -25,7 +25,7 @@
     -fx-background-color: gainsboro;
 }
 #buttons{
-    -fx-background-image: url("board2.png") ;
+    -fx-background-image: url("../images/board2.png") ;
      -fx-background-repeat: no-repeat;
      -fx-background-size:stretch;
      -fx-halignment: center;
@@ -56,7 +56,7 @@
 }
 #b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9{
     
-   -fx-graphic: url("null.png");
+   -fx-graphic: url("../images/null.png");
    -fx-background-color: transparent;
   -fx-background-repeat: no-repeat;
   -fx-background-position: center;

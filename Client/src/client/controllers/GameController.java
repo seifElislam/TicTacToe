@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package client.controllers;
 
 import java.net.URL;
 import static java.time.Instant.now;
@@ -32,7 +32,7 @@ public class GameController implements Initializable {
     @FXML private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
     @FXML private TextField txt_field;
     @FXML int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
-    @FXML String src="x.png";
+    @FXML String src="/resources/images/x.png";
     @FXML  Image img = new Image(getClass().getResourceAsStream(src));
     @FXML private Label player1Name,player2Name,massge,time;
     @FXML private TextArea txt_area;

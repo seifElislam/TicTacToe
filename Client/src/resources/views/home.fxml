@@ -12,7 +12,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.collections.*?>
 
-<GridPane id="home"   hgap="3" vgap="3"  styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.HomeController" >
+<GridPane id="home"   hgap="3" vgap="3"  styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.HomeController" >
     <padding><Insets top="10"  bottom="10" left="10" right="10"/></padding>
     
      <GridPane id="opponent"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="500">
@@ -24,7 +24,7 @@
                <ImageView fitHeight="40.0" fitWidth="40.0"  GridPane.columnIndex="0" GridPane.rowIndex="0"  >
                      
                      <image>
-                        <Image  url="@human.png"  />
+                        <Image  url="@../images/human.png"  />
                      </image>
                   </ImageView> 
                    <HBox GridPane.columnIndex="2" GridPane.rowIndex="1" > 
@@ -36,7 +36,7 @@
                     <ImageView fitHeight="40.0" fitWidth="40.0"  GridPane.columnIndex="0" GridPane.rowIndex="1"  >
                      
                      <image>
-                        <Image fx:id="opponentImg" url="@human.png"  />
+                        <Image fx:id="opponentImg" url="@../images/human.png"  />
                      </image>
                   </ImageView> 
                    <Label  text="    wins :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
@@ -55,7 +55,7 @@
                <ImageView fitHeight="40.0" fitWidth="40.0" GridPane.columnIndex="0" GridPane.rowIndex="0" >
                      
                      <image>
-                        <Image  url="@robot.png"   />
+                        <Image  url="@../images/robot.png"   />
                      </image>
                   </ImageView> 
                   <TilePane GridPane.columnIndex="0" GridPane.rowIndex="1">
@@ -88,7 +88,7 @@
                <ImageView fx:id="imgView" fitHeight="100" fitWidth="100" GridPane.columnIndex="0" GridPane.rowIndex="0" >
                      
                      <image>
-                        <Image fx:id="playerImg" url="@x.png" />
+                        <Image fx:id="playerImg" url="@../images/x.png" />
                      </image>
                   </ImageView> 
               <Label  text="Wins :" GridPane.columnIndex="0" GridPane.rowIndex="2" />

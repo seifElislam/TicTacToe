@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client;
+package client.controllers;
 
 
 import java.net.URL;
@@ -37,7 +37,7 @@ public class HomeController implements Initializable {
     @FXML private Label playerName,playerWins,playerLoses,playerDraws;
   //  @FXML private TableView<Person> allPlayersTable;
     @FXML private ImageView imgView;
-     @FXML private String src="o.png";
+     @FXML private String src="/resources/images/o.png";
     @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); ;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,7 +47,7 @@ public class HomeController implements Initializable {
     }    
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
       System.out.println("invite");
-      playerImg.getClass().getResourceAsStream("o.png");
+      playerImg.getClass().getResourceAsStream("../images/o.png");
       
        imgView.setImage(playerImg);
        System.out.println(playerImg.impl_getUrl());

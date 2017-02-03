@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane id="GridPane"   hgap="5" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.FXMLClientController">
+<GridPane id="GridPane"   hgap="5" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.FXMLClientController">
     <padding><Insets top="100"  bottom="10" left="400" /></padding>
     <Text fx:id="Welcome_txt" text="Welcome" textAlignment="right" 
         GridPane.columnIndex="0" GridPane.rowIndex="0"

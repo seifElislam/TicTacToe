@@ -11,7 +11,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
-<GridPane id="GridPane2"   hgap="0" vgap="3" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.GameController">
+<GridPane id="GridPane2"   hgap="0" vgap="3" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.GameController">
     <padding><Insets top="10"  bottom="10" left="10" right="10"/></padding>
     
         <GridPane id="board"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="400">
