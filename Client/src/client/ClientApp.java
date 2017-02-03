@@ -47,19 +47,19 @@ public class ClientApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
-//        System.out.println("client console started");
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Port: ");
-//        String portNumber = scanner.nextLine();
-//        Session session = new Session("127.0.0.1", Integer.parseInt(portNumber));
-//        if(session.connected){
-//            System.out.print("Username: ");
-//            String username = scanner.nextLine();
-//            System.out.print("Password: ");
-//            String password = scanner.nextLine();
-//            session.loginToServer(username, password);
-//        }
+        //launch(args);
+        System.out.println("client console started");
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Port: ");
+        String portNumber = scanner.nextLine();
+        Session session = new Session("127.0.0.1", Integer.parseInt(portNumber));
+        if(session.connected){
+            System.out.print("Username: ");
+            String username = scanner.nextLine();
+            System.out.print("Password: ");
+            String password = scanner.nextLine();
+            session.loginToServer(username, password);
+        }
     }
     
 }
