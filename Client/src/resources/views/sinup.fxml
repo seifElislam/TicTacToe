@@ -66,14 +66,11 @@
                         GridPane.columnIndex="1" 
                         GridPane.rowIndex="5"
                         >
-
-                        <image>
                             <Image
                                 
                                 url="@../images/userpic.png"
                                 backgroundLoading="true"
                                 />
-                        </image>
                       </ImageView> 
       </graphic>
     </Button>

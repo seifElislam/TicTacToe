@@ -79,10 +79,12 @@ public class sinupController implements Initializable {
                 filechooser.getExtensionFilters().addAll(jpgFilter , pngFilter);
                 File file = filechooser.showOpenDialog(new Stage());
                 if(file != null){
-                    //write code to set user Image here 
+//                    write the rest code here 
+
                     String path = file.getAbsolutePath();
-                    System.out.println("this is the path : "+path);
-                    userPic.setImage(new Image(path));
+                    Image image = new Image(file.toURI().toString());
+                    userPic.setImage(image);
+                    
                 }
     }
     
