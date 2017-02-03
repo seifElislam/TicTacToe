@@ -1,0 +1,65 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    
+
+}
+#GridPane2 {
+    
+  -fx-background-image: url("wall.jpg") ;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position:left  ;
+     -fx-margin-top: 50px;  
+    
+}
+#chat{
+     -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+#board{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+#buttons{
+    -fx-background-image: url("board2.png") ;
+     -fx-background-repeat: no-repeat;
+     -fx-background-size:stretch;
+     -fx-halignment: center;
+  -fx-valignment: center;
+ -fx-background-position: center;
+   -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+    
+}
+.label{
+    
+     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill:darkslategray;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+#send,#surrend {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+   
+}
+#send:hover ,#surrend:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9{
+    
+   -fx-graphic: url("null.png");
+   -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+ -fx-background-size:cover;
+  
+}

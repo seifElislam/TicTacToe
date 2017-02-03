@@ -1,0 +1,60 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+#playerInfo{
+     -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+#opponent{
+     -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+.label{
+    
+     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill:darkslategray;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+   
+}
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+#palyerImg{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+    
+}
+#human{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+#computer{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}
+#tableView{
+    
+     -fx-font-size: 10px;
+     fx-border-width: 2;
+    -fx-border-color: gray;
+}
+#opponentImg{
+    
+}
