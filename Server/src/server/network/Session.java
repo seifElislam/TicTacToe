@@ -88,6 +88,9 @@ public class Session extends Thread{
                 if(loggedIn)
                     playerLogout();
                 break;
+            case REGISTER : 
+                playerRegister(message.getData("username"), message.getData("password"),message.getData("fname"),message.getData("lname"),message.getData("picpath"));
+            break;
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -112,5 +115,25 @@ public class Session extends Thread{
                 //error invalid message sent by client
             }
         }
+    }
+
+    private void playerRegister(String username, String password,String fname,String lname,String picpath){
+        Message result = new Message(MsgType.REGISTER);
+        boolean playerexists = model.Players.playerExisted(username);
+        if(!playerexists)
+        {
+            
+        if(  model.Players.signUp(fname,lname ,username,password, picpath)) 
+            
+        {
+            result.setData("signal", MsgSignal.SUCCESS);
+          
+            }
+        }
+        else{
+           result.setData("signal", MsgSignal.FAILURE);}
+        
+        SendMessage(result);
+   
     }
 }

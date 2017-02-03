@@ -89,6 +89,24 @@ public class Session {
                     connected = false;
                 }
                 break;
+                
+                
+                
+                   case REGISTER:
+                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
+                    System.out.println("register  succedded");
+         
+                 
+                  
+                }
+                else{
+                    System.out.println("register failes to server failed");
+                    connected = false;
+                }
+                break;
+                
+                
+                
             default:
                 System.out.println("server sent unhandled message");
                 break;
@@ -101,5 +119,16 @@ public class Session {
             ioex.printStackTrace();
             System.out.println("Cannot send message to server");
         }
+    }
+
+    public void signUpToServer(String fname, String lname, String username, String password, String picpath) {
+     Message message = new Message(MsgType.REGISTER);
+        message.setData("username", username);
+        message.setData("password", password);
+        message.setData("fname",fname);
+        message.setData("lname",lname);
+        message.setData("picpath",picpath);
+       
+        sendMessage(message);
     }
 }

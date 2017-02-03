@@ -110,11 +110,11 @@ public class Players {
             return false;
         }
     }
-    public static synchronized boolean signUp(Player player) {
+    public static synchronized boolean signUp(String fname,String lname ,String username,String password,String picpath) {
         try {
             Connection conn = Obj.Connection();
             Statement stmt = conn.createStatement();
-            String queryString = "INSERT INTO `players` ( `fname`, `lname`, `username`, `score`, `password`, `picpath`) VALUES ('" + player.getFname() + "', '" + player.getLname() + "', '" + player.getUsername() + "', '" + player.getScore() + "', '" + player.getPassword() + "', '" + player.getPicPath() + "')";
+            String queryString = "INSERT INTO `players` ( `fname`, `lname`, `username`, `score`, `password`, `picpath`) VALUES ('" +fname + "', '" + lname + "', '" + username + "', '" + 0 + "', '" + password + "', '" + picpath + "')";
             stmt.executeUpdate(queryString);
             stmt.close();
             Obj.CloseConnection(conn);
