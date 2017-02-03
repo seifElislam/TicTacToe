@@ -26,7 +26,7 @@ public class ClientApp extends Application {
       // Parent root = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
    
       //Parent root = FXMLLoader.load(getClass().getResource("/resources/views/sinup.fxml"));
-       Parent root = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
         // Parent root = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
         Scene scene = new Scene(root,700,500);
 //        stage.setTitle("Sign In window");
@@ -34,7 +34,7 @@ public class ClientApp extends Application {
         stage.setScene(scene);
          //scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/Login.css").toExternalForm());
          // scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/signup.css").toExternalForm());
-       scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/Game.css").toExternalForm());
+//       scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/Game.css").toExternalForm());
      // scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/home.css").toExternalForm());
         stage.show();
         stage.setMinWidth(800);
@@ -47,7 +47,7 @@ public class ClientApp extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //launch(args);
+        launch(args);
         System.out.println("client console started");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Port: ");

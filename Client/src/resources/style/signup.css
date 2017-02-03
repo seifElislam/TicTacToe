@@ -25,7 +25,6 @@ and open the template in the editor.
     /*-fx-background-color: #3a3a3a;*/
     -fx-background-color: white;
     -fx-text-fill: #0d0d12;
-    -fx-font: italic;
 }
 
 .button:pressed, .button:default:hover:pressed {

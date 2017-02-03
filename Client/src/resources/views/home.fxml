@@ -115,6 +115,6 @@
     
     
     <stylesheets>
-        <URL value="@home.css"/>
+        <URL value="@../style/home.css"/>
     </stylesheets>
 </GridPane>

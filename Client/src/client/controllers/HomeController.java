@@ -6,12 +6,17 @@
 package client.controllers;
 
 
+import java.io.IOException;
 import java.net.URL;
 
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -19,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -55,6 +61,20 @@ public class HomeController implements Initializable {
     }
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
+       
+      try {
+            Parent logOutParent = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
+            Scene logOutScene = new Scene(logOutParent);
+            Stage logOutStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            logOutStage.hide();
+            logOutStage.setScene(logOutScene);
+            logOutStage.show();
+        } catch (IOException ex) {
+            System.out.println("Error done with an exception");
+//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
+            ex.printStackTrace();
+
+        }
     }
     @FXML protected void handleButton_easy_Action(ActionEvent event) {
       System.out.println("easy");

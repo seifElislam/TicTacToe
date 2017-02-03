@@ -92,6 +92,6 @@
                  
         </GridPane>
     <stylesheets>
-        <URL value="@Game.css"/>
+        <URL value="@../style/Game.css"/>
     </stylesheets>
 </GridPane >

@@ -49,25 +49,36 @@
     <Label text="Choose a Pic :"
             GridPane.columnIndex="0" GridPane.rowIndex="5"/>
  
-    <ImageView
-            fx:id="userPic"
-            fitHeight="150.0"
-            fitWidth="200.0"
-            layoutX="61.0"
-            layoutY="83.0"
-            pickOnBounds="true"
-            preserveRatio="true"
-            GridPane.columnIndex="1" 
-            GridPane.rowIndex="5"
-            >
-            <image>
-                <Image
-                    url="@img/userpic.png"
-                    backgroundLoading="true"
-                    />
-            </image>
-        </ImageView>
-    
+    <Button fx:id="selectUserImage" GridPane.columnIndex="1" GridPane.rowIndex="5" 
+            onAction="#selectUserPic" text="Choose Picture">
+      <font>
+        <Font size="30.0" />
+      </font>
+      <graphic>
+        <ImageView
+                        fx:id="userPic"
+                        fitHeight="150.0"
+                        fitWidth="200.0"
+                        layoutX="61.0"
+                        layoutY="83.0"
+                        pickOnBounds="true"
+                        preserveRatio="true"
+                        GridPane.columnIndex="1" 
+                        GridPane.rowIndex="5"
+                        >
+
+                        <image>
+                            <Image
+                                
+                                url="@../images/userpic.png"
+                                backgroundLoading="true"
+                                />
+                        </image>
+                      </ImageView> 
+      </graphic>
+    </Button>
+          
+                
     <HBox spacing="10" alignment="bottom_right" 
           GridPane.columnIndex="1" GridPane.rowIndex="8">
         <Button  text="Sign In"     
@@ -78,7 +89,8 @@
           GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
     <stylesheets>
-        <URL value="@signup.css" />
+        <URL value="@../style/signup.css" />
+        <URL value="@../style/Game.css" />
     </stylesheets>
 
 </GridPane>
