@@ -7,6 +7,7 @@ package client.controllers;
 
 import client.network.Session;
 import assets.*;
+import client.ClientApp;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,11 +41,10 @@ public class FXMLClientController implements Initializable {
     
     @FXML protected void handleSignInButtonAction(ActionEvent event) {
         Session session = new Session("127.0.0.1", 5555);
-        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         session.openConnection();
         if(session.connected){
             if(session.loginToServer(txtf_userName.getText(), txtf_password.getText())){
-                primaryStage.hide();
+//                primaryStage.hide();
                 primaryStage.setScene(homeScene);
                 primaryStage.show();
             }else{
@@ -62,8 +63,7 @@ public class FXMLClientController implements Initializable {
         }
     }
     @FXML protected void handleSignUpButtonAction(ActionEvent event) {
-        primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        primaryStage.hide();
+//        primaryStage.hide();
         primaryStage.setScene(signupScene);
         primaryStage.show();
     }
@@ -74,6 +74,7 @@ public class FXMLClientController implements Initializable {
         try{
             homeScene = new Scene(FXMLLoader.load(getClass().getResource("/resources/views/home.fxml")));
             signupScene = new Scene(FXMLLoader.load(getClass().getResource("/resources/views/sinup.fxml")));
+            primaryStage = ClientApp.primaryStage;
         }catch(IOException ioex){
             
         }

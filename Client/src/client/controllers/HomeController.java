@@ -6,6 +6,7 @@
 package client.controllers;
 
 
+import client.ClientApp;
 import java.io.IOException;
 import java.net.URL;
 
@@ -44,10 +45,12 @@ public class HomeController implements Initializable {
   //  @FXML private TableView<Person> allPlayersTable;
     @FXML private ImageView imgView;
      @FXML private String src="/resources/images/o.png";
-    @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); ;
+    @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); 
+    private Stage primaryStage;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        primaryStage = ClientApp.primaryStage;
         opponentInfo() ;
         playerInfo() ;
     }    
@@ -56,10 +59,9 @@ public class HomeController implements Initializable {
        try {
             Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
             Scene gameScene = new Scene(game);
-            Stage gameStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            gameStage.hide();
-            gameStage.setScene(gameScene);
-            gameStage.show();
+//            primaryStage.hide();
+            primaryStage.setScene(gameScene);
+            primaryStage.show();
         } catch (IOException ex) {
             System.out.println("Error done with an exception");
 //            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
@@ -73,10 +75,9 @@ public class HomeController implements Initializable {
       try {
             Parent logOutParent = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
             Scene logOutScene = new Scene(logOutParent);
-            Stage logOutStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            logOutStage.hide();
-            logOutStage.setScene(logOutScene);
-            logOutStage.show();
+//            primaryStage.hide();
+            primaryStage.setScene(logOutScene);
+            primaryStage.show();
         } catch (IOException ex) {
             System.out.println("Error done with an exception");
 //            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
@@ -89,10 +90,9 @@ public class HomeController implements Initializable {
        try {
             Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
             Scene gameScene = new Scene(game);
-            Stage gameStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            gameStage.hide();
-            gameStage.setScene(gameScene);
-            gameStage.show();
+//            primaryStage.hide();
+            primaryStage.setScene(gameScene);
+            primaryStage.show();
         } catch (IOException ex) {
             System.out.println("Error done with an exception");
 //            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
