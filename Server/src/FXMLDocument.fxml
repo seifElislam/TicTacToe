@@ -10,7 +10,7 @@
 
 
 
-<GridPane fx:controller="server.controllers.FXMLDocumentController" prefWidth="500"
+<GridPane fx:controller="server.FXMLDocumentController" prefWidth="500"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <padding>
         <Insets top="25" right="25" bottom="25" left="25"/>        
@@ -31,6 +31,8 @@
     <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="1"
                GridPane.columnSpan="2">
         <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="30">
+            </TableColumn>
             <TableColumn fx:id="fNameColumn" text="First Name" prefWidth="120">
             </TableColumn>
             <TableColumn fx:id="lNameColumn" text="Last Name" prefWidth="120">

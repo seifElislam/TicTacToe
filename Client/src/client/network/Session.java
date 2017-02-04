@@ -6,16 +6,21 @@
 package client.network;
 
 import assets.*;
+import client.Player;
+import client.controllers.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 
 /**
  *
  * @author Ehab
  */
 public class Session {
+    public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
+    private Player player;
     private Socket socket;
     private final int portNumber;
     private final String ipAddress;
@@ -28,16 +33,16 @@ public class Session {
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
         this.portNumber = portNumber;
-        openConnection();
+        //openConnection();
     }
-    private void openConnection(){
+    public void openConnection(){
         try {
             socket = new Socket(ipAddress, portNumber);
             upLink = new ObjectOutputStream(socket.getOutputStream());
             downLink = new ObjectInputStream(socket.getInputStream());
             connected = true;
             System.out.println("Connected to server successfully!");
-            startCommunication();
+            //startCommunication();
         } catch (IOException ex) {
             connected = false;
             System.out.println("Connection to server failed!");
@@ -68,11 +73,37 @@ public class Session {
             System.out.println("Connection with server closed");
         }).start();
     }
-    public void loginToServer(String username, String password){
+    public boolean loginToServer(String username, String password){
         Message message = new Message(MsgType.LOGIN);
         message.setData("username", username);
         message.setData("password", password);
-        sendMessage(message);
+        if(connected){
+            sendMessage(message);
+            while(connected){
+                try{
+                    Message response = (Message)downLink.readObject();
+                    if(response.getType() == MsgType.LOGIN){
+                        if(response.getData("signal").equals(MsgSignal.SUCCESS)){
+                            loggedin = true;
+                            player = new Player();
+                            player.setUsername(response.getData("username"));
+                            player.setFname(response.getData("fname"));
+                            player.setLname(response.getData("lname"));
+                            player.setPicPath(response.getData("picpath"));
+                            player.setScore(Integer.parseInt(response.getData("score")));
+                            startCommunication();
+                        }
+                        break;
+                    }else
+                        MessageHandler(response);
+                }catch(IOException ioex){
+                    
+                }catch(ClassNotFoundException cnfex){
+                    
+                }
+            }
+        }
+        return loggedin;
     }
     private void MessageHandler(Message message){
         switch(message.getType()){
@@ -102,10 +133,14 @@ public class Session {
                 }
                 break;
             case INIT:
-                System.out.println(message.getData("username")+" "+message.getData("status"));
-                break;
             case NOTIFY:
-                System.out.println(message.getData("username")+" became "+message.getData("status"));
+                updatePlayersList(message);
+                break;
+            case GAME_REQ:
+                respondToRequest(message);
+                break;
+            case GAME_RES:
+                handleResponse(message);
                 break;
             default:
                 System.out.println("server sent unhandled message");
@@ -130,5 +165,46 @@ public class Session {
         message.setData("picpath",picpath);
        
         sendMessage(message);
+    }
+    public void requestGame(String secondPlayerName){
+        //**ALERT** waiting for other player response with cancel button
+        Message message=new Message(MsgType.GAME_REQ,"destination",secondPlayerName);
+        sendMessage(message);
+    }
+    public void respondToRequest(Message incoming){
+        //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
+        String playerRequestingGame =incoming.getData("source");        
+        boolean accept=true;       
+        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
+        if(accept){
+            outgoing.setData("response", "accept");
+            //set scene to game scene
+        }else{
+            outgoing.setData("response", "deny");
+        }
+        sendMessage(outgoing);
+    }
+    public void handleResponse(Message incoming){
+        if(incoming.getData("response").equals("accept")){
+            //change scene to gameplay scene
+        }else{
+            System.out.println("player 2 denied game request");
+        }
+    }
+    public void updatePlayersList(Message message){
+        //if(!message.getData("username").equals(this.player.getUsername())){
+        if(true){
+            if(message.getType() == MsgType.INIT){
+                Player newPlayer = new Player();
+                newPlayer.setUsername(message.getData("username"));
+                newPlayer.setStatus(message.getData("status"));
+                newPlayer.setScore(Integer.parseInt(message.getData("score")));
+                newPlayer.setPicPath(message.getData("picpath"));
+                allPlayers.put(message.getData("username"), newPlayer);
+            }else if(message.getType() == MsgType.NOTIFY){
+                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+            }
+        }
+        System.out.println(message.getType()+" "+message.getData("username")+" "+message.getData("status"));
     }
 }
