@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import server.Game;
 import static server.network.Server.allPlayers;
 
 /**
@@ -27,6 +28,7 @@ public class Session extends Thread{
     private Socket socket;
     private ObjectInputStream downLink;
     private ObjectOutputStream upLink;
+    private Game game;
     
     public Session(Socket socket){
         this.socket = socket;
@@ -90,6 +92,12 @@ public class Session extends Thread{
             case REGISTER : 
                 playerRegister(message.getData("username"), message.getData("password"),message.getData("fname"),message.getData("lname"),message.getData("picpath"));
             break;
+            case GAME_REQ :
+                requestGame(message);
+            break;
+            case GAME_RES :
+                respondGame(message);
+            break;
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -134,6 +142,27 @@ public class Session extends Thread{
         SendMessage(result);
    
     }
+    
+    public void requestGame(Message incoming){
+        //handle request from client 1 and forward it to client2
+        Message outgoing=new Message(MsgType.GAME_REQ,"source",player.getUsername());
+        if(connectedPlayers.containsKey(incoming.getData("destination"))){
+            connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
+        }
+    }
+    public void respondGame(Message incoming){
+        //handle response from client 2 and forward it to client1
+        if(incoming.getData("response").equals("accept")){
+                game=new Game();
+                connectedPlayers.get(incoming.getData("destination")).game=game;
+        }
+        Message outgoing=new Message(MsgType.GAME_RES,"source",player.getUsername());
+        outgoing.setData("response", incoming.getData("response"));
+        if(connectedPlayers.containsKey(incoming.getData("destination"))){
+            connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
+        }
+    }
+    
     private void pushNotification(){
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
             session.getValue().SendMessage(new Message(MsgType.NOTIFY, player.getUsername(), player.getStatus()));

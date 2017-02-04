@@ -107,6 +107,12 @@ public class Session {
             case NOTIFY:
                 System.out.println(message.getData("username")+" became "+message.getData("status"));
                 break;
+            case GAME_REQ:
+                respondToRequest(message);
+                break;
+            case GAME_RES:
+                handleResponse(message);
+                break;
             default:
                 System.out.println("server sent unhandled message");
                 break;
@@ -130,5 +136,30 @@ public class Session {
         message.setData("picpath",picpath);
        
         sendMessage(message);
+    }
+    public void requestGame(String secondPlayerName){
+        //**ALERT** waiting for other player response with cancel button
+        Message message=new Message(MsgType.GAME_REQ,"destination",secondPlayerName);
+        sendMessage(message);
+    }
+    public void respondToRequest(Message incoming){
+        //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
+        String playerRequestingGame =incoming.getData("source");        
+        boolean accept=true;       
+        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
+        if(accept){
+            outgoing.setData("response", "accept");
+            //set scene to game scene
+        }else{
+            outgoing.setData("response", "deny");
+        }
+        sendMessage(outgoing);
+    }
+    public void handleResponse(Message incoming){
+        if(incoming.getData("response").equals("accept")){
+            //change scene to gameplay scene
+        }else{
+            System.out.println("player 2 denied game request");
+        }
     }
 }
