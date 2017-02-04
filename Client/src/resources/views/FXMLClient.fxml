@@ -37,7 +37,7 @@
     <Text fx:id="actiontarget"
            GridPane.columnIndex="1" GridPane.rowIndex="8"  GridPane.columnSpan="2"/>
     <stylesheets>
-        <URL value="@Login.css" />
+        <URL value="@../style/Login.css" />
       </stylesheets>
 
 </GridPane>

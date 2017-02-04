@@ -53,7 +53,7 @@
         <ToggleGroup fx:id="myToggleGroup"/>
     </fx:define>
     
-    <ToggleButton fx:id="on" text="On" selected="true" onAction="#handleToggleOnAction" toggleGroup="$myToggleGroup"
+    <ToggleButton fx:id="on" text="On"  onAction="#handleToggleOnAction" toggleGroup="$myToggleGroup"
                   GridPane.columnIndex="0" GridPane.rowIndex="4" />
     <ToggleButton fx:id="off" text="Off" onAction="#handleToggleOffAction" toggleGroup="$myToggleGroup"
                   GridPane.columnIndex="1" GridPane.rowIndex="4" />

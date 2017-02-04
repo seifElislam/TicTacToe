@@ -21,10 +21,9 @@ import static server.network.Server.allPlayers;
  * @author Ehab
  */
 public class Session extends Thread{
-    public static HashMap<Integer,Session> connectedPlayers = new HashMap<Integer,Session>();
+    public static HashMap<String,Session> connectedPlayers = new HashMap<String,Session>();
     private Player player;
     private boolean connected = false;
-    private boolean loggedIn = false;
     private Socket socket;
     private ObjectInputStream downLink;
     private ObjectOutputStream upLink;
@@ -46,47 +45,47 @@ public class Session extends Thread{
     }
     private void closeConnection(){
         try{
-            socket.close();
             upLink.close();
             downLink.close();
+            socket.close();
+            connected = false;
         }catch(IOException ioex){
             //error connection already closed
         }
     }
-    private void playerLogin(String username, String password){
+    private void playerLogin(Message message){
         Message loginResult = new Message(MsgType.LOGIN);
-        boolean playerAuth = model.Players.playerAuth(username, password);
+        boolean playerAuth = model.Players.playerAuth(message.getData("username"), message.getData("password"));
         if(playerAuth){
-            loggedIn = true;
-            player = model.Players.getPlayerInfo(username);
+            player = model.Players.getPlayerInfo(message.getData("username"));
             loginResult.setData("signal", MsgSignal.SUCCESS);
             loginResult.setData("id", String.valueOf(player.getID()));
             loginResult.setData("username", player.getUsername());
             loginResult.setData("fullname", player.getFullName());
+            loginResult.setData("picpath", player.getPicPath());
+            loginResult.setData("score", String.valueOf(player.getScore()));
             Server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
-            for(Map.Entry<String, Player> entry : allPlayers.entrySet()){
-                System.out.println(entry.getValue().getUsername()+" - "+entry.getValue().getStatus());
-            }
+            initConnection();
+            pushNotification();
         }else{
             loginResult.setData("signal", MsgSignal.FAILURE);
+            connected = false;
         }
         SendMessage(loginResult);
     }
     private void playerLogout(){
-        loggedIn = false;
-        connected = false;
         connectedPlayers.remove(this);
         Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
+        pushNotification();
         closeConnection();
     }
     private void MessageHandler(Message message){
         switch(message.getType()){
             case LOGIN:
-                playerLogin(message.getData("username"), message.getData("password"));
+                playerLogin(message);
                 break;
             case LOGOUT:
-                if(loggedIn)
-                    playerLogout();
+                playerLogout();
                 break;
             case REGISTER : 
                 playerRegister(message.getData("username"), message.getData("password"),message.getData("fname"),message.getData("lname"),message.getData("picpath"));
@@ -110,7 +109,6 @@ public class Session extends Thread{
                 MessageHandler(message);
             }catch(IOException ioex){
                 //error server lost connection with client
-                
             }catch(ClassNotFoundException cnfex){
                 //error invalid message sent by client
             }
@@ -135,5 +133,20 @@ public class Session extends Thread{
         
         SendMessage(result);
    
+    }
+    private void pushNotification(){
+        for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
+            session.getValue().SendMessage(new Message(MsgType.NOTIFY, player.getUsername(), player.getStatus()));
+        }
+    }
+    private void initConnection(){
+        for(Map.Entry<String, Player> player : allPlayers.entrySet()){
+            Message message = new Message(MsgType.INIT);
+            message.setData("username", player.getValue().getUsername());
+            message.setData("score", String.valueOf(player.getValue().getScore()));
+            message.setData("picpath", player.getValue().getPicPath());
+            message.setData("status", player.getValue().getStatus());
+            this.SendMessage(message);
+        }
     }
 }

@@ -20,9 +20,9 @@ public class Message implements Serializable{
         this.type = type;
         data = new HashMap<String,String>();
     }
-    public Message(MsgType type, int DestID){
+    public Message(MsgType type, String key, String value){
         this.type = type;
-        data.put("destid", String.valueOf(DestID));
+        data.put(key, value);
     }
     public void setType(MsgType type){
         this.type = type;

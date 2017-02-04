@@ -7,7 +7,6 @@ package server.controllers;
 
 import model.*;
 import java.net.URL;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,13 +63,14 @@ public class FXMLDocumentController implements Initializable {
             new PropertyValueFactory<Players,String>("score")
         );
         data = FXCollections.observableArrayList();
-        addPlayers();
-        tableView.setItems(data);
+        
     }
     
     @FXML
     protected void handleToggleOnAction(ActionEvent t) {
         System.out.println("on");
+        addPlayers();
+        tableView.setItems(data);
     }
 
     @FXML
@@ -78,10 +78,9 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("off");
     }
     public void addPlayers(){
-        //TicTacToeDataBase db=new TicTacToeDataBase();
-        //Players.getAllPlayers().forEach((player) -> {
-            //data.add(player);
-        //});
+        Players.getAllPlayers().entrySet().forEach((m) -> {
+            data.add(m.getValue());
+        }); 
  
     }
 

@@ -14,6 +14,7 @@ public enum MsgType{
     LOGOUT,
     REGISTER,
     INIT,
+    NOTIFY,
     GAME_REQ,
     GAME_RES,
     MOVE,

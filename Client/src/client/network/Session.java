@@ -88,11 +88,8 @@ public class Session {
                     System.out.println("login to server failed");
                     connected = false;
                 }
-                break;
-                
-                
-                
-                   case REGISTER:
+                break;    
+            case REGISTER:
                 if(message.getData("signal").equals(MsgSignal.SUCCESS)){
                     System.out.println("register  succedded");
          
@@ -104,9 +101,12 @@ public class Session {
                     connected = false;
                 }
                 break;
-                
-                
-                
+            case INIT:
+                System.out.println(message.getData("username")+" "+message.getData("status"));
+                break;
+            case NOTIFY:
+                System.out.println(message.getData("username")+" became "+message.getData("status"));
+                break;
             default:
                 System.out.println("server sent unhandled message");
                 break;
