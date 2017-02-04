@@ -30,8 +30,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableView<Player> tableView;
     @FXML
-    private TableColumn idColumn;
-    @FXML
     private TableColumn fNameColumn;
     @FXML
     private TableColumn lNameColumn;
@@ -47,21 +45,20 @@ public class FXMLDocumentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        idColumn.setCellValueFactory(
-            new PropertyValueFactory<Players,Integer>("id")
-        );
+    
         fNameColumn.setCellValueFactory(
-            new PropertyValueFactory<Players,String>("fname")
+            new PropertyValueFactory<>("fname")
         );
         lNameColumn.setCellValueFactory(
-            new PropertyValueFactory<Players,String>("lname")
+            new PropertyValueFactory<>("lname")
         );
         loginColumn.setCellValueFactory(
-            new PropertyValueFactory<Players,String>("username")
+            new PropertyValueFactory<>("username")
         );
         scoreColumn.setCellValueFactory(
-            new PropertyValueFactory<Players,String>("score")
+            new PropertyValueFactory<>("score")
         );
+        
         data = FXCollections.observableArrayList();
         
     }
