@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import javax.management.Notification;
 import server.Game;
 import static server.network.Server.allPlayers;
 
@@ -63,10 +64,12 @@ public class Session extends Thread{
             loginResult.setData("signal", MsgSignal.SUCCESS);
             loginResult.setData("id", String.valueOf(player.getID()));
             loginResult.setData("username", player.getUsername());
-            loginResult.setData("fullname", player.getFullName());
+            loginResult.setData("fname", player.getFname());
+            loginResult.setData("lname", player.getLname());
             loginResult.setData("picpath", player.getPicPath());
             loginResult.setData("score", String.valueOf(player.getScore()));
             Server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
+            this.connectedPlayers.put(player.getUsername(), this);
             initConnection();
             pushNotification();
         }else{
@@ -165,7 +168,10 @@ public class Session extends Thread{
     
     private void pushNotification(){
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
-            session.getValue().SendMessage(new Message(MsgType.NOTIFY, player.getUsername(), player.getStatus()));
+            Message notification = new Message(MsgType.NOTIFY);
+            notification.setData("username", player.getUsername());
+            notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
+            session.getValue().SendMessage(notification);
         }
     }
     private void initConnection(){

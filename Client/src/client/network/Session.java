@@ -6,17 +6,21 @@
 package client.network;
 
 import assets.*;
+import client.Player;
 import client.controllers.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.HashMap;
 
 /**
  *
  * @author Ehab
  */
 public class Session {
+    public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
+    private Player player;
     private Socket socket;
     private final int portNumber;
     private final String ipAddress;
@@ -81,6 +85,12 @@ public class Session {
                     if(response.getType() == MsgType.LOGIN){
                         if(response.getData("signal").equals(MsgSignal.SUCCESS)){
                             loggedin = true;
+                            player = new Player();
+                            player.setUsername(response.getData("username"));
+                            player.setFname(response.getData("fname"));
+                            player.setLname(response.getData("lname"));
+                            player.setPicPath(response.getData("picpath"));
+                            player.setScore(Integer.parseInt(response.getData("score")));
                             startCommunication();
                         }
                         break;
@@ -123,10 +133,8 @@ public class Session {
                 }
                 break;
             case INIT:
-                System.out.println(message.getData("username")+" "+message.getData("status"));
-                break;
             case NOTIFY:
-                System.out.println(message.getData("username")+" became "+message.getData("status"));
+                updatePlayersList(message);
                 break;
             case GAME_REQ:
                 respondToRequest(message);
@@ -182,5 +190,21 @@ public class Session {
         }else{
             System.out.println("player 2 denied game request");
         }
+    }
+    public void updatePlayersList(Message message){
+        //if(!message.getData("username").equals(this.player.getUsername())){
+        if(true){
+            if(message.getType() == MsgType.INIT){
+                Player newPlayer = new Player();
+                newPlayer.setUsername(message.getData("username"));
+                newPlayer.setStatus(message.getData("status"));
+                newPlayer.setScore(Integer.parseInt(message.getData("score")));
+                newPlayer.setPicPath(message.getData("picpath"));
+                allPlayers.put(message.getData("username"), newPlayer);
+            }else if(message.getType() == MsgType.NOTIFY){
+                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+            }
+        }
+        System.out.println(message.getType()+" "+message.getData("username")+" "+message.getData("status"));
     }
 }
