@@ -49,12 +49,9 @@ public class sinupController implements Initializable {
     private TextField lastName = new TextField();
     
     @FXML
-<<<<<<< HEAD
     private ImageView userPic = new ImageView();
     private Stage primaryStage;
-=======
     ListView<ImageView> imglist = new ListView<ImageView>();
->>>>>>> 743dd82acdcdf9a1a45567cc5602342cfdc62ea9
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
