@@ -3,21 +3,24 @@
  */
 
 .mainFxmlClass {
-
+       -fx-background-image: url("../images/wall.jpg") ;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position:left  ;
+     -fx-margin-top: 50px;
 }
-#playerInfo{
+/*#Info{
      -fx-border-width: 2;
     -fx-border-color: gray;
     -fx-background-color: gainsboro;
-}
+}*/
 #opponent{
      -fx-border-width: 2;
     -fx-border-color: gray;
-    -fx-background-color: gainsboro;
+    -fx-background-color: burlywood;
 }
 .label{
     
-     -fx-font-size: 20px;
+     -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill:darkslategray;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
@@ -42,19 +45,95 @@
 #human{
     -fx-border-width: 2;
     -fx-border-color: gray;
+    -fx-background-color: burlywood;
+}
+/*#name{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
     -fx-background-color: gainsboro;
 }
+#score{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}*/
+/*#all{
+    -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;
+}*/
 #computer{
     -fx-border-width: 2;
     -fx-border-color: gray;
     -fx-background-color: gainsboro;
 }
-#tableView{
+#playersList{
     
-     -fx-font-size: 10px;
-     fx-border-width: 2;
+     -fx-border-width: 2;
     -fx-border-color: gray;
+    -fx-background-color: burlywood;
 }
 #opponentImg{
     
+}
+#playerName{
+    -fx-font-size: 25px;
+   -fx-font-family: "Arial Black";
+   -fx-font-weight: bold;
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+#opponentName{
+    -fx-font-size: 25px;
+   -fx-font-family: "Arial Black";
+   -fx-font-weight: bold;
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+#lbl,#playerScore,#opponentScore{
+    -fx-font-size: 20px;
+   -fx-font-family: "Arial Black";
+   -fx-font-weight: bold;
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+#arcade{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-padding: 10 10 10 10;
+    -fx-margin-Top:50px;
+    
+}
+#arcade:hover {
+    
+     -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
+}
+#invite{
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-padding: 10 10 10 10;
+    -fx-margin-Top:50px;
+}
+#invite:hover {
+    
+      -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
+
 }

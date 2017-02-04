@@ -6,6 +6,7 @@
 package client.network;
 
 import assets.*;
+import client.controllers.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -28,16 +29,16 @@ public class Session {
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
         this.portNumber = portNumber;
-        openConnection();
+        //openConnection();
     }
-    private void openConnection(){
+    public void openConnection(){
         try {
             socket = new Socket(ipAddress, portNumber);
             upLink = new ObjectOutputStream(socket.getOutputStream());
             downLink = new ObjectInputStream(socket.getInputStream());
             connected = true;
             System.out.println("Connected to server successfully!");
-            startCommunication();
+            //startCommunication();
         } catch (IOException ex) {
             connected = false;
             System.out.println("Connection to server failed!");
@@ -68,11 +69,31 @@ public class Session {
             System.out.println("Connection with server closed");
         }).start();
     }
-    public void loginToServer(String username, String password){
+    public boolean loginToServer(String username, String password){
         Message message = new Message(MsgType.LOGIN);
         message.setData("username", username);
         message.setData("password", password);
-        sendMessage(message);
+        if(connected){
+            sendMessage(message);
+            while(connected){
+                try{
+                    Message response = (Message)downLink.readObject();
+                    if(response.getType() == MsgType.LOGIN){
+                        if(response.getData("signal").equals(MsgSignal.SUCCESS)){
+                            loggedin = true;
+                            startCommunication();
+                        }
+                        break;
+                    }else
+                        MessageHandler(response);
+                }catch(IOException ioex){
+                    
+                }catch(ClassNotFoundException cnfex){
+                    
+                }
+            }
+        }
+        return loggedin;
     }
     private void MessageHandler(Message message){
         switch(message.getType()){
