@@ -8,24 +8,34 @@ and open the template in the editor.
     Author     : seif
 */
 .root {
-     -fx-background-image: url("../images/tic-tac-toe2.png") ;
+     -fx-background-image: url("../images/wood2.jpg") ;
      -fx-background-repeat: no-repeat;
-     -fx-background-position:left  ;
+     
+      -fx-background-size:stretch;
      -fx-margin-top: 50px;
      
 }
 .label {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: beige;
+    -fx-text-fill: whitesmoke;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+/* -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 #Welcome_txt{
    -fx-font-size: 32px;
    -fx-font-family: "Arial Black";
    -fx-font-weight: bold;
-   -fx-fill: beige;
-   -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+   -fx-fill: whitesmoke;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+/*-fx-font-size: 32px;
+-fx-font-weight: bold;
+   -fx-font-family: "Arial Black";
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
 #actiontarget {
   -fx-fill: FIREBRICK;

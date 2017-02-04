@@ -5,9 +5,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
-<GridPane id="GridPane"   hgap="5" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.FXMLClientController">
-    <padding><Insets top="100"  bottom="10" left="400" /></padding>
+
+<GridPane id="GridPane" alignment="CENTER"  hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.FXMLClientController">
+    <padding><Insets top="10"  bottom="10" left="10" /></padding>
+    
+    <ImageView fitHeight="200" fitWidth="700" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" >
+                     
+                     <image>
+                        <Image  url="@../images/tic.gif"   />
+                     </image>
+                  </ImageView>
+    <ImageView  GridPane.columnIndex="0" GridPane.rowIndex="1" >
+
+       <image>
+          <Image  url="@../images/ticwood.png"   />
+       </image>
+    </ImageView>
+    
+    <GridPane id="login"   hgap="10" vgap="10" GridPane.columnIndex="1" GridPane.rowIndex="1"  >
+    <padding><Insets top="10"  bottom="10" left="10" /></padding>
     <Text fx:id="Welcome_txt" text="Welcome" textAlignment="right" 
         GridPane.columnIndex="0" GridPane.rowIndex="0"
         GridPane.columnSpan="2"/>
@@ -36,6 +54,7 @@
 
     <Text fx:id="actiontarget"
            GridPane.columnIndex="1" GridPane.rowIndex="8"  GridPane.columnSpan="2"/>
+    </GridPane>
     <stylesheets>
         <URL value="@../style/Login.css" />
       </stylesheets>
