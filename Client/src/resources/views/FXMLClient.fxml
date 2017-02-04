@@ -15,13 +15,13 @@
     <Label text="User Name:" textAlignment="right"
         GridPane.columnIndex="1" GridPane.rowIndex="1"/>
  
-    <TextField 
+    <TextField fx:id="txtf_userName"
         GridPane.columnIndex="2" GridPane.rowIndex="1"/>
  
     <Label text="Password:"  textAlignment="right"
         GridPane.columnIndex="1" GridPane.rowIndex="2"/>
  
-    <PasswordField fx:id="passwordField" 
+    <PasswordField fx:id="txtf_password" 
         GridPane.columnIndex="2" GridPane.rowIndex="2"/>
     
     <HBox spacing="10" alignment="bottom_right" 
@@ -35,7 +35,7 @@
     </HBox>
 
     <Text fx:id="actiontarget"
-           GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+           GridPane.columnIndex="1" GridPane.rowIndex="8"  GridPane.columnSpan="2"/>
     <stylesheets>
         <URL value="@Login.css" />
       </stylesheets>
