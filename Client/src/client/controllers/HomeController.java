@@ -53,8 +53,20 @@ public class HomeController implements Initializable {
     }    
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
       System.out.println("invite");
+       try {
+            Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
+            Scene gameScene = new Scene(game);
+            Stage gameStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            gameStage.hide();
+            gameStage.setScene(gameScene);
+            gameStage.show();
+        } catch (IOException ex) {
+            System.out.println("Error done with an exception");
+//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
+            ex.printStackTrace();
       
     }
+    };
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
        
@@ -74,6 +86,20 @@ public class HomeController implements Initializable {
     }
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
       System.out.println("arcade");
+       try {
+            Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
+            Scene gameScene = new Scene(game);
+            Stage gameStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            gameStage.hide();
+            gameStage.setScene(gameScene);
+            gameStage.show();
+        } catch (IOException ex) {
+            System.out.println("Error done with an exception");
+//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
+            ex.printStackTrace();
+      
+    }
+      
     }
    
     @FXML protected void playerInfo() {
