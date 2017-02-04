@@ -58,7 +58,7 @@ public class sinupController implements Initializable {
 //            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
             Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
             Scene homeScene = new Scene(homePageParent);
-            primaryStage.hide();
+//            primaryStage.hide();
             primaryStage.setScene(homeScene);
             primaryStage.show();
         } catch (IOException ex) {
