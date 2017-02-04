@@ -14,10 +14,10 @@
 <GridPane id="GridPane2"   hgap="0" vgap="3" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.GameController">
     <padding><Insets top="10"  bottom="10" left="10" right="10"/></padding>
     
-        <GridPane id="board"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="400">
+        <GridPane id="board"  hgap="5" vgap="5" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="400">
              <padding><Insets top="10"  bottom="10" left="10" right="10" /></padding>
              
-             <GridPane id="buttons"  hgap="1" vgap="1" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3" >
+             <GridPane id="buttons"  hgap="1" vgap="1" alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"  >
                  <padding><Insets top="10"  bottom="10" left="10" right="10"/></padding>
                
                  <HBox GridPane.columnIndex="0" GridPane.rowIndex="0"   >
@@ -65,17 +65,19 @@
                         <Image url="@board2.png" />
                      </image>
                   </ImageView> -->
-                <Label  text="Player 1 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label  text="Player 2 :" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Label fx:id="player1Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label fx:id="player2Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label fx:id="time"  text="00:00" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                <Label fx:id="massge"  text="It's your turn " GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                   <GridPane id="info"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="300" prefWidth="400">
+             <padding><Insets top="5"  bottom="5" left="10" right="10" /></padding>
+                <Label  text="Player 1 :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label  text="Player 2 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="player1Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label fx:id="player2Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label fx:id="time"  text="00:00" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="massge"  text="It's your turn " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                
-                 <HBox spacing="10" alignment="CENTER"  GridPane.columnIndex="2" GridPane.rowIndex="3" >
+                 <HBox spacing="10" alignment="CENTER"  GridPane.columnIndex="2" GridPane.rowIndex="2" >
                  <Button fx:id="surrend" text="Surrend" onAction="#handleButton_surrend_Action" />    
                 </HBox>     
-           
+           </GridPane>
                
         </GridPane>
         
