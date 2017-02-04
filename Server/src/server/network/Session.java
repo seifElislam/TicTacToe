@@ -69,6 +69,7 @@ public class Session extends Thread{
             loginResult.setData("picpath", player.getPicPath());
             loginResult.setData("score", String.valueOf(player.getScore()));
             Server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
+            this.connectedPlayers.put(player.getUsername(), this);
             initConnection();
             pushNotification();
         }else{
@@ -169,7 +170,7 @@ public class Session extends Thread{
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
             Message notification = new Message(MsgType.NOTIFY);
             notification.setData("username", player.getUsername());
-            notification.setData("status", player.getStatus());
+            notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
             session.getValue().SendMessage(notification);
         }
     }
