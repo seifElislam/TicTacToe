@@ -11,12 +11,23 @@
 <?import javafx.scene.image.*?>
 
 
-<GridPane fx:controller="client.controllers.sinupController" 
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<GridPane id="root" fx:controller="client.controllers.sinupController" 
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="0" vgap="10">
     <padding> 
-        <Insets top="25" right="25" bottom="10" left="25"/>
+        <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
     
+     <GridPane id="img"   hgap="10" vgap="10" GridPane.columnIndex="0" GridPane.rowIndex="0"  prefHeight="600" prefWidth="400" >
+         <padding> <Insets top="10"  bottom="10" left="10" /> </padding>
+            <!--<ImageView  >
+                     <image>
+                        <Image  url="@../images/tic_tac_toe.png"   />
+                     </image>
+                  </ImageView>-->
+     </GridPane>
+     
+     <GridPane id="info"   hgap="10" vgap="10" GridPane.columnIndex="1" GridPane.rowIndex="0" prefHeight="600" prefWidth="400" >
+    <padding><Insets top="30"  bottom="10" left="10" right="10"/></padding>
     <Label text="User Name:"
             GridPane.columnIndex="0" GridPane.rowIndex="1"/>
  
@@ -48,10 +59,56 @@
     
     <Label text="Choose a Pic :"
             GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+      <ListView fx:id="imglist" GridPane.columnSpan="2" prefHeight="80"  GridPane.columnIndex="0" GridPane.rowIndex="6" 	orientation="horizontal">
+                 <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="1" url="@../images/person1.png"   />
+                     </image>
+                  </ImageView>
+                  
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="2" url="@../images/person2.png"   />
+                     </image>
+                  </ImageView>
+                  
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="3" url="@../images/person3.png"   />
+                     </image>
+                  </ImageView>
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="4" url="@../images/person4.png"   />
+                     </image>
+                  </ImageView>
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="5" url="@../images/person5.png"   />
+                     </image>
+                  </ImageView>
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="6" url="@../images/person6.png"   />
+                     </image>
+                  </ImageView>
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="7" url="@../images/person7.png"   />
+                     </image>
+                  </ImageView>
+                   <ImageView fitHeight="50" fitWidth="50" >
+                     <image>
+                        <Image fx:id="8" url="@../images/person8.png"   />
+                     </image>
+                  </ImageView>
+                  
+           
+       </ListView> 
  
-    <Button fx:id="selectUserImage" GridPane.columnIndex="1" GridPane.rowIndex="5" 
-            onAction="#selectUserPic" text="Choose Picture">
-      <font>
+   <!-- <Button fx:id="selectUserImage" GridPane.columnIndex="1" GridPane.rowIndex="5" 
+           text="Choose Picture">
+     <font>
         <Font size="30.0" />
       </font>
       <graphic>
@@ -73,7 +130,7 @@
                                 />
                       </ImageView> 
       </graphic>
-    </Button>
+    </Button>-->
           
                 
     <HBox spacing="10" alignment="bottom_right" 
@@ -82,12 +139,12 @@
                  onAction="#handleButtonAction"/>
     </HBox>
     
-    <Text fx:id="heolow"
+    <Text fx:id="massage"
           GridPane.columnIndex="1" GridPane.rowIndex="10"/>
-
+</GridPane>
     <stylesheets>
         <URL value="@../style/signup.css" />
-        <URL value="@../style/Game.css" />
+       
     </stylesheets>
 
 </GridPane>

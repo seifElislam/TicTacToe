@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,7 +38,7 @@ public class sinupController implements Initializable {
     @FXML
     private Label label=new Label();
     @FXML
-    private Text heolow = new Text();
+    private Text massage = new Text();
     @FXML
     private TextField userName = new TextField();
     @FXML
@@ -46,13 +47,24 @@ public class sinupController implements Initializable {
     private TextField firstName = new TextField();
     @FXML
     private TextField lastName = new TextField();
+    
     @FXML
+<<<<<<< HEAD
     private ImageView userPic = new ImageView();
     private Stage primaryStage;
+=======
+    ListView<ImageView> imglist = new ListView<ImageView>();
+>>>>>>> 743dd82acdcdf9a1a45567cc5602342cfdc62ea9
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        
+        //validation here
+        userName.setText("");
+         userPassword.setText("");
+         firstName.setText("");
+         lastName.setText("");
+         massage.setText("new palyer");
+       System.out.println(Integer.toString(imglist.getSelectionModel().getSelectedIndex()));
         
         try {
 //            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
@@ -71,23 +83,23 @@ public class sinupController implements Initializable {
     }
     
     @FXML
-    private void selectUserPic(ActionEvent event){
-        FileChooser filechooser = new FileChooser();
-                filechooser.setTitle("Open Resource File");
-                filechooser.getInitialDirectory();
-                FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG Images", "*.png");
-                FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Jpeg Images", "*.jpg");
-                filechooser.getExtensionFilters().addAll(jpgFilter , pngFilter);
-                File file = filechooser.showOpenDialog(new Stage());
-                if(file != null){
-//                    write the rest code here 
-
-                    String path = file.getAbsolutePath();
-                    Image image = new Image(file.toURI().toString());
-                    userPic.setImage(image);
-                    
-                }
-    }
+//    private void selectUserPic(ActionEvent event){
+//        FileChooser filechooser = new FileChooser();
+//                filechooser.setTitle("Open Resource File");
+//                filechooser.getInitialDirectory();
+//                FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG Images", "*.png");
+//                FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Jpeg Images", "*.jpg");
+//                filechooser.getExtensionFilters().addAll(jpgFilter , pngFilter);
+//                File file = filechooser.showOpenDialog(new Stage());
+//                if(file != null){
+////                    write the rest code here 
+//
+//                    String path = file.getAbsolutePath();
+//                    Image image = new Image(file.toURI().toString());
+//                    userPic.setImage(image);
+//                    
+//                }
+//    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

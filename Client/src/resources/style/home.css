@@ -3,7 +3,7 @@
  */
 
 .mainFxmlClass {
-       -fx-background-image: url("../images/wall.jpg") ;
+       -fx-background-image: url("../images/wood2.jpg") ;
      -fx-background-repeat: no-repeat;
      -fx-background-position:left  ;
      -fx-margin-top: 50px;
@@ -14,15 +14,18 @@
     -fx-background-color: gainsboro;
 }*/
 #opponent{
-     -fx-border-width: 2;
-    -fx-border-color: gray;
-    -fx-background-color: burlywood;
+     
+     -fx-background-image: url("../images/peice.png") ;
+     -fx-background-repeat: no-repeat;
+     
+      -fx-background-size:stretch;
+     -fx-margin-top: 50px;
 }
 .label{
     
      -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill:darkslategray;
+    -fx-text-fill:graytext;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
 .button {
@@ -43,9 +46,11 @@
     
 }
 #human{
-    -fx-border-width: 2;
-    -fx-border-color: gray;
-    -fx-background-color: burlywood;
+   -fx-background-image: url("../images/peice.png") ;
+     -fx-background-repeat: no-repeat;
+     
+      -fx-background-size:stretch;
+     -fx-margin-top: 50px;
 }
 /*#name{
     -fx-border-width: 2;
@@ -68,10 +73,7 @@
     -fx-background-color: gainsboro;
 }
 #playersList{
-    
-     -fx-border-width: 2;
-    -fx-border-color: gray;
-    -fx-background-color: burlywood;
+   -fx-background-image: url("../images/wood-texture.jpg") ;
 }
 #opponentImg{
     

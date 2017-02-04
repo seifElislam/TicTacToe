@@ -8,21 +8,21 @@
 }
 #GridPane2 {
     
-  -fx-background-image: url("../images/wall.jpg") ;
+  -fx-background-image: url("../images/wood2.jpg") ;
      -fx-background-repeat: no-repeat;
      -fx-background-position:left  ;
      -fx-margin-top: 50px;  
     
 }
 #chat{
-     -fx-border-width: 2;
-    -fx-border-color: gray;
-    -fx-background-color: burlywood;
+    -fx-background-image: url("../images/wood-texture.jpg") ;
 }
 #info{
-    -fx-border-width: 2;
-    -fx-border-color: gray;
-    -fx-background-color: burlywood;
+   -fx-background-image: url("../images/wood-texture.jpg") ;
+     /*-fx-background-repeat: no-repeat;*/
+     
+      /*-fx-background-size:auto;*/
+     /*-fx-margin-top: 50px;*/
 }
 #buttons{
     -fx-background-image: url("../images/board2.png") ;
@@ -40,7 +40,7 @@
     
      -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill:darkslategray;
+    -fx-text-fill:graytext;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
 #send,#surrend {
