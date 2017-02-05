@@ -7,26 +7,29 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
 
 
-<GridPane fx:controller="server.controllers.FXMLDocumentController" prefWidth="500"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<GridPane id="window" fx:controller="server.controllers.FXMLDocumentController" prefWidth="500"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"  >
     <padding>
         <Insets top="25" right="25" bottom="25" left="25"/>        
     </padding>
-    <columnConstraints>
+  <!--  <columnConstraints>
         <ColumnConstraints halignment="CENTER" percentWidth="50"/>
         <ColumnConstraints halignment="CENTER" percentWidth="50"/>
-    </columnConstraints>
+    </columnConstraints>-->
     
     <!--<gridLinesVisible>true</gridLinesVisible>--> 
 
-
-    <Text text="Players" 
-          GridPane.columnIndex="0" GridPane.rowIndex="0"
-          GridPane.columnSpan="2">
-    </Text>
+ <ImageView fitHeight="120" fitWidth="400" GridPane.columnIndex="0" GridPane.rowIndex="0"  >
+                     
+                     <image>
+                        <Image  url="@images/tic.gif"   />
+                     </image>
+                  </ImageView>
+   
     
     <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="1"
                GridPane.columnSpan="2">
@@ -42,18 +45,17 @@
         </columns>    
     </TableView>
     
-    <Text text="Server Status" 
-          GridPane.columnIndex="0" GridPane.rowIndex="3"
-          GridPane.columnSpan="2">
-    </Text>
+   
     
-    <fx:define>
-        <ToggleGroup fx:id="myToggleGroup"/>
-    </fx:define>
+     <HBox GridPane.columnIndex="1" GridPane.rowIndex="0"   >
+                     <padding><Insets top="10"  bottom="10" left="10" right="10" /></padding>
+                     <Button fx:id="key"  onAction="#handleToggleOnAction"  /> 
+                 </HBox> 
     
-    <ToggleButton fx:id="on" text="On"  onAction="#handleToggleOnAction" toggleGroup="$myToggleGroup"
-                  GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <ToggleButton fx:id="off" text="Off" onAction="#handleToggleOffAction" toggleGroup="$myToggleGroup"
-                  GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    
+    
+     <stylesheets>
+        <URL value="@server.css" />
+      </stylesheets>
 
 </GridPane>
