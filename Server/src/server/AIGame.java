@@ -1,4 +1,5 @@
 package server;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,7 +32,7 @@ class PointAndScore {
 }
 
 class Board {
- 
+
     List<Point> availablePoints;
     Scanner scan = new Scanner(System.in);
     int[][] board = new int[3][3];
@@ -89,14 +90,14 @@ class Board {
 
     public void placeAMove(Point point, int player) {
         board[point.x][point.y] = player;   //player = 1 for X, 2 for O
-    } 
-    
-    void takeHumanInput() {
+    }
+
+    public void takeHumanInput() {
         System.out.println("Your move: ");
         int x = scan.nextInt();
         int y = scan.nextInt();
         Point point = new Point(x, y);
-        placeAMove(point, 2); 
+        placeAMove(point, 2);
     }
 
     public void displayBoard() {
@@ -109,76 +110,101 @@ class Board {
             System.out.println();
 
         }
-    } 
-    
-    Point computersMove; 
-    
-    public int minimax(int depth, int turn) {  
-        if (hasXWon()) return +1; 
-        if (hasOWon()) return -1;
+    }
+
+    Point computersMove;
+
+    public int minimax(int depth, int turn) {
+        if (hasXWon()) {
+            return +1;
+        }
+        if (hasOWon()) {
+            return -1;
+        }
 
         List<Point> pointsAvailable = getAvailableStates();
-        if (pointsAvailable.isEmpty()) return 0; 
- 
+        if (pointsAvailable.isEmpty()) {
+            return 0;  // if list is emty so no available move ..retrn 
+        }
         int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
-         
-        for (int i = 0; i < pointsAvailable.size(); ++i) {  
-            Point point = pointsAvailable.get(i);   
-            if (turn == 1) { 
-                placeAMove(point, 1); 
+
+        for (int i = 0; i < pointsAvailable.size(); ++i) {
+            Point point = pointsAvailable.get(i);
+            if (turn == 1) {
+                placeAMove(point, 1);
                 int currentScore = minimax(depth + 1, 2);
                 max = Math.max(currentScore, max);
-                
-                if(depth == 0)System.out.println("Score for position "+(i+1)+" = "+currentScore);
-                if(currentScore >= 0){ if(depth == 0) computersMove = point;} 
-                if(currentScore == 1){board[point.x][point.y] = 0; break;} 
-                if(i == pointsAvailable.size()-1 && max < 0){if(depth == 0)computersMove = point;}
+
+                if (depth == 0) {
+                    System.out.println("Score for position " + (i + 1) + " = " + currentScore);
+                }
+                if (currentScore >= 0) {
+                    if (depth == 0) {
+                        computersMove = point;
+                    }
+                }
+                if (currentScore == 1) {
+                    board[point.x][point.y] = 0;
+                    break;
+                }
+                if (i == pointsAvailable.size() - 1 && max < 0) {
+                    if (depth == 0) {
+                        computersMove = point;
+                    }
+                }
             } else if (turn == 2) {
-                placeAMove(point, 2); 
+                placeAMove(point, 2);
                 int currentScore = minimax(depth + 1, 1);
-                min = Math.min(currentScore, min); 
-                if(min == -1){board[point.x][point.y] = 0; break;}
+                min = Math.min(currentScore, min);
+                if (min == -1) {
+                    board[point.x][point.y] = 0;
+                    break;
+                }
             }
             board[point.x][point.y] = 0; //Reset this point
-        } 
-        return turn == 1?max:min;
-    }  
+        }
+        return turn == 1 ? max : min;
+    }
 }
 
 public class AIGame {
 
     public static void main(String[] args) {
         Board b = new Board();
-        Random rand = new Random();
-        
+//        Random rand = new Random();
+
         b.displayBoard();
 
-        System.out.println("Select turn:\n\n1. Computer 2. User: ");
-        int choice = b.scan.nextInt();
-        if(choice == 1){
-            Point p = new Point(rand.nextInt(3), rand.nextInt(3));
-            b.placeAMove(p, 1);
-            b.displayBoard();
-        }
-        
+//        System.out.println("Select turn:\n\n1. Computer 2. User: ");
+////        int choice = b.scan.nextInt();
+//        if(choice == 1){
+//            Point p = new Point(rand.nextInt(3), rand.nextInt(3));
+//            b.placeAMove(p, 1);
+//            b.displayBoard();
+////        }
         while (!b.isGameOver()) {
-            System.out.println("Your move: ");
-            Point userMove = new Point(b.scan.nextInt(), b.scan.nextInt());
+            //System.out.println("Your move: ");
 
-            b.placeAMove(userMove, 2); //2 for O and O is the user
+            //Point userMove = new Point(b.scan.nextInt(), b.scan.nextInt());
+            //  b.placeAMove(userMove, 2); //2 for O and O is the user
+            b.takeHumanInput();
             b.displayBoard();
-            if (b.isGameOver()) break;
-            
-            b.minimax(0, 1);  
-            
+            if (b.isGameOver()) {
+                break;
+            }
+
+            b.minimax(0, 1); //compter's trn  1 = compter 2 = user
+
             b.placeAMove(b.computersMove, 1);
             b.displayBoard();
         }
-        if (b.hasXWon()) 
+        if (b.hasXWon()) {
             System.out.println("Unfortunately, you lost!");
-        else if (b.hasOWon()) 
+        } else if (b.hasOWon()) {
             System.out.println("You win!"); //Can't happen
-        else 
+        } else {
             System.out.println("It's a draw!");
+            
+        }
     }
 }
