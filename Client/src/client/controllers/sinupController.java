@@ -5,6 +5,7 @@
  */
 package client.controllers;
 
+import client.ClientApp;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +49,8 @@ public class sinupController implements Initializable {
     private TextField lastName = new TextField();
     
     @FXML
+    private ImageView userPic = new ImageView();
+    private Stage primaryStage;
     ListView<ImageView> imglist = new ListView<ImageView>();
     
     @FXML
@@ -64,10 +67,9 @@ public class sinupController implements Initializable {
 //            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
             Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
             Scene homeScene = new Scene(homePageParent);
-            Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            homeStage.hide();
-            homeStage.setScene(homeScene);
-            homeStage.show();
+//            primaryStage.hide();
+            primaryStage.setScene(homeScene);
+            primaryStage.show();
         } catch (IOException ex) {
             System.out.println("Error done with an exception");
 //            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
@@ -99,6 +101,7 @@ public class sinupController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        primaryStage = ClientApp.primaryStage;
     }    
     
 }
