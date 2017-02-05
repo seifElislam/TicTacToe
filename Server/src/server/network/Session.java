@@ -94,13 +94,15 @@ public class Session extends Thread{
                 break;
             case REGISTER : 
                 playerRegister(message.getData("username"), message.getData("password"),message.getData("fname"),message.getData("lname"),message.getData("picpath"));
-            break;
+                break;
             case GAME_REQ :
                 requestGame(message);
-            break;
+                break;
             case GAME_RES :
                 respondGame(message);
-            break;
+                break;
+            case MOVE:
+                handleMove(message);
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -156,13 +158,18 @@ public class Session extends Thread{
     public void respondGame(Message incoming){
         //handle response from client 2 and forward it to client1
         if(incoming.getData("response").equals("accept")){
-                game=new Game();
+                game=new Game(incoming.getData("destination"),player.getUsername());
                 connectedPlayers.get(incoming.getData("destination")).game=game;
         }
         Message outgoing=new Message(MsgType.GAME_RES,"source",player.getUsername());
         outgoing.setData("response", incoming.getData("response"));
         if(connectedPlayers.containsKey(incoming.getData("destination"))){
             connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
+        }
+    }
+     private void handleMove(Message message) {
+        if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+            message.setData("gameStatus", game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y"))));
         }
     }
     

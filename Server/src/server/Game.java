@@ -12,23 +12,35 @@ package server;
 public class Game {
     
     //enum for cell status should be kept in assets
-    private enum Cell{ X, O};
+//    private enum Cell{ X, O};
+    private final String player1;
+    private final String player2;
     //"currentGame" will store game status
-    private final Cell[][] currentGame ;
+    private final String[][] currentGame ;
     private int incMove=0;
     public boolean Horizontal = true, Vertical = true, DiagonalOne = true, DiagonalTwo = true;
 
     //class constructor initiates new current game table with 3*3 dimensions
-    public Game(){
-        currentGame = new Cell[3][3];
+    public Game(String player1,String player2){
+        this.player1=player1;
+        this.player2=player2;
+        currentGame = new String[3][3];
         DiagonalOne = true;
+    }
+
+    public String getPlayer1() {
+        return player1;
+    }
+
+    public String getPlayer2() {
+        return player2;
     }
     
     //method to handle move request takes 3 params enum , position in game table x,y
-    public boolean validateMove(Cell player,int x,int y){
-        if(true){
+    public boolean validateMove(String player,int x,int y){
+        if(currentGame[x][y] == null){
             currentGame[x][y] = player;
-            checkForWin(player,x,y);
+//            checkForWin(player,x,y);
             return true;
         }else{
             System.out.println("cell is occupied");
@@ -37,23 +49,23 @@ public class Game {
     }
 
     //method to check win horizontal, vertical and diagonal    
-    public void checkForWin(Cell player,int x,int y){
+    public String checkForWin(String player,int x,int y){
         for(int i = 0; i < 3; i++){
             //horizontal check
-            if(currentGame[x][i] != player){
+            if(currentGame[x][i]!=player){
                 Horizontal = false;
             }
             //vertical check
-            if(currentGame[i][y] != player){
+            if(currentGame[i][y]!=player){
                 Vertical = false;
             }
         }
         //diagonals check
         if( x==y || x==2-y ){
             for(int i = 0; i < 3; i++){
-                if(currentGame[i][i] != player)
+                if(currentGame[i][i]!=player)
                     DiagonalOne = false;
-                if(currentGame[i][2-i] != player)
+                if(currentGame[i][2-i]!=player)
                     DiagonalTwo = false;
             }
         }else{
@@ -61,28 +73,31 @@ public class Game {
             DiagonalTwo = false;
         }
         if(Horizontal || Vertical || DiagonalOne || DiagonalTwo){
-            System.out.println(player+" won");
+//            System.out.println(player+" won");
+            return "win";
         }else if (incMove==8) {
-            System.out.println("Draw!!");
+//            System.out.println("Draw!!");
+            return "draw";
         }else{
             Horizontal = Vertical = DiagonalOne = DiagonalTwo = true;
             incMove++;
+            return "gameOn";
         }
     }
     
 
     public static void main(String[] args) {
         //when game starts between 2 players a game obj is created
-        Game game=new Game();
-        game.validateMove(Cell.X, 0, 1);
-        game.validateMove(Cell.O, 0, 0);
-        game.validateMove(Cell.X, 0, 2);
-        game.validateMove(Cell.O, 1, 1);
-        game.validateMove(Cell.X, 1, 0);
-        game.validateMove(Cell.O, 1, 2);
-        game.validateMove(Cell.X, 2, 0);
-        game.validateMove(Cell.O, 2, 1);
-        game.validateMove(Cell.X, 2, 2);
+        Game game=new Game("x","o");
+        game.validateMove(game.player1, 0, 1);
+        game.validateMove(game.player2, 0, 0);
+        game.validateMove(game.player1, 0, 2);
+        game.validateMove(game.player2, 1, 1);
+        game.validateMove(game.player1, 2, 1);
+        game.validateMove(game.player2, 1, 2);
+        game.validateMove(game.player1, 2, 0);
+        game.validateMove(game.player2, 1, 0);
+        game.validateMove(game.player1, 2, 2);
         
     }
     

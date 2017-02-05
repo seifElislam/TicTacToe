@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
+import javafx.fxml.FXMLLoader;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Session {
     private ObjectOutputStream upLink;
     public boolean connected = false;
     private boolean loggedin = false;
-    private boolean playing = false;
+    private boolean myTurn;
     
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
@@ -142,6 +143,8 @@ public class Session {
             case GAME_RES:
                 handleResponse(message);
                 break;
+            case MOVE:
+                handleMove(message);
             default:
                 System.out.println("server sent unhandled message");
                 break;
@@ -190,6 +193,27 @@ public class Session {
         }else{
             System.out.println("player 2 denied game request");
         }
+    }
+    public void makeAMove(String x,String y) {
+        Message message=new Message(MsgType.MOVE);
+        message.setData("x", x);
+        message.setData("y", y);
+        sendMessage(message);
+        myTurn=false;
+    }
+    private void handleMove(Message message) {
+        switch (message.getData("gameStatus")){
+            case "gameOn":
+                myTurn=true;
+                break;
+            case "win" :
+                System.out.println("you lose");
+                break;
+            case "draw":
+                System.out.println("draw");
+                break;
+        }
+        
     }
     public void updatePlayersList(Message message){
         //if(!message.getData("username").equals(this.player.getUsername())){
