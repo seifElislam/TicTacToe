@@ -56,50 +56,22 @@ public class HomeController implements Initializable {
     }    
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
       System.out.println("invite");
-       try {
-            Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
-            Scene gameScene = new Scene(game);
-//            primaryStage.hide();
-            primaryStage.setScene(gameScene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            System.out.println("Error done with an exception");
-//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
-            ex.printStackTrace();
-      
-    }
+       
+            primaryStage.setScene(client.ClientApp.game);
+
     };
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
        
-      try {
-            Parent logOutParent = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
-            Scene logOutScene = new Scene(logOutParent);
-//            primaryStage.hide();
-            primaryStage.setScene(logOutScene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            System.out.println("Error done with an exception");
-//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
-            ex.printStackTrace();
-
-        }
+    
+            primaryStage.setScene(client.ClientApp.signIn);
+    
     }
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
       System.out.println("arcade");
-       try {
-            Parent game = FXMLLoader.load(getClass().getResource("/resources/views/Game.fxml"));
-            Scene gameScene = new Scene(game);
-//            primaryStage.hide();
-            primaryStage.setScene(gameScene);
-            primaryStage.show();
-        } catch (IOException ex) {
-            System.out.println("Error done with an exception");
-//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
-            ex.printStackTrace();
-      
-    }
-      
+     
+            primaryStage.setScene(client.ClientApp.game);
+    
     }
    
     @FXML protected void playerInfo() {

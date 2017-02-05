@@ -35,8 +35,6 @@ public class FXMLClientController implements Initializable {
     @FXML private Text actiontarget;
     @FXML private TextField txtf_password;
     @FXML private TextField txtf_userName;
-    private Scene homeScene;
-    private Scene signupScene;
     private Stage primaryStage;
     
     @FXML protected void handleSignInButtonAction(ActionEvent event) {
@@ -45,7 +43,7 @@ public class FXMLClientController implements Initializable {
         if(session.connected){
             if(session.loginToServer(txtf_userName.getText(), txtf_password.getText())){
 //                primaryStage.hide();
-                primaryStage.setScene(homeScene);
+                primaryStage.setScene(client.ClientApp.home);
                 primaryStage.show();
             }else{
                 Alert alert = new Alert(AlertType.ERROR);
@@ -64,20 +62,16 @@ public class FXMLClientController implements Initializable {
     }
     @FXML protected void handleSignUpButtonAction(ActionEvent event) {
 //        primaryStage.hide();
-        primaryStage.setScene(signupScene);
+        primaryStage.setScene(client.ClientApp.signUp);
         primaryStage.show();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        try{
-            homeScene = new Scene(FXMLLoader.load(getClass().getResource("/resources/views/home.fxml")));
-            signupScene = new Scene(FXMLLoader.load(getClass().getResource("/resources/views/sinup.fxml")));
+        
             primaryStage = ClientApp.primaryStage;
-        }catch(IOException ioex){
-            
-        }
+        
     }    
     
 }

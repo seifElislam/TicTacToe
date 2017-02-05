@@ -29,7 +29,7 @@ public class GameController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
+    @FXML public Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
     @FXML private TextField txt_field;
     @FXML int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
     @FXML String src="/resources/images/x.png";
