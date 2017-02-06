@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 
 /**
@@ -26,6 +28,7 @@ import javafx.scene.image.ImageView;
 public class Session {
     public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
     private Player player;
+    private String player2;
     private Socket socket;
     private final int portNumber;
     private final String ipAddress;
@@ -188,24 +191,24 @@ public class Session {
     public void respondToRequest(Message incoming){
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
         String playerRequestingGame =incoming.getData("source");        
-//        Alert alert = new Alert(AlertType.CONFIRMATION);
-//                alert.setTitle("Request");
-//                alert.setHeaderText("Game request");
-//                alert.setContentText(playerRequestingGame+" wants to play with you");
-//                alert.showAndWait();
-        boolean accept=true;       
         Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
-        if(accept){
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, playerRequestingGame+" wants to play with you", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
             outgoing.setData("response", "accept");
-            //set scene to game scene
+            player2=playerRequestingGame;
+            //change scene to gameplay scene
         }else{
             outgoing.setData("response", "deny");
         }
+        
         sendMessage(outgoing);
     }
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
             IAmX=true;
+            player2=incoming.getData("source");
             //change scene to gameplay scene
         }else{
             System.out.println("player 2 denied game request");
@@ -223,10 +226,21 @@ public class Session {
         myTurn=true;
         btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
     }
+    
     private void handleGameOver(Message message) {
+        //add score
         //**ALERT**win msg **play again(GAME_REQ) **home scene.
+        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+        
         String msg=message.getData("line");
-        System.out.println(msg);
+        Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("Play again", ButtonData.NO));
+        alert.showAndWait();
+        if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
+            requestGame(player2);
+            
+        }else{
+            //change scene to home scene
+        }    
     }
     
     public void updatePlayersList(Message message){

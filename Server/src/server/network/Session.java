@@ -175,11 +175,17 @@ public class Session extends Thread{
                     break;
                 case "win" :
                     SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
-                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(new Message(MsgType.GAME_OVER,"line","You lose !"));
+                    Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
+                    lose.setData("x", message.getData("x"));
+                    lose.setData("y", message.getData("y"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
                     break;
                 case "draw":
                     SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
-                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
+                    Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
+                    draw.setData("x", message.getData("x"));
+                    draw.setData("y", message.getData("y"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
                     break;
             }
         }
