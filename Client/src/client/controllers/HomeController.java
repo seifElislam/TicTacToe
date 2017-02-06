@@ -7,6 +7,7 @@ package client.controllers;
 
 
 import client.ClientApp;
+import static client.ClientApp.primaryStage;
 import client.Player;
 import client.network.Session;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -59,6 +61,8 @@ public class HomeController implements Initializable {
     @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); 
     private Stage primaryStage;
     private String opponent;
+    private Alert alert = new Alert(Alert.AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.YES, ButtonType.NO);
+      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -108,5 +112,15 @@ public class HomeController implements Initializable {
             playersData.add(player.getValue());
         });
         allPlayersTable.setItems(playersData);
+    }
+    public boolean showAlert(String playerName){
+        alert = new Alert(AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.YES, ButtonType.NO);
+    
+        if (alert.showAndWait().get() == ButtonType.YES) {
+            ClientApp.primaryStage.setScene(client.ClientApp.game);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

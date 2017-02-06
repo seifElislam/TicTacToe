@@ -193,16 +193,7 @@ public class Session {
         String playerRequestingGame =incoming.getData("source");        
         Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
         System.out.println("client request game");
-//        Alert alert = new Alert(AlertType.CONFIRMATION, playerRequestingGame+" wants to play with you", ButtonType.YES, ButtonType.NO);
-//        alert.showAndWait();
-//        if (alert.getResult() == ButtonType.YES) {
-//            outgoing.setData("response", "accept");
-//            player2=playerRequestingGame;
-//            //change scene to gameplay scene
-//        }else{
-//            outgoing.setData("response", "deny");
-//        }
-        
+        outgoing.setData("response", ClientApp.homeController.showAlert(playerRequestingGame)?"accept":"deny");
         sendMessage(outgoing);
     }
     public void handleResponse(Message incoming){
