@@ -27,6 +27,7 @@ public class ClientApp extends Application {
     public static Scene signUp;
     public static Scene home;
     public static Scene game;
+    public static GameController gameController;
     @Override
     public void start(Stage stage) throws Exception {
         setPrimaryStage(stage);
@@ -55,7 +56,7 @@ public class ClientApp extends Application {
         Parent gameParent = gameLoader.load();
         game = new Scene(gameParent,700,500);
         game.getStylesheets().add(ClientApp.class.getResource("/resources/style/Game.css").toExternalForm());
-        GameController gameController=(GameController)gameLoader.getController();
+        gameController=(GameController)gameLoader.getController();
         
         stage.setTitle("Game");
         stage.setScene(signIn);

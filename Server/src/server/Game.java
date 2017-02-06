@@ -17,11 +17,12 @@ public class Game {
     private final String player2;
     //"currentGame" will store game status
     private final String[][] currentGame ;
-    private int incMove=0;
+    public int incMove;
     public boolean Horizontal = true, Vertical = true, DiagonalOne = true, DiagonalTwo = true;
 
     //class constructor initiates new current game table with 3*3 dimensions
     public Game(String player1,String player2){
+        this.incMove = 0;
         this.player1=player1;
         this.player2=player2;
         currentGame = new String[3][3];

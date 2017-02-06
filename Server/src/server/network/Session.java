@@ -169,8 +169,21 @@ public class Session extends Thread{
     }
      private void handleMove(Message message) {
         if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-            message.setData("gameStatus", game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y"))));
+            switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+                case "gameOn":
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(message);
+                    break;
+                case "win" :
+                    SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(new Message(MsgType.GAME_OVER,"line","You lose !"));
+                    break;
+                case "draw":
+                    SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
+                    break;
+            }
         }
+        
     }
     
     private void pushNotification(){

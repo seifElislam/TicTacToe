@@ -6,7 +6,7 @@
 package client.network;
 
 import assets.*;
-import client.Player;
+import client.*;
 import client.controllers.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +14,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -29,7 +33,12 @@ public class Session {
     private ObjectOutputStream upLink;
     public boolean connected = false;
     private boolean loggedin = false;
-    private boolean myTurn;
+    private boolean IAmX=false;
+    public static boolean myTurn;
+    private Button[][] btns={
+                {ClientApp.gameController.b1,ClientApp.gameController.b2,ClientApp.gameController.b3},
+                {ClientApp.gameController.b4,ClientApp.gameController.b5,ClientApp.gameController.b6},
+                {ClientApp.gameController.b7,ClientApp.gameController.b8,ClientApp.gameController.b9}};
     
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
@@ -145,6 +154,8 @@ public class Session {
                 break;
             case MOVE:
                 handleMove(message);
+            case GAME_OVER:
+                handleGameOver(message);
             default:
                 System.out.println("server sent unhandled message");
                 break;
@@ -177,6 +188,11 @@ public class Session {
     public void respondToRequest(Message incoming){
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
         String playerRequestingGame =incoming.getData("source");        
+//        Alert alert = new Alert(AlertType.CONFIRMATION);
+//                alert.setTitle("Request");
+//                alert.setHeaderText("Game request");
+//                alert.setContentText(playerRequestingGame+" wants to play with you");
+//                alert.showAndWait();
         boolean accept=true;       
         Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
         if(accept){
@@ -189,6 +205,7 @@ public class Session {
     }
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
+            IAmX=true;
             //change scene to gameplay scene
         }else{
             System.out.println("player 2 denied game request");
@@ -202,19 +219,16 @@ public class Session {
         myTurn=false;
     }
     private void handleMove(Message message) {
-        switch (message.getData("gameStatus")){
-            case "gameOn":
-                myTurn=true;
-                break;
-            case "win" :
-                System.out.println("you lose");
-                break;
-            case "draw":
-                System.out.println("draw");
-                break;
-        }
         
+        myTurn=true;
+        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
     }
+    private void handleGameOver(Message message) {
+        //**ALERT**win msg **play again(GAME_REQ) **home scene.
+        String msg=message.getData("line");
+        System.out.println(msg);
+    }
+    
     public void updatePlayersList(Message message){
         //if(!message.getData("username").equals(this.player.getUsername())){
         if(true){
@@ -231,4 +245,6 @@ public class Session {
         }
         System.out.println(message.getType()+" "+message.getData("username")+" "+message.getData("status"));
     }
+
+    
 }
