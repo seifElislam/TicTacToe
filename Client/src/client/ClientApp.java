@@ -29,6 +29,8 @@ public class ClientApp extends Application {
     public static Scene game;
     public static GameController gameController;
     public static HomeController homeController;
+    public static Session session;
+   
     @Override
     public void start(Stage stage) throws Exception {
         setPrimaryStage(stage);
