@@ -5,6 +5,8 @@
  */
 package server.network;
 
+import assets.Message;
+import assets.MsgType;
 import server.*;
 import server.network.Session;
 import model.Player;
@@ -16,6 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import server.network.Session;
+import static server.network.Session.connectedPlayers;
 
 /**
  *
@@ -23,48 +26,62 @@ import server.network.Session;
  */
 public class Server {
     public static HashMap<String,Player> allPlayers = model.Players.getAllPlayers();
-    private final int portNumber;
-    private final int maxConnections;
+    private int portNumber;
     private ServerSocket serverSocket;
     private Socket socket;
-    private boolean running = false;
+    public boolean running = false;
 
-    public Server(int portNumber, int maxConnections){
-        this.portNumber = portNumber;
-        this.maxConnections = maxConnections;
-        running = runServer();
-        if(running){
-            System.out.println("Server started successfully!");
-            for(Map.Entry<String, Player> entry : allPlayers.entrySet()){
-                System.out.println(entry.getValue().getUsername()+" - "+entry.getValue().getStatus());
-            }
-            startCommunication();
-        }else
-            System.out.println("Server failed to start");
+    public Server(){
+//        //this.portNumber = portNumber;
+//        running = runServer();
+//        if(running){
+//            System.out.println("Server started successfully!");
+//            for(Map.Entry<String, Player> entry : allPlayers.entrySet()){
+//                System.out.println(entry.getValue().getUsername()+" - "+entry.getValue().getStatus());
+//            }
+//            startCommunication();
+//        }else
+//            System.out.println("Server failed to start");
     }
-    public boolean runServer(){
+    private boolean runServer(){
         try{
-            serverSocket = new ServerSocket(portNumber, maxConnections);
+            serverSocket = new ServerSocket(portNumber);
             return true;
         }catch(IOException ex){
             return false;
         }
     }
+    public boolean startServer(int portNumber){
+        this.portNumber = portNumber;
+        running = runServer();
+        if(running)
+            startCommunication();
+        return running;
+    }
+    public void stopServer(){
+        running = false;
+        for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
+            Message notification = new Message(MsgType.TERM);
+            session.getValue().SendMessage(notification);
+        }
+        try{
+            serverSocket.close();
+        }catch(IOException ioex){
+            
+        }
+    }
     //TODO move this function to new thread
-    public void startCommunication(){
-    	while(running && Session.connectedPlayers.size()<maxConnections){
-            try{
-                socket = serverSocket.accept();
-                new Session(socket);
-                System.out.print("New client connected @ ");
-                System.out.println(new SimpleDateFormat("yyy/MM/dd HH:mm:ss").format(new Date()));
-                for(Map.Entry<String, Player> entry : allPlayers.entrySet()){
-                    System.out.println(entry.getValue().getUsername()+" - "+entry.getValue().getStatus());
+    private void startCommunication(){
+        new Thread(()->{
+            while(running){
+                try{
+                    socket = serverSocket.accept();
+                    new Session(socket);
+                }catch(IOException ioex){
+                    //error cannot accept connections anymore - limit exceeded
                 }
-            }catch(IOException ioex){
-                //error cannot accept connections anymore - limit exceeded
             }
-    	}
+        }).start();
     }
     
 }

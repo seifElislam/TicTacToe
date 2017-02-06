@@ -22,5 +22,6 @@ public enum MsgType{
     GAME_OVER,
     CHAT,
     ERROR,
+    TERM,
     UNKNOWN
 }
