@@ -25,8 +25,8 @@ public class DBConnection {
               rs=null;
               DriverManager.registerDriver(new com.mysql.jdbc.Driver());
               
-//              con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB", "root", "root");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "R00t_123");
+              con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB", "root", "Noneshallpass");
+          //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "R00t_123");
           } catch (SQLException ex) {
               Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
           }

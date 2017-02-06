@@ -28,6 +28,9 @@ public class ClientApp extends Application {
     public static Scene home;
     public static Scene game;
     public static GameController gameController;
+    public static HomeController homeController;
+    public static Session session;
+   
     @Override
     public void start(Stage stage) throws Exception {
         setPrimaryStage(stage);
@@ -50,6 +53,7 @@ public class ClientApp extends Application {
         Parent homeParent = homeLoader.load();
         home = new Scene(homeParent,700,500);
         home.getStylesheets().add(ClientApp.class.getResource("/resources/style/home.css").toExternalForm());
+        homeController = (HomeController)homeLoader.getController();
         //game
         FXMLLoader gameLoader=new FXMLLoader();
         gameLoader.setLocation(getClass().getResource("/resources/views/Game.fxml"));

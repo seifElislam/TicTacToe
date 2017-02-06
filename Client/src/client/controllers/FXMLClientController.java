@@ -38,13 +38,14 @@ public class FXMLClientController implements Initializable {
     private Stage primaryStage;
     
     @FXML protected void handleSignInButtonAction(ActionEvent event) {
-        Session session = new Session("127.0.0.1", 5555);
-        session.openConnection();
-        if(session.connected){
-            if(session.loginToServer(txtf_userName.getText(), txtf_password.getText())){
+        ClientApp.session = new Session("127.0.0.1", 5555);
+        ClientApp.session.openConnection();
+        if(ClientApp.session.connected){
+            if(ClientApp.session.loginToServer(txtf_userName.getText(), txtf_password.getText())){
 //                primaryStage.hide();
                 primaryStage.setScene(client.ClientApp.home);
                 primaryStage.show();
+                ClientApp.homeController.bindPlayersTable();
             }else{
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("TicTacToe");

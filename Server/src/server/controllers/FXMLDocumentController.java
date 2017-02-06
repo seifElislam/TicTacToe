@@ -13,10 +13,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -39,6 +42,13 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn scoreColumn;
     @FXML
     private ObservableList<Player> data;
+    @FXML private Button key;
+    @FXML int flag=0;
+     @FXML String src="/resources/images/swithon.png";
+     @FXML String src2="/resources/images/swithoff.png";
+    @FXML  Image img = new Image(getClass().getResourceAsStream(src));
+    @FXML  Image img2 = new Image(getClass().getResourceAsStream(src2));
+
 
     /**
      * Initializes the controller class.
@@ -65,9 +75,22 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     protected void handleToggleOnAction(ActionEvent t) {
-        System.out.println("on");
-        addPlayers();
-        tableView.setItems(data);
+        if(flag==0)
+        {
+            key.setGraphic(new ImageView(img));
+            System.out.println("on");
+            addPlayers();
+            tableView.setItems(data);
+            
+            flag=1;
+        }
+        else{
+        
+            System.out.println("off");
+            flag=0;
+            key.setGraphic(new ImageView(img2));
+        }
+        
     }
 
     @FXML
@@ -75,10 +98,10 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("off");
     }
     public void addPlayers(){
+        data.clear();
         Players.getAllPlayers().entrySet().forEach((m) -> {
             data.add(m.getValue());
         }); 
- 
     }
 
 }

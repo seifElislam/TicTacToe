@@ -23,14 +23,22 @@ and open the template in the editor.
 }
 
 .button {
-    -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
     -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-size: 12px;
+    -fx-padding: 10 10 10 10;
+    -fx-margin-Top:50px;
 }
 .button:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+     -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
 }
 .label {
     -fx-font-size: 20px;
