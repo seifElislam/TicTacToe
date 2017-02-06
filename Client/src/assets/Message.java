@@ -22,6 +22,7 @@ public class Message implements Serializable{
     }
     public Message(MsgType type, String key, String value){
         this.type = type;
+        data = new HashMap<String,String>();
         data.put(key, value);
     }
     public void setType(MsgType type){

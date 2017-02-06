@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -192,16 +192,16 @@ public class Session {
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
         String playerRequestingGame =incoming.getData("source");        
         Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
-        
-        Alert alert = new Alert(AlertType.CONFIRMATION, playerRequestingGame+" wants to play with you", ButtonType.YES, ButtonType.NO);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            outgoing.setData("response", "accept");
-            player2=playerRequestingGame;
-            //change scene to gameplay scene
-        }else{
-            outgoing.setData("response", "deny");
-        }
+        System.out.println("client request game");
+//        Alert alert = new Alert(AlertType.CONFIRMATION, playerRequestingGame+" wants to play with you", ButtonType.YES, ButtonType.NO);
+//        alert.showAndWait();
+//        if (alert.getResult() == ButtonType.YES) {
+//            outgoing.setData("response", "accept");
+//            player2=playerRequestingGame;
+//            //change scene to gameplay scene
+//        }else{
+//            outgoing.setData("response", "deny");
+//        }
         
         sendMessage(outgoing);
     }
