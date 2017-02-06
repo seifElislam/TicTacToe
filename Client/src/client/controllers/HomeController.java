@@ -58,6 +58,7 @@ public class HomeController implements Initializable {
     @FXML private String src="/resources/images/o.png";
     @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); 
     private Stage primaryStage;
+    private String opponent;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -73,9 +74,8 @@ public class HomeController implements Initializable {
         playerInfo() ;
     }    
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
-      System.out.println("invite");
-       
-            primaryStage.setScene(client.ClientApp.game);
+//        opponent=getOpponentFromtable;
+        ClientApp.session.requestGame("sara");
 
     };
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
