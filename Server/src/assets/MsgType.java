@@ -19,6 +19,7 @@ public enum MsgType{
     GAME_REQ,
     GAME_RES,
     MOVE,
+    GAME_OVER,
     CHAT,
     ERROR,
     UNKNOWN

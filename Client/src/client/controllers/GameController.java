@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import client.network.Session;
 
 /**
  * FXML Controller class
@@ -29,7 +30,7 @@ public class GameController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
+    @FXML public Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
     @FXML private TextField txt_field;
     @FXML int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
     @FXML String src="/resources/images/x.png";
@@ -52,7 +53,7 @@ public class GameController implements Initializable {
       System.out.println("surrend");
     }
      @FXML protected void handleButton1Action(ActionEvent event) {
-       if(flag1==0)
+       if(flag1==0 && Session.myTurn)
         {
             b1.setGraphic(new ImageView(img));
             
@@ -62,7 +63,7 @@ public class GameController implements Initializable {
 //      
     }
     @FXML protected void handleButton2Action(ActionEvent event) {
-      if(flag2==0)
+      if(flag2==0 && Session.myTurn)
         {
             b2.setGraphic(new ImageView(img));
             flag2=1;
@@ -70,49 +71,49 @@ public class GameController implements Initializable {
       else{}
     }
     @FXML protected void handleButton3Action(ActionEvent event) {
-      if(flag3==0)
+      if(flag3==0 && Session.myTurn)
         {
             b3.setGraphic(new ImageView(img));
             flag3=1;
         }
     }
     @FXML protected void handleButton4Action(ActionEvent event) {
-      if(flag4==0)
+      if(flag4==0 && Session.myTurn)
         {
             b4.setGraphic(new ImageView(img));
             flag4=1;
         }
     }
     @FXML protected void handleButton5Action(ActionEvent event) {
-       if(flag5==0)
+       if(flag5==0 && Session.myTurn)
         {
             b5.setGraphic(new ImageView(img));
             flag5=1;
         }
     }
     @FXML protected void handleButton6Action(ActionEvent event) {
-       if(flag6==0)
+       if(flag6==0 && Session.myTurn)
         {
             b6.setGraphic(new ImageView(img));
             flag6=1;
         }
     }
      @FXML protected void handleButton7Action(ActionEvent event) {
-       if(flag7==0)
+       if(flag7==0 && Session.myTurn)
         {
             b7.setGraphic(new ImageView(img));
             flag7=1;
         }
     }
      @FXML protected void handleButton8Action(ActionEvent event) {
-       if(flag8==0)
+       if(flag8==0 && Session.myTurn)
         {
             b8.setGraphic(new ImageView(img));
             flag8=1;
         }
     }
     @FXML protected void handleButton9Action(ActionEvent event) {
-       if(flag9==0)
+       if(flag9==0 && Session.myTurn)
         {
             b9.setGraphic(new ImageView(img));
             flag9=1;

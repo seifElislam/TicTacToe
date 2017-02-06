@@ -36,9 +36,9 @@ public class ServerApp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Server port: ");
-        int portNumber = scanner.nextInt();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Server port: ");
+        int portNumber = 5555;//scanner.nextInt();
         new Server(portNumber,999);
     }
     

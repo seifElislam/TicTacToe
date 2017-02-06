@@ -7,12 +7,13 @@ package client;
 
 
 import client.network.Session;
-
+import client.controllers.*;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -22,15 +23,43 @@ import javafx.stage.Stage;
 public class ClientApp extends Application {
     
     public static Stage primaryStage ;
-     @Override
+    public static Scene signIn;
+    public static Scene signUp;
+    public static Scene home;
+    public static Scene game;
+    public static GameController gameController;
+    @Override
     public void start(Stage stage) throws Exception {
         setPrimaryStage(stage);
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/views/FXMLClient.fxml"));
 
-        Scene scene = new Scene(root,700,500);
+        //sign in
+        FXMLLoader signInLoader=new FXMLLoader();
+        signInLoader.setLocation(getClass().getResource("/resources/views/FXMLClient.fxml"));
+        Parent signInParent = signInLoader.load();
+        signIn = new Scene(signInParent,700,500);
+        signIn.getStylesheets().add(ClientApp.class.getResource("/resources/style/Login.css").toExternalForm());
+        //sign up
+        FXMLLoader signUpLoader=new FXMLLoader();
+        signUpLoader.setLocation(getClass().getResource("/resources/views/sinup.fxml"));
+        Parent signUpParent = signUpLoader.load();
+        signUp = new Scene(signUpParent,700,500);
+        signUp.getStylesheets().add(ClientApp.class.getResource("/resources/style/signup.css").toExternalForm());
+        //home
+        FXMLLoader homeLoader=new FXMLLoader();
+        homeLoader.setLocation(getClass().getResource("/resources/views/home.fxml"));
+        Parent homeParent = homeLoader.load();
+        home = new Scene(homeParent,700,500);
+        home.getStylesheets().add(ClientApp.class.getResource("/resources/style/home.css").toExternalForm());
+        //game
+        FXMLLoader gameLoader=new FXMLLoader();
+        gameLoader.setLocation(getClass().getResource("/resources/views/Game.fxml"));
+        Parent gameParent = gameLoader.load();
+        game = new Scene(gameParent,700,500);
+        game.getStylesheets().add(ClientApp.class.getResource("/resources/style/Game.css").toExternalForm());
+        gameController=(GameController)gameLoader.getController();
+        
         stage.setTitle("Game");
-        stage.setScene(scene);
-        scene.getStylesheets().add(ClientApp.class.getResource("/resources/style/Login.css").toExternalForm());
+        stage.setScene(signIn);
         stage.show();
         stage.setMinWidth(800);
         stage.setMaxWidth(800);

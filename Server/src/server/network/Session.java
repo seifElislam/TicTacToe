@@ -94,13 +94,15 @@ public class Session extends Thread{
                 break;
             case REGISTER : 
                 playerRegister(message.getData("username"), message.getData("password"),message.getData("fname"),message.getData("lname"),message.getData("picpath"));
-            break;
+                break;
             case GAME_REQ :
                 requestGame(message);
-            break;
+                break;
             case GAME_RES :
                 respondGame(message);
-            break;
+                break;
+            case MOVE:
+                handleMove(message);
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -156,7 +158,7 @@ public class Session extends Thread{
     public void respondGame(Message incoming){
         //handle response from client 2 and forward it to client1
         if(incoming.getData("response").equals("accept")){
-                game=new Game();
+                game=new Game(incoming.getData("destination"),player.getUsername());
                 connectedPlayers.get(incoming.getData("destination")).game=game;
         }
         Message outgoing=new Message(MsgType.GAME_RES,"source",player.getUsername());
@@ -164,6 +166,30 @@ public class Session extends Thread{
         if(connectedPlayers.containsKey(incoming.getData("destination"))){
             connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
         }
+    }
+     private void handleMove(Message message) {
+        if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+            switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+                case "gameOn":
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(message);
+                    break;
+                case "win" :
+                    SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
+                    Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
+                    lose.setData("x", message.getData("x"));
+                    lose.setData("y", message.getData("y"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                    break;
+                case "draw":
+                    SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
+                    Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
+                    draw.setData("x", message.getData("x"));
+                    draw.setData("y", message.getData("y"));
+                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                    break;
+            }
+        }
+        
     }
     
     private void pushNotification(){
