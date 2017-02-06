@@ -67,6 +67,7 @@ public class HomeController implements Initializable {
         colScore.setCellValueFactory(
             new PropertyValueFactory<>("score")
         );
+       
         primaryStage = ClientApp.primaryStage;
         opponentInfo() ;
         playerInfo() ;
