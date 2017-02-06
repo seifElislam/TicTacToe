@@ -75,6 +75,7 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("off");
     }
     public void addPlayers(){
+        data.clear();
         Players.getAllPlayers().entrySet().forEach((m) -> {
             data.add(m.getValue());
         }); 
