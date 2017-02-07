@@ -167,7 +167,7 @@ public class Session extends Thread{
             
             switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                 case "gameOn":
-                    System.out.println(message.getType()+" "+moveNum+moveNum%2);
+//                    System.out.println(message.getType()+" "+moveNum+moveNum%2);
                     if(moveNum%2==0){
                         connectedPlayers.get(game.getPlayer1()).SendMessage(message);
                     }else{
@@ -181,6 +181,8 @@ public class Session extends Thread{
                     lose.setData("x", message.getData("x"));
                     lose.setData("y", message.getData("y"));
                     connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                    game=null;
+                    moveNum=0;
                     break;
                 case "draw":
                     SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
@@ -188,6 +190,8 @@ public class Session extends Thread{
                     draw.setData("x", message.getData("x"));
                     draw.setData("y", message.getData("y"));
                     connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                    game=null;
+                    moveNum=0;
                     break;
             }
         }

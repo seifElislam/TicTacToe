@@ -271,20 +271,30 @@ public class Session {
         
         Platform.runLater(new Runnable(){
            public void run(){
-                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/x.png":"/resources/images/o.png"));
+               if(message.getData("line").equals("You lose !")){
+                   btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+               }
+                System.out.println("last move");
         }});        
         String msg=message.getData("line");
+        
+        
         Platform.runLater(new Runnable(){
             public void run(){
-                    Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("Play again", ButtonData.NO));
+                    Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("cancel", ButtonData.NO));
                     alert.showAndWait();
                     if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
+                        System.out.println(player2);
                         requestGame(player2);
             
                     }else{
-                        //change scene to home scene
+                        ClientApp.primaryStage.setScene(client.ClientApp.home);
                     }    
             }});
+//        player1=null;
+//        player2=null;
+        myTurn=false;
+        IAmX=false;
         
     }
     
