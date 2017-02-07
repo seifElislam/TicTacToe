@@ -14,8 +14,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.application.Platform;
 import javax.management.Notification;
 import server.Game;
+import server.ServerApp;
 import static server.network.Server.allPlayers;
 
 /**
@@ -49,10 +51,12 @@ public class Session extends Thread{
     }
     private void closeConnection(){
         try{
+            connected = false;
             upLink.close();
             downLink.close();
             socket.close();
-            connected = false;
+            Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
+            pushNotification();
         }catch(IOException ioex){
             //error connection already closed
         }
@@ -71,13 +75,14 @@ public class Session extends Thread{
             loginResult.setData("score", String.valueOf(player.getScore()));
             Server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
             this.connectedPlayers.put(player.getUsername(), this);
+            SendMessage(loginResult);
             initConnection();
             pushNotification();
         }else{
             loginResult.setData("signal", MsgSignal.FAILURE);
+            SendMessage(loginResult);
             connected = false;
         }
-        SendMessage(loginResult);
     }
     private void playerLogout(){
         connectedPlayers.remove(this);
@@ -123,7 +128,7 @@ public class Session extends Thread{
                 Message message = (Message)downLink.readObject();
                 MessageHandler(message);
             }catch(IOException ioex){
-                //error server lost connection with client
+                closeConnection();
             }catch(ClassNotFoundException cnfex){
                 //error invalid message sent by client
             }
@@ -205,6 +210,7 @@ public class Session extends Thread{
             notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
             session.getValue().SendMessage(notification);
         }
+        ServerApp.serverController.bindPlayersTable();
     }
     private void initConnection(){
         for(Map.Entry<String, Player> player : allPlayers.entrySet()){

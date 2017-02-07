@@ -64,6 +64,17 @@ public class Session {
             System.out.println("Connection to server failed!");
         }
     }
+    public void closeConnection(){
+        connected = false;
+        try {
+            upLink.close();
+            downLink.close();
+            socket.close();
+            System.out.println("Connection to server closed successfully!");
+        } catch (IOException ex) {
+            System.out.println("Connection to server already closed!");
+        }
+    }
     private void startCommunication(){
         new Thread(() -> {
             while(connected){
@@ -124,29 +135,29 @@ public class Session {
     private void MessageHandler(Message message){
         switch(message.getType()){
             case LOGIN:
-                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-                    System.out.println("login to server succedded");
-                    System.out.println("ID: "+message.getData("id"));
-                    System.out.println("username: "+message.getData("username"));
-                    System.out.println("Fullname: "+message.getData("fullname"));
-                    loggedin = true;
-                }
-                else{
-                    System.out.println("login to server failed");
-                    connected = false;
-                }
+//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
+//                    System.out.println("login to server succedded");
+//                    System.out.println("ID: "+message.getData("id"));
+//                    System.out.println("username: "+message.getData("username"));
+//                    System.out.println("Fullname: "+message.getData("fullname"));
+//                    loggedin = true;
+//                }
+//                else{
+//                    System.out.println("login to server failed");
+//                    connected = false;
+//                }
                 break;    
             case REGISTER:
-                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-                    System.out.println("register  succedded");
-         
-                 
-                  
-                }
-                else{
-                    System.out.println("register failes to server failed");
-                    connected = false;
-                }
+//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
+//                    System.out.println("register  succedded");
+//         
+//                 
+//                  
+//                }
+//                else{
+//                    System.out.println("register failes to server failed");
+//                    connected = false;
+//                }
                 break;
             case INIT:
             case NOTIFY:
@@ -299,20 +310,20 @@ public class Session {
     }
     
     public void updatePlayersList(Message message){
-        //if(!message.getData("username").equals(this.player.getUsername())){
-        if(true){
-            if(message.getType() == MsgType.INIT){
-                Player newPlayer = new Player();
-                newPlayer.setUsername(message.getData("username"));
-                newPlayer.setStatus(message.getData("status"));
-                newPlayer.setScore(Integer.parseInt(message.getData("score")));
-                newPlayer.setPicPath(message.getData("picpath"));
-                allPlayers.put(message.getData("username"), newPlayer);
-            }else if(message.getType() == MsgType.NOTIFY){
-                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+        if(!message.getData("username").equals(this.player.getUsername())){
+            if(true){
+                if(message.getType() == MsgType.INIT){
+                    Player newPlayer = new Player();
+                    newPlayer.setUsername(message.getData("username"));
+                    newPlayer.setStatus(message.getData("status"));
+                    newPlayer.setScore(Integer.parseInt(message.getData("score")));
+                    newPlayer.setPicPath(message.getData("picpath"));
+                    allPlayers.put(message.getData("username"), newPlayer);
+                }else if(message.getType() == MsgType.NOTIFY){
+                    allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+                }
             }
         }
-        System.out.println(message.getType()+" "+message.getData("username")+" "+message.getData("status"));
     }
 
     

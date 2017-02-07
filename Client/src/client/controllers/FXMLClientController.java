@@ -39,9 +39,9 @@ public class FXMLClientController implements Initializable {
     
     @FXML protected void handleSignInButtonAction(ActionEvent event) {
         if(ClientApp.session == null){
-                ClientApp.session = new Session("127.0.0.1", 5555);
-                ClientApp.session.openConnection();
+            ClientApp.session = new Session("127.0.0.1", 5555);
         }
+        ClientApp.session.openConnection();
         if(ClientApp.session.connected){
             if(ClientApp.session.loginToServer(txtf_userName.getText(), txtf_password.getText())){
                 primaryStage.hide();
