@@ -48,6 +48,8 @@ public class FXMLClientController implements Initializable {
                 primaryStage.setScene(client.ClientApp.home);
                 primaryStage.show();
                 ClientApp.homeController.bindPlayersTable();
+                ClientApp.homeController.playerInfo();
+               
             }else{
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("TicTacToe");

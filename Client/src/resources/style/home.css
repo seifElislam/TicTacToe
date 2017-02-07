@@ -25,8 +25,8 @@
     
      -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill:gray;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    -fx-text-fill:white;
+/*    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 .button {
    -fx-background-color: 
@@ -90,22 +90,22 @@
     -fx-font-size: 25px;
    -fx-font-family: "Arial Black";
    -fx-font-weight: bold;
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-fill: white;
+/*   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
 #opponentName{
     -fx-font-size: 25px;
    -fx-font-family: "Arial Black";
    -fx-font-weight: bold;
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-fill: brown;
+/*   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
 #lbl,#playerScore,#opponentScore{
     -fx-font-size: 20px;
    -fx-font-family: "Arial Black";
    -fx-font-weight: bold;
-   -fx-fill: #818181;
-   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   -fx-fill: white;
+/*   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );*/
 }
 #arcade{
     -fx-background-color: 
