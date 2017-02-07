@@ -40,8 +40,8 @@
     
      -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill:gray;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    -fx-text-fill:white;
+/*    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 #send,#surrend {
     -fx-background-color: 

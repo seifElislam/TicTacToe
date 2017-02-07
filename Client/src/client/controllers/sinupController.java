@@ -62,6 +62,7 @@ public class sinupController implements Initializable {
          lastName.setText("");
          massage.setText("new palyer");
        System.out.println(Integer.toString(imglist.getSelectionModel().getSelectedIndex()));
+       System.out.println(Integer.toString(imglist.getSelectionModel().getSelectedIndex()));
         
         try {
 //            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
