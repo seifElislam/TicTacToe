@@ -6,6 +6,7 @@
 package client.controllers;
 
 import client.ClientApp;
+import client.network.Session;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -74,10 +75,26 @@ public class sinupController implements Initializable {
             alert.setContentText("password doesn't match the confirmation!");
             alert.showAndWait();
         }else{
-            primaryStage.hide();
-            primaryStage.setScene(client.ClientApp.home);
-            primaryStage.show();
-            alert.setContentText("registration succeded");
+            if(ClientApp.session == null){
+                ClientApp.session = new Session("127.0.0.1", 5555);
+                ClientApp.session.openConnection();
+            }
+            if(ClientApp.session.connected){
+                boolean regResult = ClientApp.session.signUpToServer(firstName.getText(), lastName.getText(), userName.getText(), userPassword.getText(), "person1.png");
+                if(regResult){
+                    alert.setContentText("Congratulations! you've registered successfully!\nYou will be redirected to login page");
+                    alert.showAndWait();
+                    primaryStage.hide();
+                    primaryStage.setScene(client.ClientApp.signIn);
+                    primaryStage.show();
+                }else{
+                    alert.setContentText("Registration failed! username already existed!");
+                    alert.showAndWait();
+                }
+            }else{
+                alert.setContentText("Cannot establish connection with server");
+                alert.showAndWait();
+            }
         }
         
     }

@@ -130,22 +130,14 @@ public class Session extends Thread{
 
     private void playerRegister(String username, String password,String fname,String lname,String picpath){
         Message result = new Message(MsgType.REGISTER);
-        boolean playerexists = model.Players.playerExisted(username);
-        if(!playerexists)
-        {
-            
-        if(  model.Players.signUp(fname,lname ,username,password, picpath)) 
-            
-        {
-            result.setData("signal", MsgSignal.SUCCESS);
-          
+        if(!model.Players.playerExisted(username)){
+            if(model.Players.signUp(fname,lname ,username,password, picpath)){
+                result.setData("signal", MsgSignal.SUCCESS);
             }
         }
         else{
            result.setData("signal", MsgSignal.FAILURE);}
-        
         SendMessage(result);
-   
     }
     
     public void requestGame(Message incoming){
