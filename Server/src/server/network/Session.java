@@ -49,10 +49,12 @@ public class Session extends Thread{
     }
     private void closeConnection(){
         try{
+            connected = false;
             upLink.close();
             downLink.close();
             socket.close();
-            connected = false;
+            Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
+            pushNotification();
         }catch(IOException ioex){
             //error connection already closed
         }
@@ -71,13 +73,14 @@ public class Session extends Thread{
             loginResult.setData("score", String.valueOf(player.getScore()));
             Server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
             this.connectedPlayers.put(player.getUsername(), this);
+            SendMessage(loginResult);
             initConnection();
             pushNotification();
         }else{
             loginResult.setData("signal", MsgSignal.FAILURE);
+            SendMessage(loginResult);
             connected = false;
         }
-        SendMessage(loginResult);
     }
     private void playerLogout(){
         connectedPlayers.remove(this);
@@ -123,7 +126,7 @@ public class Session extends Thread{
                 Message message = (Message)downLink.readObject();
                 MessageHandler(message);
             }catch(IOException ioex){
-                //error server lost connection with client
+                closeConnection();
             }catch(ClassNotFoundException cnfex){
                 //error invalid message sent by client
             }

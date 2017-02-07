@@ -77,8 +77,8 @@ public class sinupController implements Initializable {
         }else{
             if(ClientApp.session == null){
                 ClientApp.session = new Session("127.0.0.1", 5555);
-                ClientApp.session.openConnection();
             }
+            ClientApp.session.openConnection();
             if(ClientApp.session.connected){
                 boolean regResult = ClientApp.session.signUpToServer(firstName.getText(), lastName.getText(), userName.getText(), userPassword.getText(), "person1.png");
                 if(regResult){
@@ -95,6 +95,7 @@ public class sinupController implements Initializable {
                 alert.setContentText("Cannot establish connection with server");
                 alert.showAndWait();
             }
+            ClientApp.session.closeConnection();
         }
         
     }
