@@ -115,7 +115,7 @@ public class HomeController implements Initializable {
     }
     public boolean showAlert(String playerName){
         alert = new Alert(AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.YES, ButtonType.NO);
-    
+
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.primaryStage.setScene(client.ClientApp.game);
             return true;

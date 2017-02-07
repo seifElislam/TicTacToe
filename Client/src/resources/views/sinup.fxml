@@ -46,7 +46,7 @@
     <Label  text="re-password:"
                GridPane.columnIndex="0" GridPane.rowIndex="3"/>
  
-    <PasswordField fx:id="confirm" 
+    <PasswordField fx:id="confirmPassword" 
                    GridPane.columnIndex="1" GridPane.rowIndex="3"/>
  
     <Label text="First Name:"
