@@ -37,8 +37,8 @@ public class Session {
     private ObjectOutputStream upLink;
     public boolean connected = false;
     private boolean loggedin = false;
-    private boolean IAmX=false;
-    public static boolean myTurn;
+    public boolean IAmX=false;
+    public boolean myTurn;
     private Button[][] btns={
                 {ClientApp.gameController.b1,ClientApp.gameController.b2,ClientApp.gameController.b3},
                 {ClientApp.gameController.b4,ClientApp.gameController.b5,ClientApp.gameController.b6},
@@ -158,10 +158,12 @@ public class Session {
                 break;
             case MOVE:
                 handleMove(message);
+                break;
             case GAME_OVER:
                 handleGameOver(message);
+                break;
             default:
-                System.out.println("server sent unhandled message");
+                System.out.println("server sent unhandled message "+message.getType());
                 break;
         }
     }
@@ -210,7 +212,8 @@ public class Session {
     
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
-            IAmX=true;
+            IAmX=true;         
+            myTurn=true;
             player2=incoming.getData("source");
             Platform.runLater(new Runnable(){
            public void run(){
@@ -221,32 +224,46 @@ public class Session {
         }
     }
     public void makeAMove(String x,String y) {
+        myTurn=false;
         Message message=new Message(MsgType.MOVE);
         message.setData("x", x);
         message.setData("y", y);
         sendMessage(message);
-        myTurn=false;
+        
+        
     }
     private void handleMove(Message message) {
         
         myTurn=true;
-        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+        System.out.println("client recieved a move");
+        Platform.runLater(new Runnable(){
+           public void run(){
+                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/x.png":"/resources/images/o.png"));
+        }});
+        
     }
     
     private void handleGameOver(Message message) {
         //add score
         //**ALERT**win msg **play again(GAME_REQ) **home scene.
-        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
         
+        Platform.runLater(new Runnable(){
+           public void run(){
+                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/x.png":"/resources/images/o.png"));
+        }});        
         String msg=message.getData("line");
-        Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("Play again", ButtonData.NO));
-        alert.showAndWait();
-        if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
-            requestGame(player2);
+        Platform.runLater(new Runnable(){
+            public void run(){
+                    Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("Play again", ButtonData.NO));
+                    alert.showAndWait();
+                    if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
+                        requestGame(player2);
             
-        }else{
-            //change scene to home scene
-        }    
+                    }else{
+                        //change scene to home scene
+                    }    
+            }});
+        
     }
     
     public void updatePlayersList(Message message){

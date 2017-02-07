@@ -30,6 +30,7 @@ public class Session extends Thread{
     private ObjectInputStream downLink;
     private ObjectOutputStream upLink;
     private Game game;
+    private static int moveNum=0;
     
     public Session(Socket socket){
         this.socket = socket;
@@ -103,6 +104,7 @@ public class Session extends Thread{
                 break;
             case MOVE:
                 handleMove(message);
+                break;
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -169,23 +171,33 @@ public class Session extends Thread{
     }
      private void handleMove(Message message) {
         if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+            moveNum++;
+            System.out.println(game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y"))));
             switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                 case "gameOn":
-                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(message);
+                    System.out.println(message.getType()+" "+moveNum+moveNum%2);
+                    if(moveNum%2==0){
+                        connectedPlayers.get(game.getPlayer1()).SendMessage(message);
+                        System.out.println("server send move  "+game.getPlayer1()+" , "+message.getData("x")+message.getData("y"));
+                    }else{
+                        connectedPlayers.get(game.getPlayer2()).SendMessage(message);
+                        System.out.println("server send move 2 "+game.getPlayer2()+" , "+message.getData("x")+message.getData("y"));
+                    }
+                    
                     break;
                 case "win" :
                     SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
                     Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
                     lose.setData("x", message.getData("x"));
                     lose.setData("y", message.getData("y"));
-                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                    connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
                     break;
                 case "draw":
                     SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
                     Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
                     draw.setData("x", message.getData("x"));
                     draw.setData("y", message.getData("y"));
-                    connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                    connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
                     break;
             }
         }
