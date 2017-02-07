@@ -60,6 +60,7 @@ public class sinupController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         //validation here
+        System.out.println("pic");
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Registration error!");
         if( userName.getText().equals("") || 
