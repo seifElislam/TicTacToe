@@ -34,6 +34,7 @@ public class ServerApp extends Application {
         serverLoader.setLocation(getClass().getResource("/resources/FXMLDocument.fxml"));
         Parent serverParent = serverLoader.load();
         serverScene = new Scene(serverParent);
+        serverController = (FXMLDocumentController)serverLoader.getController();
         stage.setTitle("TicTacToe Server");
         stage.setScene(serverScene);
         stage.show();

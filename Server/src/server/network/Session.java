@@ -14,8 +14,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.application.Platform;
 import javax.management.Notification;
 import server.Game;
+import server.ServerApp;
 import static server.network.Server.allPlayers;
 
 /**
@@ -204,6 +206,7 @@ public class Session extends Thread{
             notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
             session.getValue().SendMessage(notification);
         }
+        ServerApp.serverController.bindPlayersTable();
     }
     private void initConnection(){
         for(Map.Entry<String, Player> player : allPlayers.entrySet()){
