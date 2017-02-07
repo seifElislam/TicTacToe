@@ -6,14 +6,21 @@
 package client.controllers;
 
 
+
 import client.ClientApp;
+
+import static client.ClientApp.session;
+
 import static client.ClientApp.primaryStage;
+
 import client.Player;
 import client.network.Session;
 import java.io.IOException;
 import java.net.URL;
 
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,8 +64,11 @@ public class HomeController implements Initializable {
     @FXML private TableColumn colScore;
     private ObservableList<Player> playersData = FXCollections.observableArrayList();
     @FXML private ImageView imgView;
-    @FXML private String src="/resources/images/o.png";
-    @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); 
+    
+    @FXML public ImageView playerImgView;
+    @FXML public ImageView opponentImgView;
+    @FXML public Image playerImg;
+    @FXML public Image opponentImg;
     private Stage primaryStage;
     private String opponent;
     public Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "someone"+" wants to play with you", ButtonType.YES, ButtonType.NO);
@@ -66,6 +76,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       
         colUsername.setCellValueFactory(
             new PropertyValueFactory<>("username")
         );
@@ -74,12 +85,29 @@ public class HomeController implements Initializable {
         );
        
         primaryStage = ClientApp.primaryStage;
-        opponentInfo() ;
-        playerInfo() ;
-    }    
+        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
+
+
+        
+    }   
+     
+     private class RowSelectChangeListener implements ChangeListener {
+        
+        
+
+        @Override
+        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+            System.out.println("seif");
+            opponentInfo();
+        }
+    };
+
+     
+     
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
 //        opponent=getOpponentFromtable;
         ClientApp.session.requestGame("sara");
+        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
@@ -96,24 +124,36 @@ public class HomeController implements Initializable {
     }
    
     @FXML protected void playerInfo() {
-      playerName.setText("seif eleslam");
-      playerScore.setText("1000");
+      playerName.setText(ClientApp.session.player.getUsername());
+      playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
+     playerImg=new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
+      ClientApp.homeController.playerImgView.setImage(playerImg);
 
     }
     @FXML protected void opponentInfo() {
-      opponentName.setText("ehab gamal");
-     opponentScore.setText("1000");
+//      opponentName.setText("ehab gamal");
+//     opponentScore.setText("1000");
+    opponentName.setText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
+      opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
+       opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
+        opponentImgView.setImage(opponentImg);
+          
+
+        
 
     }
     public void bindPlayersTable(){
         //playersData.clear();
+        System.out.println(ClientApp.session.player.getPicPath());
+        
+        
+         
         Session.allPlayers.entrySet().forEach((player) -> {
             playersData.add(player.getValue());
         });
         allPlayersTable.setItems(playersData);
     }
     public void showAlert(String playerName){
-        
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
             ClientApp.primaryStage.setScene(client.ClientApp.game);

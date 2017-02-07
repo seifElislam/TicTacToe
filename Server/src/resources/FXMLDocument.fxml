@@ -42,6 +42,7 @@
             </TableColumn>
             <TableColumn fx:id="scoreColumn" text="Score" prefWidth="60">
             </TableColumn>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="60"></TableColumn>
         </columns>    
     </TableView>
     

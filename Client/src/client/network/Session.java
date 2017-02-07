@@ -28,7 +28,7 @@ import javafx.scene.image.ImageView;
  */
 public class Session {
     public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
-    private Player player;
+    public Player player;
     private String player2;
     private Socket socket;
     private final int portNumber;

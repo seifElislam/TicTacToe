@@ -34,7 +34,7 @@ public class Player {
     public void setPassword(String password) {
         this.password = password;
     }
-    private String picPath;
+//    private String picPath;
     
     public Player(){
         
@@ -67,7 +67,7 @@ public class Player {
         return fname+" "+lname;
     }
     public void setPicPath(String picPath){
-        this.picPath = picPath;
+        this.picpath = picPath;
     }
     public String getPicPath(){
         return picpath;
