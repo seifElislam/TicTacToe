@@ -44,6 +44,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn scoreColumn;
     @FXML
+    private TableColumn statusColumn;
+    @FXML
     private ObservableList<Player> data;
     private ObservableList<Player> playersList = FXCollections.observableArrayList();
     @FXML private Button key;
@@ -70,6 +72,9 @@ public class FXMLDocumentController implements Initializable {
         );
         scoreColumn.setCellValueFactory(
             new PropertyValueFactory<>("score")
+        );
+        statusColumn.setCellValueFactory(
+            new PropertyValueFactory<>("status")
         );
         
         data = FXCollections.observableArrayList();

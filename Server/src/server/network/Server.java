@@ -31,18 +31,7 @@ public class Server {
     private Socket socket;
     public boolean running = false;
 
-    public Server(){
-//        //this.portNumber = portNumber;
-//        running = runServer();
-//        if(running){
-//            System.out.println("Server started successfully!");
-//            for(Map.Entry<String, Player> entry : allPlayers.entrySet()){
-//                System.out.println(entry.getValue().getUsername()+" - "+entry.getValue().getStatus());
-//            }
-//            startCommunication();
-//        }else
-//            System.out.println("Server failed to start");
-    }
+    public Server(){}
     private boolean runServer(){
         try{
             serverSocket = new ServerSocket(portNumber);
@@ -70,7 +59,6 @@ public class Server {
             
         }
     }
-    //TODO move this function to new thread
     private void startCommunication(){
         new Thread(()->{
             while(running){
@@ -83,5 +71,4 @@ public class Server {
             }
         }).start();
     }
-    
 }
