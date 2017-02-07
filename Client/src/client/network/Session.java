@@ -178,15 +178,34 @@ public class Session {
         }
     }
 
-    public void signUpToServer(String fname, String lname, String username, String password, String picpath) {
-     Message message = new Message(MsgType.REGISTER);
+    public boolean signUpToServer(String fname, String lname, String username, String password, String picpath) {
+        boolean regResult = false;
+        Message message = new Message(MsgType.REGISTER);
         message.setData("username", username);
         message.setData("password", password);
         message.setData("fname",fname);
         message.setData("lname",lname);
         message.setData("picpath",picpath);
-       
-        sendMessage(message);
+        if(connected){
+            sendMessage(message);
+            while(connected){
+                try{
+                    Message response = (Message)downLink.readObject();
+                    if(response.getType() == MsgType.REGISTER){
+                        if(response.getData("signal").equals(MsgSignal.SUCCESS)){
+                            regResult = true;
+                        }
+                        break;
+                    }else
+                        MessageHandler(response);
+                }catch(IOException ioex){
+                    
+                }catch(ClassNotFoundException cnfex){
+                    
+                }
+            }
+        }
+        return regResult;
     }
     public void requestGame(String secondPlayerName){
         //**ALERT** waiting for other player response with cancel button

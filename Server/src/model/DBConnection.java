@@ -22,13 +22,10 @@ public class DBConnection {
     public Connection Connection(){
     
           try {
-              rs=null;
-              DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-              
-
-//              con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB", "root", "root");
-          con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "");
-
+                rs=null;
+                DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+                con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "root");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "");
           } catch (SQLException ex) {
               Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
           }
