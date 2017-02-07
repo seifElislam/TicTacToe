@@ -6,6 +6,7 @@
 package server.controllers;
 
 import model.*;
+import server.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -13,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,13 +44,15 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TableColumn scoreColumn;
     @FXML
+    private TableColumn statusColumn;
+    @FXML
     private ObservableList<Player> data;
+    private ObservableList<Player> playersList = FXCollections.observableArrayList();
     @FXML private Button key;
-    @FXML int flag=0;
-     @FXML String src="/resources/images/swithon.png";
-     @FXML String src2="/resources/images/swithoff.png";
-    @FXML  Image img = new Image(getClass().getResourceAsStream(src));
-    @FXML  Image img2 = new Image(getClass().getResourceAsStream(src2));
+    //@FXML String src="/resources/images/swithon.png";
+    //@FXML String src2="/resources/images/swithoff.png";
+    @FXML  Image switchOn = new Image(getClass().getResourceAsStream("/resources/images/swithon.png"));
+    @FXML  Image switchOff = new Image(getClass().getResourceAsStream("/resources/images/swithoff.png"));
 
 
     /**
@@ -68,6 +73,9 @@ public class FXMLDocumentController implements Initializable {
         scoreColumn.setCellValueFactory(
             new PropertyValueFactory<>("score")
         );
+        statusColumn.setCellValueFactory(
+            new PropertyValueFactory<>("status")
+        );
         
         data = FXCollections.observableArrayList();
         
@@ -75,24 +83,26 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     protected void handleToggleOnAction(ActionEvent t) {
-        if(flag==0)
+        if(!ServerApp.server.running)
         {
-            key.setGraphic(new ImageView(img));
-            System.out.println("on");
-            addPlayers();
-            tableView.setItems(data);
-            
-            flag=1;
-        }
-        else{
-        
-            System.out.println("off");
-            flag=0;
-            key.setGraphic(new ImageView(img2));
+            if(ServerApp.server.startServer(5555)){
+                key.setGraphic(new ImageView(switchOn));
+                bindPlayersTable();
+            }else{
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error starting the server");
+                alert.setContentText("Cannot start the server, try using another port number");
+                alert.showAndWait();
+            }
+        }else{
+            ServerApp.server.stopServer();
+            bindPlayersTable();
+            key.setGraphic(new ImageView(switchOff));
         }
         
     }
 
+<<<<<<< HEAD
     @FXML
     protected void handleToggleOffAction(ActionEvent t) {
         System.out.println("off");
@@ -104,6 +114,13 @@ public class FXMLDocumentController implements Initializable {
             data.add(m.getValue());
         }); 
 
+=======
+    public void bindPlayersTable(){
+        playersList.clear();
+        ServerApp.server.allPlayers.entrySet().forEach((player) -> {
+            playersList.add(player.getValue());
+        });
+        tableView.setItems(playersList);
+>>>>>>> 1d3b354bdd4c6446207b1f1fc8e8adb60712cd6f
     }
-
 }

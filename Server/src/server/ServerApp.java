@@ -22,6 +22,7 @@ import server.network.Server;
  * @author Ehab
  */
 public class ServerApp extends Application {
+    public static Server server = new Server();
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/resources/FXMLDocument.fxml"));
@@ -36,10 +37,6 @@ public class ServerApp extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Server port: ");
-        int portNumber = 5555;//scanner.nextInt();
-        new Server(portNumber,999);
     }
     
 }

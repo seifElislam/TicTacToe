@@ -1,9 +1,25 @@
 package server;
 
+import assets.Message;
+import assets.MsgType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import model.Player;
+import assets.*;
+import assets.MsgType;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+import javax.management.Notification;
+import server.Game;
+import server.network.Session;
+
+
 
 class Point {
 
@@ -31,13 +47,17 @@ class PointAndScore {
     }
 }
 
-class Board {
+public class AIGame {
 
     List<Point> availablePoints;
     Scanner scan = new Scanner(System.in);
     int[][] board = new int[3][3];
+    String player=null;
 
-    public Board() {
+    public AIGame() {
+    }
+    public AIGame(String name) {
+        player=name;
     }
 
     public boolean isGameOver() {
@@ -98,6 +118,39 @@ class Board {
         int y = scan.nextInt();
         Point point = new Point(x, y);
         placeAMove(point, 2);
+    }
+
+    public String takeMove(int x, int y) {
+        String stats = null;
+        Point point = new Point(x, y);
+        this.placeAMove(point, 2);
+
+        this.minimax(0, 1); //compter's trn  1 = compter 2 = user
+
+        placeAMove(this.computersMove, 1);
+        //b.displayBoard();
+
+        if (this.hasXWon()) {
+            stats = "pcWon";
+        } else if (this.hasOWon()) {
+            stats = "playerWon"; //Can't happen
+        } else if (this.isGameOver() && !this.hasXWon()) {
+            stats = "draw";
+
+        } else {
+            stats = "gameon";
+
+            int x1 = this.computersMove.x;
+            int y1 = this.computersMove.y;
+            System.out.println(x1 + " " + y1);
+            Message message=new Message(MsgType.MOVE);
+        message.setData("x", Integer.toString(x1));
+        message.setData("y", Integer.toString(y1));
+        Session.connectedPlayers.get(player).SendMessage(message); //5ali al sendmessage pblic fel session
+
+        }
+
+        return stats;
     }
 
     public void displayBoard() {
@@ -167,44 +220,37 @@ class Board {
     }
 }
 
-public class AIGame {
-
-    public static void main(String[] args) {
-        Board b = new Board();
-//        Random rand = new Random();
-
-        b.displayBoard();
-
-//        System.out.println("Select turn:\n\n1. Computer 2. User: ");
-////        int choice = b.scan.nextInt();
-//        if(choice == 1){
-//            Point p = new Point(rand.nextInt(3), rand.nextInt(3));
-//            b.placeAMove(p, 1);
+//public class AIGam {
+//
+//    public static void main(String[] args) {
+//        AIGame b = new AIGame();
+////        Random rand = new Random();
+//
+//        b.displayBoard();
+//
+////        System.out.println("Select turn:\n\n1. Computer 2. User: ");
+//////        int choice = b.scan.nextInt();
+////        if(choice == 1){
+////            Point p = new Point(rand.nextInt(3), rand.nextInt(3));
+////            b.placeAMove(p, 1);
+////            b.displayBoard();
+//////        }
+//        while (!b.isGameOver()) {
+//
+//            String stats = null;
+//            System.out.println("Your move: ");
+//            int x = b.scan.nextInt();
+//            int y = b.scan.nextInt();
+//            stats = b.takeMove(x, y);
+//
+//            System.out.println(stats);
 //            b.displayBoard();
-////        }
-        while (!b.isGameOver()) {
-            //System.out.println("Your move: ");
-
-            //Point userMove = new Point(b.scan.nextInt(), b.scan.nextInt());
-            //  b.placeAMove(userMove, 2); //2 for O and O is the user
-            b.takeHumanInput();
-            b.displayBoard();
-            if (b.isGameOver()) {
-                break;
-            }
-
-            b.minimax(0, 1); //compter's trn  1 = compter 2 = user
-
-            b.placeAMove(b.computersMove, 1);
-            b.displayBoard();
-        }
-        if (b.hasXWon()) {
-            System.out.println("Unfortunately, you lost!");
-        } else if (b.hasOWon()) {
-            System.out.println("You win!"); //Can't happen
-        } else {
-            System.out.println("It's a draw!");
-            
-        }
-    }
-}
+//            //Point userMove = new Point(b.scan.nextInt(), b.scan.nextInt());
+//            //  b.placeAMove(userMove, 2); //2 for O and O is the user
+////            b.takeHumanInput();
+////            b.displayBoard();
+////           
+//
+//        }
+//    }
+//}

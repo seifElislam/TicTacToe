@@ -108,7 +108,7 @@ public class Session extends Thread{
                 break;
         }
     }
-    private void SendMessage(Message message){
+    public void SendMessage(Message message){
         try{
             this.upLink.writeObject(message);
         }catch(IOException ioex){

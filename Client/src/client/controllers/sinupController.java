@@ -19,6 +19,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -44,6 +46,8 @@ public class sinupController implements Initializable {
     @FXML
     private TextField userPassword = new TextField();
     @FXML
+    private TextField confirmPassword = new TextField();
+    @FXML
     private TextField firstName = new TextField();
     @FXML
     private TextField lastName = new TextField();
@@ -56,48 +60,27 @@ public class sinupController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         //validation here
-        userName.setText("");
-         userPassword.setText("");
-         firstName.setText("");
-         lastName.setText("");
-         massage.setText("new palyer");
-       System.out.println(Integer.toString(imglist.getSelectionModel().getSelectedIndex()));
-       System.out.println(Integer.toString(imglist.getSelectionModel().getSelectedIndex()));
-        
-        try {
-//            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
-            Parent homePageParent = FXMLLoader.load(getClass().getResource("/resources/views/home.fxml"));
-            Scene homeScene = new Scene(homePageParent);
-//            primaryStage.hide();
-            primaryStage.setScene(homeScene);
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Registration error!");
+        if( userName.getText().equals("") || 
+            userPassword.getText().equals("") ||
+            confirmPassword.getText().equals("") || 
+            firstName.getText().equals("") ||
+            lastName.getText().equals("") ){
+            alert.setContentText("Please complete all your information!");
+            alert.showAndWait();
+            alert.showAndWait();
+        }else if(!userPassword.getText().equals(confirmPassword.getText())){
+            alert.setContentText("password doesn't match the confirmation!");
+            alert.showAndWait();
+        }else{
+            primaryStage.hide();
+            primaryStage.setScene(client.ClientApp.home);
             primaryStage.show();
-        } catch (IOException ex) {
-            System.out.println("Error done with an exception");
-//            Logger.getLogger(sinupController.class.getName()).log(Level.SEVERE, null, ex);    
-            ex.printStackTrace();
-
+            alert.setContentText("registration succeded");
         }
         
     }
-    
-    @FXML
-//    private void selectUserPic(ActionEvent event){
-//        FileChooser filechooser = new FileChooser();
-//                filechooser.setTitle("Open Resource File");
-//                filechooser.getInitialDirectory();
-//                FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG Images", "*.png");
-//                FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Jpeg Images", "*.jpg");
-//                filechooser.getExtensionFilters().addAll(jpgFilter , pngFilter);
-//                File file = filechooser.showOpenDialog(new Stage());
-//                if(file != null){
-////                    write the rest code here 
-//
-//                    String path = file.getAbsolutePath();
-//                    Image image = new Image(file.toURI().toString());
-//                    userPic.setImage(image);
-//                    
-//                }
-//    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
