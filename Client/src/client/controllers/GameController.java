@@ -35,7 +35,7 @@ public class GameController implements Initializable {
     @FXML private TextField txt_field;
     @FXML int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
     @FXML public String src;
-    @FXML  Image img;
+    @FXML public Image img;
     @FXML private Label player1Name,player2Name,massge,time;
     @FXML private TextArea txt_area;
     @Override
@@ -43,8 +43,8 @@ public class GameController implements Initializable {
         // TODO
         player1Name.setText("seif");
         player2Name.setText("ehab");
-        src="/resources/images/x.png";//:"/resources/images/o.png";
-        img = new Image(getClass().getResourceAsStream(src));
+        //src="/resources/images/x.png";//:"/resources/images/o.png";
+        
     }   
     @FXML protected void handleButton_send_Action(ActionEvent event) {
       System.out.println("send");

@@ -102,25 +102,13 @@ public class FXMLDocumentController implements Initializable {
         
     }
 
-<<<<<<< HEAD
-    @FXML
-    protected void handleToggleOffAction(ActionEvent t) {
-        System.out.println("off");
-    }
-    public void addPlayers(){
 
-        data.clear();
-        Players.getAllPlayers().entrySet().forEach((m) -> {
-            data.add(m.getValue());
-        }); 
-
-=======
     public void bindPlayersTable(){
         playersList.clear();
         ServerApp.server.allPlayers.entrySet().forEach((player) -> {
             playersList.add(player.getValue());
         });
         tableView.setItems(playersList);
->>>>>>> 1d3b354bdd4c6446207b1f1fc8e8adb60712cd6f
+
     }
 }

@@ -157,6 +157,7 @@ public class HomeController implements Initializable {
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
             ClientApp.primaryStage.setScene(client.ClientApp.game);
+            ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/o.png"));
         }else{
             ClientApp.session.sendResponse(false);
         }

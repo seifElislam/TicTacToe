@@ -172,7 +172,7 @@ public class Session extends Thread{
      private void handleMove(Message message) {
         if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
             moveNum++;
-            System.out.println(game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y"))));
+            
             switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                 case "gameOn":
                     System.out.println(message.getType()+" "+moveNum+moveNum%2);

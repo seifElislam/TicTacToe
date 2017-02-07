@@ -20,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -218,6 +219,7 @@ public class Session {
             Platform.runLater(new Runnable(){
            public void run(){
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
+                ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/x.png"));
            }});
         }else{
             System.out.println("player 2 denied game request");
@@ -237,8 +239,8 @@ public class Session {
         myTurn=true;
         System.out.println("client recieved a move");
         Platform.runLater(new Runnable(){
-           public void run(){
-                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/x.png":"/resources/images/o.png"));
+            public void run(){
+                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
         }});
         
     }
