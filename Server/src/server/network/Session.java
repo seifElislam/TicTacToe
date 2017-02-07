@@ -178,10 +178,8 @@ public class Session extends Thread{
                     System.out.println(message.getType()+" "+moveNum+moveNum%2);
                     if(moveNum%2==0){
                         connectedPlayers.get(game.getPlayer1()).SendMessage(message);
-                        System.out.println("server send move  "+game.getPlayer1()+" , "+message.getData("x")+message.getData("y"));
                     }else{
                         connectedPlayers.get(game.getPlayer2()).SendMessage(message);
-                        System.out.println("server send move 2 "+game.getPlayer2()+" , "+message.getData("x")+message.getData("y"));
                     }
                     
                     break;

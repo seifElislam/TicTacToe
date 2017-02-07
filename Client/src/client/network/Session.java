@@ -30,6 +30,7 @@ import javafx.scene.image.ImageView;
 public class Session {
     public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
     public Player player;
+    private String player1;
     private String player2;
     private Socket socket;
     private final int portNumber;
@@ -194,18 +195,18 @@ public class Session {
     }
     public void respondToRequest(Message incoming){
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
-        player2=incoming.getData("source");        
+        player1=incoming.getData("source");        
 //        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
 //        System.out.println("client request game");
         Platform.runLater(new Runnable(){
            public void run(){
-               ClientApp.homeController.showAlert(player2);
+               ClientApp.homeController.showAlert(player1);
            }});
 //        outgoing.setData("response","accept");
 //        sendMessage(outgoing);
     }
     public void sendResponse(boolean response){
-        Message outgoing=new Message(MsgType.GAME_RES,"destination",player2);
+        Message outgoing=new Message(MsgType.GAME_RES,"destination",player1);
         outgoing.setData("response",response?"accept":"deny");
         sendMessage(outgoing);
         

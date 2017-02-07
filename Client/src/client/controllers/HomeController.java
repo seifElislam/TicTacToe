@@ -71,7 +71,6 @@ public class HomeController implements Initializable {
     @FXML public Image opponentImg;
     private Stage primaryStage;
     private String opponent;
-    public Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "someone"+" wants to play with you", ButtonType.YES, ButtonType.NO);
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,7 +105,7 @@ public class HomeController implements Initializable {
      
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
 //        opponent=getOpponentFromtable;
-        ClientApp.session.requestGame("sara");
+        ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
@@ -154,6 +153,7 @@ public class HomeController implements Initializable {
         allPlayersTable.setItems(playersData);
     }
     public void showAlert(String playerName){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.NO, ButtonType.YES);
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
             ClientApp.primaryStage.setScene(client.ClientApp.game);
