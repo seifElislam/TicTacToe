@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.HashMap;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -190,17 +191,31 @@ public class Session {
     }
     public void respondToRequest(Message incoming){
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
-        String playerRequestingGame =incoming.getData("source");        
-        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
-        System.out.println("client request game");
-        outgoing.setData("response", ClientApp.homeController.showAlert(playerRequestingGame)?"accept":"deny");
-        sendMessage(outgoing);
+        player2=incoming.getData("source");        
+//        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
+//        System.out.println("client request game");
+        Platform.runLater(new Runnable(){
+           public void run(){
+               ClientApp.homeController.showAlert(player2);
+           }});
+//        outgoing.setData("response","accept");
+//        sendMessage(outgoing);
     }
+    public void sendResponse(boolean response){
+        Message outgoing=new Message(MsgType.GAME_RES,"destination",player2);
+        outgoing.setData("response",response?"accept":"deny");
+        sendMessage(outgoing);
+        
+    }
+    
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
             IAmX=true;
             player2=incoming.getData("source");
-            //change scene to gameplay scene
+            Platform.runLater(new Runnable(){
+           public void run(){
+                ClientApp.primaryStage.setScene(client.ClientApp.game);
+           }});
         }else{
             System.out.println("player 2 denied game request");
         }
