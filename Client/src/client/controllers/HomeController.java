@@ -61,7 +61,7 @@ public class HomeController implements Initializable {
     @FXML private Image playerImg= new Image(getClass().getResourceAsStream(src)); 
     private Stage primaryStage;
     private String opponent;
-    private Alert alert = new Alert(Alert.AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.YES, ButtonType.NO);
+    public Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "someone"+" wants to play with you", ButtonType.YES, ButtonType.NO);
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -91,7 +91,6 @@ public class HomeController implements Initializable {
     }
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
       System.out.println("arcade");
-     
             primaryStage.setScene(client.ClientApp.game);
     
     }
@@ -113,14 +112,13 @@ public class HomeController implements Initializable {
         });
         allPlayersTable.setItems(playersData);
     }
-    public boolean showAlert(String playerName){
-        alert = new Alert(AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.YES, ButtonType.NO);
-    
+    public void showAlert(String playerName){
+        
         if (alert.showAndWait().get() == ButtonType.YES) {
+            ClientApp.session.sendResponse(true);
             ClientApp.primaryStage.setScene(client.ClientApp.game);
-            return true;
         }else{
-            return false;
+            ClientApp.session.sendResponse(false);
         }
     }
 }
