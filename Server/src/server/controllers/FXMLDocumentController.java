@@ -102,11 +102,13 @@ public class FXMLDocumentController implements Initializable {
         
     }
 
+
     public void bindPlayersTable(){
         playersList.clear();
         ServerApp.server.allPlayers.entrySet().forEach((player) -> {
             playersList.add(player.getValue());
         });
         tableView.setItems(playersList);
+
     }
 }

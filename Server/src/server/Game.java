@@ -17,7 +17,7 @@ public class Game {
     private final String player2;
     //"currentGame" will store game status
     private final String[][] currentGame ;
-    public int incMove;
+    public  int incMove;
     public boolean Horizontal = true, Vertical = true, DiagonalOne = true, DiagonalTwo = true;
 
     //class constructor initiates new current game table with 3*3 dimensions
@@ -87,19 +87,19 @@ public class Game {
     }
     
 
-    public static void main(String[] args) {
-        //when game starts between 2 players a game obj is created
-        Game game=new Game("x","o");
-        game.validateMove(game.player1, 0, 1);
-        game.validateMove(game.player2, 0, 0);
-        game.validateMove(game.player1, 0, 2);
-        game.validateMove(game.player2, 1, 1);
-        game.validateMove(game.player1, 2, 1);
-        game.validateMove(game.player2, 1, 2);
-        game.validateMove(game.player1, 2, 0);
-        game.validateMove(game.player2, 1, 0);
-        game.validateMove(game.player1, 2, 2);
-        
-    }
+//    public static void main(String[] args) {
+//        //when game starts between 2 players a game obj is created
+//        Game game=new Game("x","o");
+//        game.validateMove(game.player1, 0, 1);
+//        game.validateMove(game.player2, 0, 0);
+//        game.validateMove(game.player1, 0, 2);
+//        game.validateMove(game.player2, 1, 1);
+//        game.validateMove(game.player1, 2, 1);
+//        game.validateMove(game.player2, 1, 2);
+//        game.validateMove(game.player1, 2, 0);
+//        game.validateMove(game.player2, 1, 0);
+//        game.validateMove(game.player1, 2, 2);
+//        
+//    }
     
 }

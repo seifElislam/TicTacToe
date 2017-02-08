@@ -96,12 +96,29 @@ public class Players {
         }
         return validAuth;
     }
-    public static boolean updateScore(String username, int score) {
+    public static boolean updateScoreWin(String username) {
         try {
             Connection conn = Obj.Connection();
             Statement stmt = conn.createStatement();
-            String queryString = "UPDATE `players` SET `score`='" + score + "' WHERE username = '" + username + "' ";
-            stmt.executeQuery(queryString);
+            String queryString = "UPDATE `players` SET `score`= score+10  WHERE username = '" + username + "' ";
+            
+            stmt.executeUpdate(queryString);
+            stmt.close();
+            Obj.CloseConnection(conn);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Players.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+       public static boolean updateScoreDraw(String username) {
+        try {
+            Connection conn = Obj.Connection();
+            Statement stmt = conn.createStatement();
+            String queryString = "UPDATE `players` SET `score`= score+5  WHERE username = '" + username + "' ";
+            
+            stmt.executeUpdate(queryString);
             stmt.close();
             Obj.CloseConnection(conn);
             return true;

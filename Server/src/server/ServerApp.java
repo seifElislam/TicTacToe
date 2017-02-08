@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.util.Scanner;
+import server.controllers.FXMLDocumentController;
 import server.network.Server;
 
 /**
@@ -23,12 +24,19 @@ import server.network.Server;
  */
 public class ServerApp extends Application {
     public static Server server = new Server();
+    public static Stage primaryStage ;
+    public static Scene serverScene;
+    public static FXMLDocumentController serverController;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/FXMLDocument.fxml"));
-        Scene scene = new Scene(root);
-        stage.setTitle("Game Server");
-        stage.setScene(scene);
+        FXMLLoader serverLoader = new FXMLLoader();
+        serverLoader.setLocation(getClass().getResource("/resources/FXMLDocument.fxml"));
+        Parent serverParent = serverLoader.load();
+        serverScene = new Scene(serverParent);
+        serverController = (FXMLDocumentController)serverLoader.getController();
+        stage.setTitle("TicTacToe Server");
+        stage.setScene(serverScene);
         stage.show();
     }
 

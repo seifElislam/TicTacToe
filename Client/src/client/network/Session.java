@@ -20,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -29,7 +30,8 @@ import javafx.scene.image.ImageView;
 public class Session {
     public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
     public Player player;
-    private String player2;
+    private  String player1;
+    private  String  player2;
     private Socket socket;
     private final int portNumber;
     private final String ipAddress;
@@ -37,12 +39,17 @@ public class Session {
     private ObjectOutputStream upLink;
     public boolean connected = false;
     private boolean loggedin = false;
-    private boolean IAmX=false;
-    public static boolean myTurn;
+    public boolean IAmX=false;
+    public boolean myTurn;
     private Button[][] btns={
                 {ClientApp.gameController.b1,ClientApp.gameController.b2,ClientApp.gameController.b3},
                 {ClientApp.gameController.b4,ClientApp.gameController.b5,ClientApp.gameController.b6},
                 {ClientApp.gameController.b7,ClientApp.gameController.b8,ClientApp.gameController.b9}};
+//    private int[][] btnFlags={
+//                {ClientApp.gameController.flag1,ClientApp.gameController.flag2,ClientApp.gameController.flag3},
+//                {ClientApp.gameController.flag4,ClientApp.gameController.flag5,ClientApp.gameController.flag6},
+//                {ClientApp.gameController.flag7,ClientApp.gameController.flag8,ClientApp.gameController.flag9}};
+//    
     
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
@@ -60,6 +67,17 @@ public class Session {
         } catch (IOException ex) {
             connected = false;
             System.out.println("Connection to server failed!");
+        }
+    }
+    public void closeConnection(){
+        connected = false;
+        try {
+            upLink.close();
+            downLink.close();
+            socket.close();
+            System.out.println("Connection to server closed successfully!");
+        } catch (IOException ex) {
+            System.out.println("Connection to server already closed!");
         }
     }
     private void startCommunication(){
@@ -122,29 +140,29 @@ public class Session {
     private void MessageHandler(Message message){
         switch(message.getType()){
             case LOGIN:
-                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-                    System.out.println("login to server succedded");
-                    System.out.println("ID: "+message.getData("id"));
-                    System.out.println("username: "+message.getData("username"));
-                    System.out.println("Fullname: "+message.getData("fullname"));
-                    loggedin = true;
-                }
-                else{
-                    System.out.println("login to server failed");
-                    connected = false;
-                }
+//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
+//                    System.out.println("login to server succedded");
+//                    System.out.println("ID: "+message.getData("id"));
+//                    System.out.println("username: "+message.getData("username"));
+//                    System.out.println("Fullname: "+message.getData("fullname"));
+//                    loggedin = true;
+//                }
+//                else{
+//                    System.out.println("login to server failed");
+//                    connected = false;
+//                }
                 break;    
             case REGISTER:
-                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-                    System.out.println("register  succedded");
-         
-                 
-                  
-                }
-                else{
-                    System.out.println("register failes to server failed");
-                    connected = false;
-                }
+//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
+//                    System.out.println("register  succedded");
+//         
+//                 
+//                  
+//                }
+//                else{
+//                    System.out.println("register failes to server failed");
+//                    connected = false;
+//                }
                 break;
             case INIT:
             case NOTIFY:
@@ -158,10 +176,15 @@ public class Session {
                 break;
             case MOVE:
                 handleMove(message);
+                break;
             case GAME_OVER:
                 handleGameOver(message);
+                break;
+            case CHAT:
+                chatHandler(message);
+                break;
             default:
-                System.out.println("server sent unhandled message");
+                System.out.println("server sent unhandled message "+message.getType());
                 break;
         }
     }
@@ -174,15 +197,34 @@ public class Session {
         }
     }
 
-    public void signUpToServer(String fname, String lname, String username, String password, String picpath) {
-     Message message = new Message(MsgType.REGISTER);
+    public boolean signUpToServer(String fname, String lname, String username, String password, String picpath) {
+        boolean regResult = false;
+        Message message = new Message(MsgType.REGISTER);
         message.setData("username", username);
         message.setData("password", password);
         message.setData("fname",fname);
         message.setData("lname",lname);
         message.setData("picpath",picpath);
-       
-        sendMessage(message);
+        if(connected){
+            sendMessage(message);
+            while(connected){
+                try{
+                    Message response = (Message)downLink.readObject();
+                    if(response.getType() == MsgType.REGISTER){
+                        if(response.getData("signal").equals(MsgSignal.SUCCESS)){
+                            regResult = true;
+                        }
+                        break;
+                    }else
+                        MessageHandler(response);
+                }catch(IOException ioex){
+                    
+                }catch(ClassNotFoundException cnfex){
+                    
+                }
+            }
+        }
+        return regResult;
     }
     public void requestGame(String secondPlayerName){
         //**ALERT** waiting for other player response with cancel button
@@ -191,18 +233,19 @@ public class Session {
     }
     public void respondToRequest(Message incoming){
         //**Alert** with the request from **playerRequestingGame** returns boolean **accept**
-        player2=incoming.getData("source");        
+        player1=incoming.getData("source");        
 //        Message outgoing=new Message(MsgType.GAME_RES,"destination",playerRequestingGame);
 //        System.out.println("client request game");
         Platform.runLater(new Runnable(){
            public void run(){
-               ClientApp.homeController.showAlert(player2);
+               ClientApp.homeController.showAlert(player1);
            }});
 //        outgoing.setData("response","accept");
 //        sendMessage(outgoing);
     }
     public void sendResponse(boolean response){
-        Message outgoing=new Message(MsgType.GAME_RES,"destination",player2);
+                IAmX=false;
+        Message outgoing=new Message(MsgType.GAME_RES,"destination",player1);
         outgoing.setData("response",response?"accept":"deny");
         sendMessage(outgoing);
         
@@ -210,61 +253,149 @@ public class Session {
     
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
-            IAmX=true;
+            
+            IAmX=true;         
+            myTurn=true;
             player2=incoming.getData("source");
-            Platform.runLater(new Runnable(){
-           public void run(){
+             //incoming.setData("target", player2);
+            Platform.runLater(() -> {
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
-           }});
+                ClientApp.gameController.resetScene();
+                ClientApp.gameController.img = new Image(Session.this.getClass().getResourceAsStream("/resources/images/x.png"));
+            });
         }else{
             System.out.println("player 2 denied game request");
         }
     }
+    
+    public void playWithAI(){
+        ClientApp.gameController.resetScene();
+        sendMessage(new Message(MsgType.AIGAME_REQ));
+        player1=player.getUsername();
+        player2="computer";
+        IAmX=true;
+        myTurn=true;
+        
+        ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/x.png"));
+    }
     public void makeAMove(String x,String y) {
+        myTurn=false;
         Message message=new Message(MsgType.MOVE);
         message.setData("x", x);
         message.setData("y", y);
+            
+        message.setData("target", player2);
+//      message.setData("target", player1)
         sendMessage(message);
-        myTurn=false;
+        
+        
     }
     private void handleMove(Message message) {
         
         myTurn=true;
-        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+        System.out.println("client recieved a move");
+        Platform.runLater(new Runnable(){
+            public void run(){
+                btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+                if(Integer.parseInt(message.getData("x"))==0){
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag1=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag2=1;}
+                    else{ClientApp.gameController.flag3=1;}
+                }else if(Integer.parseInt(message.getData("x"))==1){
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag4=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag5=1;}
+                    else{ClientApp.gameController.flag6=1;}
+                }else{
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag7=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag1=8;}
+                    else{ClientApp.gameController.flag9=1;}
+                }
+//                System.out.println(ClientApp.gameController.flag1+""+ClientApp.gameController.flag2+""+ClientApp.gameController.flag3+""+ClientApp.gameController.flag4+""+ClientApp.gameController.flag5+""+ClientApp.gameController.flag6+""+ClientApp.gameController.flag7+""+ClientApp.gameController.flag8+""+ClientApp.gameController.flag9);
+            }
+        });
+        
     }
     
     private void handleGameOver(Message message) {
         //add score
         //**ALERT**win msg **play again(GAME_REQ) **home scene.
-        btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
         
+        Platform.runLater(new Runnable(){
+           public void run(){
+               if(message.getData("line").equals("You lose !")||message.getData("line").equals("Draw !")){
+                   btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
+               }
+                System.out.println("last move");
+        }});        
         String msg=message.getData("line");
-        Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("Play again", ButtonData.NO));
-        alert.showAndWait();
-        if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
-            requestGame(player2);
-            
-        }else{
-            //change scene to home scene
-        }    
+        
+        
+        Platform.runLater(new Runnable(){
+            public void run(){
+                    Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("cancel", ButtonData.NO));
+                    alert.showAndWait();
+                    if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
+                        if(player2.equals("computer")){
+                            for(int i=0;i<3;i++){
+                                for(int j=0;j<3;j++){
+                                    btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                                }
+                            }
+                            playWithAI();
+                        }else{
+                            requestGame(player2);                            
+                        }            
+                    }else{
+                        for(int i=0;i<3;i++){
+                            for(int j=0;j<3;j++){
+                                btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                            }
+                        }
+                        ClientApp.primaryStage.setScene(client.ClientApp.home);
+                    }    
+            }});
+//        player1=null;
+//        player2=null;
+        myTurn=false;
+        
     }
     
     public void updatePlayersList(Message message){
-        //if(!message.getData("username").equals(this.player.getUsername())){
-        if(true){
-            if(message.getType() == MsgType.INIT){
-                Player newPlayer = new Player();
-                newPlayer.setUsername(message.getData("username"));
-                newPlayer.setStatus(message.getData("status"));
-                newPlayer.setScore(Integer.parseInt(message.getData("score")));
-                newPlayer.setPicPath(message.getData("picpath"));
-                allPlayers.put(message.getData("username"), newPlayer);
-            }else if(message.getType() == MsgType.NOTIFY){
-                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+        if(!message.getData("username").equals(this.player.getUsername())){
+            if(true){
+                if(message.getType() == MsgType.INIT){
+                    Player newPlayer = new Player();
+                    newPlayer.setUsername(message.getData("username"));
+                    newPlayer.setStatus(message.getData("status"));
+                    newPlayer.setScore(Integer.parseInt(message.getData("score")));
+                    newPlayer.setPicPath(message.getData("picpath"));
+                    allPlayers.put(message.getData("username"), newPlayer);
+                }else if(message.getType() == MsgType.NOTIFY){
+                    allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+                }
             }
         }
-        System.out.println(message.getType()+" "+message.getData("username")+" "+message.getData("status"));
     }
-
-    
+    public void chatHandler(Message message){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String msg = message.getData("sender")+": "+message.getData("text")+"\n";
+                ClientApp.gameController.txt_area.appendText(msg);
+            }
+        });
+    }
+    public void sendChatMessage(String text){
+        Message message = new Message(MsgType.CHAT);
+        System.out.println("player1 "+player1+" player2 "+player2);
+        String receiver;
+        if(player1 == null)
+            receiver = player2;
+        else
+            receiver = player1;
+        message.setData("sender", player.getUsername());
+        message.setData("receiver", receiver);
+        message.setData("text", ClientApp.gameController.txt_field.getText());
+        sendMessage(message);
+    }
 }

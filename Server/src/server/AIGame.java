@@ -129,24 +129,35 @@ public class AIGame {
 
         placeAMove(this.computersMove, 1);
         //b.displayBoard();
-
+        int x1 = this.computersMove.x;
+        int y1 = this.computersMove.y;
+        Message message=new Message(MsgType.MOVE);
+        message.setData("x", Integer.toString(x1));
+        message.setData("y", Integer.toString(y1));
         if (this.hasXWon()) {
-            stats = "pcWon";
+            message.setType(MsgType.GAME_OVER);
+            stats = "You lose !";
+            message.setData("line", stats);
+            Session.connectedPlayers.get(player).SendMessage(message); 
+            
         } else if (this.hasOWon()) {
-            stats = "playerWon"; //Can't happen
+            message.setType(MsgType.GAME_OVER);
+            stats = "You win !";
+            message.setData("line", stats);
+            Session.connectedPlayers.get(player).SendMessage(message); 
+            
         } else if (this.isGameOver() && !this.hasXWon()) {
-            stats = "draw";
+            message.setType(MsgType.GAME_OVER);
+            stats = "Draw !";
+            message.setData("line", stats);
+            Session.connectedPlayers.get(player).SendMessage(message); 
+          
+                        model.Players.updateScoreDraw(player);
+            
 
         } else {
             stats = "gameon";
-
-            int x1 = this.computersMove.x;
-            int y1 = this.computersMove.y;
-            System.out.println(x1 + " " + y1);
-            Message message=new Message(MsgType.MOVE);
-        message.setData("x", Integer.toString(x1));
-        message.setData("y", Integer.toString(y1));
-        Session.connectedPlayers.get(player).SendMessage(message); //5ali al sendmessage pblic fel session
+            Session.connectedPlayers.get(player).SendMessage(message); 
 
         }
 
