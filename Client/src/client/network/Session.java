@@ -379,11 +379,14 @@ public class Session {
     }
     public void sendChatMessage(String text){
         Message message = new Message(MsgType.CHAT);
-        String receiver = player2;
-        if(player2 == null)
+        System.out.println("player1 "+player1+" player2 "+player2);
+        String receiver;
+        if(player1 == null)
+            receiver = player2;
+        else
             receiver = player1;
         message.setData("sender", player.getUsername());
-        message.setData("receiver", player1);
+        message.setData("receiver", receiver);
         message.setData("text", ClientApp.gameController.txt_field.getText());
         sendMessage(message);
     }
