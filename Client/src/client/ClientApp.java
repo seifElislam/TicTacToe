@@ -73,6 +73,7 @@ public class ClientApp extends Application {
         primaryStage.setOnCloseRequest((event) -> {
             if(session != null && session.connected)
                 session.closeConnection();
+                ClientApp.gameController.resetScene();
         });
     }
     

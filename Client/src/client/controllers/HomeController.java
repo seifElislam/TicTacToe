@@ -6,7 +6,7 @@
 package client.controllers;
 
 
-
+import assets.*;
 import client.ClientApp;
 
 import static client.ClientApp.session;
@@ -33,6 +33,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -105,8 +106,16 @@ public class HomeController implements Initializable {
      
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
 //        opponent=getOpponentFromtable;
+        if(allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
         ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
-        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
+        }else{
+            Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Player not available");
+                    alert.setContentText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername()+" not available");
+                    alert.showAndWait();
+                    
+        }
+//        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
     

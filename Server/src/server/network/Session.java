@@ -188,12 +188,10 @@ public class Session extends Thread{
              aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
          }else{
             if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-                moveNum++;
             
                 switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                     case "gameOn":
-//                        System.out.println(message.getType()+" "+moveNum+moveNum%2);
-                        if(moveNum%2==0){
+                        if(game.incMove%2==0){
                             connectedPlayers.get(game.getPlayer1()).SendMessage(message);
                            
                            
@@ -211,9 +209,9 @@ public class Session extends Thread{
                         model.Players.updateScoreWin(username);
                         lose.setData("x", message.getData("x"));
                         lose.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
                         game=null;
-                        moveNum=0;
+                        
                         break;
                     case "draw":
                         
@@ -223,9 +221,8 @@ public class Session extends Thread{
                         model.Players.updateScoreDraw(username2);
                         draw.setData("x", message.getData("x"));
                         draw.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
                         game=null;
-                        moveNum=0;
                         break;
                 }
             }
