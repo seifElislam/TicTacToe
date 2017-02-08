@@ -112,14 +112,13 @@ public class HomeController implements Initializable {
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
        
-    
+       
             primaryStage.setScene(client.ClientApp.signIn);
     
     }
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
-      System.out.println("arcade");
-            primaryStage.setScene(client.ClientApp.game);
-    
+        ClientApp.session.playWithAI();
+        primaryStage.setScene(client.ClientApp.game);
     }
    
     @FXML protected void playerInfo() {

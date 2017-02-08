@@ -33,7 +33,7 @@ public class GameController implements Initializable {
      */
     @FXML public Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
     @FXML private TextField txt_field;
-    @FXML int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
+    @FXML public int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
     @FXML public String src;
     @FXML public Image img;
     @FXML private Label player1Name,player2Name,massge,time;
@@ -43,6 +43,7 @@ public class GameController implements Initializable {
         // TODO
         player1Name.setText("seif");
         player2Name.setText("ehab");
+        flag1=flag2=flag3=flag4=flag5=flag6=flag7=flag8=flag9=0;
         //src="/resources/images/x.png";//:"/resources/images/o.png";
         
     }   
@@ -50,6 +51,7 @@ public class GameController implements Initializable {
       System.out.println("send");
       txt_area.appendText(player1Name.getText()+" : "+txt_field.getText() + "\n");
       txt_field.setText("");
+      
     }
     @FXML protected void handleButton_surrend_Action(ActionEvent event) {
       System.out.println("surrend");

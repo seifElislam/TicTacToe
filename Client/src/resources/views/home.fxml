@@ -50,7 +50,7 @@
                            <Button fx:id="invite" text="    Invite Player    " onAction="#handleButton_invite_Action" />
                          </HBox>
                <HBox spacing="1" GridPane.columnIndex="1" GridPane.rowIndex="0"   >
-                           <Button fx:id="arcade" text="Paly VS Computer" onAction="#handleButton_arcade_Action" />
+                           <Button fx:id="arcade" text="Play VS Computer" onAction="#handleButton_arcade_Action" />
                          </HBox>
               
              

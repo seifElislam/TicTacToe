@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Platform;
 import javax.management.Notification;
+import server.AIGame;
 import server.Game;
 import server.ServerApp;
 import static server.network.Server.allPlayers;
@@ -32,6 +33,7 @@ public class Session extends Thread{
     private ObjectInputStream downLink;
     private ObjectOutputStream upLink;
     private Game game;
+    private AIGame aiGame;
     private static int moveNum=0;
     
     public Session(Socket socket){
@@ -107,6 +109,9 @@ public class Session extends Thread{
             case GAME_RES :
                 respondGame(message);
                 break;
+            case AIGAME_REQ :
+                AIrequestGame();
+                break;
             case MOVE:
                 handleMove(message);
                 break;
@@ -166,41 +171,49 @@ public class Session extends Thread{
             connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
         }
     }
+    private void AIrequestGame(){
+        aiGame = new AIGame(player.getUsername());
+    }
      private void handleMove(Message message) {
-        if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-            moveNum++;
+         if(message.getData("target").equals("computer")){
+             aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
+         }else{
+            if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+                moveNum++;
             
-            switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-                case "gameOn":
-//                    System.out.println(message.getType()+" "+moveNum+moveNum%2);
-                    if(moveNum%2==0){
-                        connectedPlayers.get(game.getPlayer1()).SendMessage(message);
-                    }else{
-                        connectedPlayers.get(game.getPlayer2()).SendMessage(message);
-                    }
+                switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
+                    case "gameOn":
+//                        System.out.println(message.getType()+" "+moveNum+moveNum%2);
+                        if(moveNum%2==0){
+                            connectedPlayers.get(game.getPlayer1()).SendMessage(message);
+                        }else{
+                            connectedPlayers.get(game.getPlayer2()).SendMessage(message);
+                        }
                     
-                    break;
-                case "win" :
-                    SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
-                    Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
-                    lose.setData("x", message.getData("x"));
-                    lose.setData("y", message.getData("y"));
-                    connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
-                    game=null;
-                    moveNum=0;
-                    break;
-                case "draw":
-                    SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
-                    Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
-                    draw.setData("x", message.getData("x"));
-                    draw.setData("y", message.getData("y"));
-                    connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
-                    game=null;
-                    moveNum=0;
-                    break;
+                        break;
+                    case "win" :
+                        SendMessage(new Message(MsgType.GAME_OVER,"line","You win !"));
+                        Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
+                        lose.setData("x", message.getData("x"));
+                        lose.setData("y", message.getData("y"));
+                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                        game=null;
+                        moveNum=0;
+                        break;
+                    case "draw":
+                        SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
+                        Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
+                        draw.setData("x", message.getData("x"));
+                        draw.setData("y", message.getData("y"));
+                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                        game=null;
+                        moveNum=0;
+                        break;
+                }
             }
-        }
         
+
+        }
     }
     
     private void pushNotification(){

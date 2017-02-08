@@ -18,6 +18,7 @@ public enum MsgType{
     NOTIFY,
     GAME_REQ,
     GAME_RES,
+    AIGAME_REQ,
     MOVE,
     GAME_OVER,
     CHAT,

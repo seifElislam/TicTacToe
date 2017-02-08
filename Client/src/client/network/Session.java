@@ -45,6 +45,11 @@ public class Session {
                 {ClientApp.gameController.b1,ClientApp.gameController.b2,ClientApp.gameController.b3},
                 {ClientApp.gameController.b4,ClientApp.gameController.b5,ClientApp.gameController.b6},
                 {ClientApp.gameController.b7,ClientApp.gameController.b8,ClientApp.gameController.b9}};
+//    private int[][] btnFlags={
+//                {ClientApp.gameController.flag1,ClientApp.gameController.flag2,ClientApp.gameController.flag3},
+//                {ClientApp.gameController.flag4,ClientApp.gameController.flag5,ClientApp.gameController.flag6},
+//                {ClientApp.gameController.flag7,ClientApp.gameController.flag8,ClientApp.gameController.flag9}};
+//    
     
     public Session(String ipAddress, int portNumber){
         this.ipAddress = ipAddress;
@@ -247,20 +252,30 @@ public class Session {
             IAmX=true;         
             myTurn=true;
             player2=incoming.getData("source");
-            Platform.runLater(new Runnable(){
-           public void run(){
+            Platform.runLater(() -> {
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
-                ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/x.png"));
-           }});
+                ClientApp.gameController.img = new Image(Session.this.getClass().getResourceAsStream("/resources/images/x.png"));
+            });
         }else{
             System.out.println("player 2 denied game request");
         }
+    }
+    
+    public void playWithAI(){
+        sendMessage(new Message(MsgType.AIGAME_REQ));
+        player1=player.getUsername();
+        player2="computer";
+        IAmX=true;
+        myTurn=true;
+        
+        ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/x.png"));
     }
     public void makeAMove(String x,String y) {
         myTurn=false;
         Message message=new Message(MsgType.MOVE);
         message.setData("x", x);
         message.setData("y", y);
+        message.setData("target", player2);
         sendMessage(message);
         
         
@@ -272,7 +287,22 @@ public class Session {
         Platform.runLater(new Runnable(){
             public void run(){
                 btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
-        }});
+                if(Integer.parseInt(message.getData("x"))==0){
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag1=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag2=1;}
+                    else{ClientApp.gameController.flag3=1;}
+                }else if(Integer.parseInt(message.getData("x"))==1){
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag4=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag5=1;}
+                    else{ClientApp.gameController.flag6=1;}
+                }else{
+                    if(Integer.parseInt(message.getData("y"))==0){ClientApp.gameController.flag7=1;}
+                    else if(Integer.parseInt(message.getData("y"))==1){ClientApp.gameController.flag1=8;}
+                    else{ClientApp.gameController.flag9=1;}
+                }
+//                System.out.println(ClientApp.gameController.flag1+""+ClientApp.gameController.flag2+""+ClientApp.gameController.flag3+""+ClientApp.gameController.flag4+""+ClientApp.gameController.flag5+""+ClientApp.gameController.flag6+""+ClientApp.gameController.flag7+""+ClientApp.gameController.flag8+""+ClientApp.gameController.flag9);
+            }
+        });
         
     }
     
@@ -282,7 +312,7 @@ public class Session {
         
         Platform.runLater(new Runnable(){
            public void run(){
-               if(message.getData("line").equals("You lose !")){
+               if(message.getData("line").equals("You lose !")||message.getData("line").equals("Draw !")){
                    btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
                }
                 System.out.println("last move");
@@ -295,9 +325,16 @@ public class Session {
                     Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("cancel", ButtonData.NO));
                     alert.showAndWait();
                     if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
-                        System.out.println(player2);
-                        requestGame(player2);
-            
+                        if(player2.equals("computer")){
+                            for(int i=0;i<3;i++){
+                                for(int j=0;j<3;j++){
+                                    btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                                }
+                            }
+                            playWithAI();
+                        }else{
+                            requestGame(player2);                            
+                        }            
                     }else{
                         ClientApp.primaryStage.setScene(client.ClientApp.home);
                     }    
