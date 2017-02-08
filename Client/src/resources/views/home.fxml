@@ -92,7 +92,7 @@
               
                  <Label  text="Players List :" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3" />
                  <Label  text="                               " GridPane.columnIndex="1" GridPane.rowIndex="2"  />
-                  <TableView fx:id="allPlayersTable"  styleClass="table" prefHeight="500" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3">
+                  <TableView  fx:id="allPlayersTable"  styleClass="table" prefHeight="500" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3">
                     <columns>
                          <TableColumn fx:id="colUsername" text="Player" prefWidth="140">
                          </TableColumn>
