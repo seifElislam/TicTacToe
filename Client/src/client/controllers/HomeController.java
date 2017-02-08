@@ -62,6 +62,7 @@ public class HomeController implements Initializable {
     @FXML private TableView<Player> allPlayersTable;
     @FXML private TableColumn colUsername;
     @FXML private TableColumn colScore;
+    @FXML private TableColumn colStatus;
     private ObservableList<Player> playersData = FXCollections.observableArrayList();
     @FXML private ImageView imgView;
     
@@ -82,7 +83,9 @@ public class HomeController implements Initializable {
         colScore.setCellValueFactory(
             new PropertyValueFactory<>("score")
         );
-       
+        colStatus.setCellValueFactory(
+            new PropertyValueFactory<>("status")
+        );
         primaryStage = ClientApp.primaryStage;
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
@@ -142,11 +145,7 @@ public class HomeController implements Initializable {
 
     }
     public void bindPlayersTable(){
-        //playersData.clear();
-        System.out.println(ClientApp.session.player.getPicPath());
-        
-        
-         
+        playersData.clear(); 
         Session.allPlayers.entrySet().forEach((player) -> {
             playersData.add(player.getValue());
         });
