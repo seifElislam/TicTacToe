@@ -32,12 +32,12 @@ public class GameController implements Initializable {
      * Initializes the controller class.
      */
     @FXML public Button b1,b2,b3,b4,b5,b6,b7,b8,b9,send,surrend;
-    @FXML private TextField txt_field;
+    @FXML public TextField txt_field;
     @FXML public int flag1=0,flag2=0,flag3=0,flag4=0,flag5=0,flag6=0,flag7=0,flag8=0,flag9=0;
     @FXML public String src;
     @FXML public Image img;
     @FXML private Label player1Name,player2Name,massge,time;
-    @FXML private TextArea txt_area;
+    @FXML public TextArea txt_area;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -48,8 +48,9 @@ public class GameController implements Initializable {
         
     }   
     @FXML protected void handleButton_send_Action(ActionEvent event) {
-      System.out.println("send");
-      txt_area.appendText(player1Name.getText()+" : "+txt_field.getText() + "\n");
+//      System.out.println("send");
+//      txt_area.appendText(player1Name.getText()+" : "+txt_field.getText() + "\n
+        ClientApp.session.sendChatMessage(txt_area.getText());
       txt_field.setText("");
       
     }

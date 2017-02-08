@@ -115,6 +115,9 @@ public class Session extends Thread{
             case MOVE:
                 handleMove(message);
                 break;
+            case CHAT:
+                chatHandler(message);
+                break;
             default:
                 SendMessage(new Message(MsgType.UNKNOWN));
                 break;
@@ -126,6 +129,12 @@ public class Session extends Thread{
         }catch(IOException ioex){
             //error cannot send message to client
         }
+    }
+    public void chatHandler(Message message){
+        if(connectedPlayers.containsKey(message.getData("receiver")))
+            connectedPlayers.get(message.getData("receiver")).SendMessage(message);
+        if(connectedPlayers.containsKey(message.getData("sender")))
+            connectedPlayers.get(message.getData("sender")).SendMessage(message);
     }
     public void run(){
         while(connected){

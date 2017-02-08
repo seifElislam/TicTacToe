@@ -180,6 +180,9 @@ public class Session {
             case GAME_OVER:
                 handleGameOver(message);
                 break;
+            case CHAT:
+                chatHandler(message);
+                break;
             default:
                 System.out.println("server sent unhandled message "+message.getType());
                 break;
@@ -362,6 +365,23 @@ public class Session {
             }
         }
     }
-
-    
+    public void chatHandler(Message message){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                String msg = message.getData("sender")+": "+message.getData("text")+"\n";
+                ClientApp.gameController.txt_area.appendText(msg);
+            }
+        });
+    }
+    public void sendChatMessage(String text){
+        Message message = new Message(MsgType.CHAT);
+        String receiver = player2;
+        if(player2 == null)
+            receiver = player1;
+        message.setData("sender", player.getUsername());
+        message.setData("receiver", player1);
+        message.setData("text", ClientApp.gameController.txt_field.getText());
+        sendMessage(message);
+    }
 }
