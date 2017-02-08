@@ -58,7 +58,7 @@ public class Session extends Thread{
             downLink.close();
             socket.close();
             Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
-            pushNotification();
+            pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         }catch(IOException ioex){
             //error connection already closed
         }
@@ -79,7 +79,7 @@ public class Session extends Thread{
             this.connectedPlayers.put(player.getUsername(), this);
             SendMessage(loginResult);
             initConnection();
-            pushNotification();
+            pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         }else{
             loginResult.setData("signal", MsgSignal.FAILURE);
             SendMessage(loginResult);
@@ -89,7 +89,7 @@ public class Session extends Thread{
     private void playerLogout(){
         connectedPlayers.remove(this);
         Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
-        pushNotification();
+        pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         closeConnection();
     }
     private void MessageHandler(Message message){
@@ -233,12 +233,12 @@ public class Session extends Thread{
 
         }
     }
-    
-    private void pushNotification(){
+    private void pushNotification(String key, String value){
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
             Message notification = new Message(MsgType.NOTIFY);
             notification.setData("username", player.getUsername());
-            notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
+            notification.setData("key", key);
+            notification.setData("value", value);
             session.getValue().SendMessage(notification);
         }
         ServerApp.serverController.bindPlayersTable();

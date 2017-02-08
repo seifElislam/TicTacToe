@@ -347,7 +347,14 @@ public class Session {
                 newPlayer.setPicPath(message.getData("picpath"));
                 allPlayers.put(message.getData("username"), newPlayer);
             }else if(message.getType() == MsgType.NOTIFY){
-                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+                switch(message.getData("key")){
+                    case "status":
+                        allPlayers.get(message.getData("username")).setStatus(message.getData("value"));
+                        break;
+                    case "score":
+                        allPlayers.get(message.getData("username")).setScore(Integer.parseInt(message.getData("value")));
+                        break;
+                }
             }
             Platform.runLater(ClientApp.homeController::bindPlayersTable);
         }
