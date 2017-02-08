@@ -209,6 +209,8 @@ public class Session extends Thread{
                         Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
                         String username=player.getUsername();
                         model.Players.updateScoreWin(username);
+                        ServerApp.server.allPlayers.get(this.player.getUsername()).setScore(ServerApp.server.allPlayers.get(this.player.getUsername()).getScore()+10);
+                        //TODO pdate ui
                         lose.setData("x", message.getData("x"));
                         lose.setData("y", message.getData("y"));
                         connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
@@ -221,6 +223,8 @@ public class Session extends Thread{
                         Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
                          String username2=player.getUsername();
                         model.Players.updateScoreDraw(username2);
+                        ServerApp.server.allPlayers.get(this.player.getUsername()).setScore(ServerApp.server.allPlayers.get(this.player.getUsername()).getScore()+5);
+                        //TODO pdate ui
                         draw.setData("x", message.getData("x"));
                         draw.setData("y", message.getData("y"));
                         connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
