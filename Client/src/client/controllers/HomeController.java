@@ -87,9 +87,7 @@ public class HomeController implements Initializable {
             new PropertyValueFactory<>("status")
         );
         primaryStage = ClientApp.primaryStage;
-        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
-
-        
+        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());        
     }   
      
      private class RowSelectChangeListener implements ChangeListener {
@@ -111,6 +109,14 @@ public class HomeController implements Initializable {
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
+    
+//    @FXML protected void handle_table_Action(ActionEvent event) {
+//         System.out.println("error");
+//        opponentInfo();
+//       
+//
+//    };
+    
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
        
@@ -129,7 +135,7 @@ public class HomeController implements Initializable {
       playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
      playerImg=new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
       ClientApp.homeController.playerImgView.setImage(playerImg);
-
+        allPlayersTable.getSelectionModel().selectFirst();
     }
     @FXML protected void opponentInfo() {
 //      opponentName.setText("ehab gamal");
@@ -138,6 +144,7 @@ public class HomeController implements Initializable {
       opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
        opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
         opponentImgView.setImage(opponentImg);
+        
           
 
         
