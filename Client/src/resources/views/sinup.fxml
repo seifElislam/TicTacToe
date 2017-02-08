@@ -66,47 +66,47 @@
     <Label text="Choose a Pic :"
             GridPane.columnIndex="0" GridPane.rowIndex="6"/>
       <ListView fx:id="imglist" GridPane.columnSpan="2" prefHeight="110"  GridPane.columnIndex="0" GridPane.rowIndex="7" orientation="horizontal">
-                 <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="1" url="@../images/person1.png"   />
-                     </image>
+                 
+                 <ImageView fx:id="v1" fitHeight="80"  fitWidth="80" >
+                    
+                        <Image fx:id="1" url="@../images/person0.png"   />
+                  </ImageView>
+                  
+                  <ImageView fitHeight="80" fitWidth="80" >
+                     
+                        <Image fx:id="2" url="@../images/person1.png"   />
+                    
                   </ImageView>
                   
                    <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="2" url="@../images/person2.png"   />
-                     </image>
+                    
+                        <Image fx:id="3" url="@../images/person2.png"   />
+               
                   </ImageView>
+                   <ImageView fitHeight="80" fitWidth="80" >
+                     
+                        <Image fx:id="4" url="@../images/person3.png"   />
+                     
+                  </ImageView>
+                   <ImageView fitHeight="80" fitWidth="80" >
                   
-                   <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="3" url="@../images/person3.png"   />
-                     </image>
+                        <Image fx:id="5" url="@../images/person4.png"   />
+                     
                   </ImageView>
                    <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="4" url="@../images/person4.png"   />
-                     </image>
+                     
+                        <Image fx:id="6" url="@../images/person5.png"   />
+                    
                   </ImageView>
                    <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="5" url="@../images/person5.png"   />
-                     </image>
+                     
+                        <Image fx:id="7" url="@../images/person6.png"   />
+                     
                   </ImageView>
                    <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="6" url="@../images/person6.png"   />
-                     </image>
-                  </ImageView>
-                   <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="7" url="@../images/person7.png"   />
-                     </image>
-                  </ImageView>
-                   <ImageView fitHeight="80" fitWidth="80" >
-                     <image>
-                        <Image fx:id="8" url="@../images/person8.png"   />
-                     </image>
+                     
+                        <Image fx:id="8" url="@../images/person7.png"   />
+                     
                   </ImageView>
                   
            
@@ -139,14 +139,16 @@
     </Button>-->
           
                 
-    <HBox spacing="10" alignment="bottom_right" 
-          GridPane.columnIndex="1" GridPane.rowIndex="8">
+    <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="8">
         <Button  text="Sign up"     
                  onAction="#handleButtonAction"/>
     </HBox>
+    <HBox spacing="10" alignment="bottom_left" GridPane.columnIndex="0" GridPane.rowIndex="8">
+        <Button  text="Back"     
+                 onAction="#handleButton_back_Action"/>
+    </HBox>
     
-    <Text fx:id="massage"
-          GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+   
 </GridPane>
     <stylesheets>
         <URL value="@../style/signup.css" />
