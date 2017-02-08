@@ -33,7 +33,8 @@ public class ClientApp extends Application {
    
     @Override
     public void start(Stage stage) throws Exception {
-        setPrimaryStage(stage);
+//        setPrimaryStage(stage);
+        primaryStage = stage;
 
         //sign in
         FXMLLoader signInLoader=new FXMLLoader();
@@ -70,14 +71,14 @@ public class ClientApp extends Application {
         stage.setMinHeight(600);
         stage.setMaxHeight(600);
         primaryStage.setOnCloseRequest((event) -> {
-            if(session.connected)
+            if(session != null && session.connected)
                 session.closeConnection();
         });
     }
     
-    public void setPrimaryStage(Stage primaryStage){
-        this.primaryStage = primaryStage;
-    }
+//    public void setPrimaryStage(Stage primaryStage){
+//        this.primaryStage = primaryStage;
+//    }
 
     /**
      * @param args the command line arguments

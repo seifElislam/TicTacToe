@@ -89,7 +89,6 @@ public class HomeController implements Initializable {
         primaryStage = ClientApp.primaryStage;
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
-
         
     }   
      
