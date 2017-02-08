@@ -147,3 +147,15 @@
       -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
 
 }
+#img{
+     -fx-background-radius:50,50;	
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+#opponentImgView{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-background-radius:50,50;
+}
+#playerImgView{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-radius:50,50;
+}

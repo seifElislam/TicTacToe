@@ -62,6 +62,7 @@ public class HomeController implements Initializable {
     @FXML private TableView<Player> allPlayersTable;
     @FXML private TableColumn colUsername;
     @FXML private TableColumn colScore;
+    @FXML private TableColumn colStatus;
     private ObservableList<Player> playersData = FXCollections.observableArrayList();
     @FXML private ImageView imgView;
     
@@ -82,12 +83,11 @@ public class HomeController implements Initializable {
         colScore.setCellValueFactory(
             new PropertyValueFactory<>("score")
         );
-       
+        colStatus.setCellValueFactory(
+            new PropertyValueFactory<>("status")
+        );
         primaryStage = ClientApp.primaryStage;
-        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
-
-
-        
+        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());        
     }   
      
      private class RowSelectChangeListener implements ChangeListener {
@@ -109,6 +109,14 @@ public class HomeController implements Initializable {
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
+    
+//    @FXML protected void handle_table_Action(ActionEvent event) {
+//         System.out.println("error");
+//        opponentInfo();
+//       
+//
+//    };
+    
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
        System.out.println("logout");
        
@@ -119,6 +127,7 @@ public class HomeController implements Initializable {
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
         ClientApp.session.playWithAI();
         primaryStage.setScene(client.ClientApp.game);
+        ClientApp.gameController.resetScene();
     }
    
     @FXML protected void playerInfo() {
@@ -126,7 +135,7 @@ public class HomeController implements Initializable {
       playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
      playerImg=new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
       ClientApp.homeController.playerImgView.setImage(playerImg);
-
+        allPlayersTable.getSelectionModel().selectFirst();
     }
     @FXML protected void opponentInfo() {
 //      opponentName.setText("ehab gamal");
@@ -135,17 +144,14 @@ public class HomeController implements Initializable {
       opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
        opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
         opponentImgView.setImage(opponentImg);
+        
           
 
         
 
     }
     public void bindPlayersTable(){
-        //playersData.clear();
-        System.out.println(ClientApp.session.player.getPicPath());
-        
-        
-         
+        playersData.clear(); 
         Session.allPlayers.entrySet().forEach((player) -> {
             playersData.add(player.getValue());
         });
@@ -155,7 +161,10 @@ public class HomeController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.NO, ButtonType.YES);
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
+            ClientApp.gameController.resetScene();
+
             ClientApp.primaryStage.setScene(client.ClientApp.game);
+            System.out.println("play again");
             ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/o.png"));
         }else{
             ClientApp.session.sendResponse(false);

@@ -49,8 +49,8 @@ public class Server {
     }
     public void stopServer(){
         running = false;
+        Message notification = new Message(MsgType.TERM);
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
-            Message notification = new Message(MsgType.TERM);
             session.getValue().SendMessage(notification);
         }
         try{

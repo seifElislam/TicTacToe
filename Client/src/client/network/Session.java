@@ -70,6 +70,8 @@ public class Session {
         }
     }
     public void closeConnection(){
+        if(loggedin)
+            sendMessage(new Message(MsgType.LOGOUT));
         connected = false;
         try {
             upLink.close();
@@ -139,31 +141,6 @@ public class Session {
     }
     private void MessageHandler(Message message){
         switch(message.getType()){
-            case LOGIN:
-//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-//                    System.out.println("login to server succedded");
-//                    System.out.println("ID: "+message.getData("id"));
-//                    System.out.println("username: "+message.getData("username"));
-//                    System.out.println("Fullname: "+message.getData("fullname"));
-//                    loggedin = true;
-//                }
-//                else{
-//                    System.out.println("login to server failed");
-//                    connected = false;
-//                }
-                break;    
-            case REGISTER:
-//                if(message.getData("signal").equals(MsgSignal.SUCCESS)){
-//                    System.out.println("register  succedded");
-//         
-//                 
-//                  
-//                }
-//                else{
-//                    System.out.println("register failes to server failed");
-//                    connected = false;
-//                }
-                break;
             case INIT:
             case NOTIFY:
                 updatePlayersList(message);
@@ -244,6 +221,7 @@ public class Session {
 //        sendMessage(outgoing);
     }
     public void sendResponse(boolean response){
+                IAmX=false;
         Message outgoing=new Message(MsgType.GAME_RES,"destination",player1);
         outgoing.setData("response",response?"accept":"deny");
         sendMessage(outgoing);
@@ -252,12 +230,14 @@ public class Session {
     
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
+            
             IAmX=true;         
             myTurn=true;
             player2=incoming.getData("source");
              //incoming.setData("target", player2);
             Platform.runLater(() -> {
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
+                ClientApp.gameController.resetScene();
                 ClientApp.gameController.img = new Image(Session.this.getClass().getResourceAsStream("/resources/images/x.png"));
             });
         }else{
@@ -266,6 +246,7 @@ public class Session {
     }
     
     public void playWithAI(){
+        ClientApp.gameController.resetScene();
         sendMessage(new Message(MsgType.AIGAME_REQ));
         player1=player.getUsername();
         player2="computer";
@@ -342,52 +323,61 @@ public class Session {
                             requestGame(player2);                            
                         }            
                     }else{
+                        for(int i=0;i<3;i++){
+                            for(int j=0;j<3;j++){
+                                btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                            }
+                        }
                         ClientApp.primaryStage.setScene(client.ClientApp.home);
                     }    
             }});
 //        player1=null;
 //        player2=null;
         myTurn=false;
-        IAmX=false;
         
     }
     
     public void updatePlayersList(Message message){
         if(!message.getData("username").equals(this.player.getUsername())){
-            if(true){
-                if(message.getType() == MsgType.INIT){
-                    Player newPlayer = new Player();
-                    newPlayer.setUsername(message.getData("username"));
-                    newPlayer.setStatus(message.getData("status"));
-                    newPlayer.setScore(Integer.parseInt(message.getData("score")));
-                    newPlayer.setPicPath(message.getData("picpath"));
-                    allPlayers.put(message.getData("username"), newPlayer);
-                }else if(message.getType() == MsgType.NOTIFY){
-                    allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+            if(message.getType() == MsgType.INIT){
+                Player newPlayer = new Player();
+                newPlayer.setUsername(message.getData("username"));
+                newPlayer.setStatus(message.getData("status"));
+                newPlayer.setScore(Integer.parseInt(message.getData("score")));
+                newPlayer.setPicPath(message.getData("picpath"));
+                allPlayers.put(message.getData("username"), newPlayer);
+            }else if(message.getType() == MsgType.NOTIFY){
+                switch(message.getData("key")){
+                    case "status":
+                        allPlayers.get(message.getData("username")).setStatus(message.getData("value"));
+                        break;
+                    case "score":
+                        allPlayers.get(message.getData("username")).setScore(Integer.parseInt(message.getData("value")));
+                        break;
                 }
             }
+            Platform.runLater(ClientApp.homeController::bindPlayersTable);
         }
     }
     public void chatHandler(Message message){
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                String msg = message.getData("sender")+": "+message.getData("text")+"\n";
-                ClientApp.gameController.txt_area.appendText(msg);
-            }
+        Platform.runLater(() -> {
+            String msg = "@"+message.getData("sender")+": "+message.getData("text")+"\n";
+            ClientApp.gameController.txt_area.appendText(msg);
         });
     }
     public void sendChatMessage(String text){
-        Message message = new Message(MsgType.CHAT);
-        System.out.println("player1 "+player1+" player2 "+player2);
-        String receiver;
-        if(player1 == null)
-            receiver = player2;
-        else
-            receiver = player1;
-        message.setData("sender", player.getUsername());
-        message.setData("receiver", receiver);
-        message.setData("text", ClientApp.gameController.txt_field.getText());
-        sendMessage(message);
+        if(!text.equals("")){
+            Message message = new Message(MsgType.CHAT);
+            System.out.println("player1 "+player1+" player2 "+player2);
+            String receiver;
+            if(player1 == null)
+                receiver = player2;
+            else
+                receiver = player1;
+            message.setData("sender", player.getUsername());
+            message.setData("receiver", receiver);
+            message.setData("text", ClientApp.gameController.txt_field.getText());
+            sendMessage(message);
+        }
     }
 }
