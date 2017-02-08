@@ -151,6 +151,8 @@ public class AIGame {
             stats = "Draw !";
             message.setData("line", stats);
             Session.connectedPlayers.get(player).SendMessage(message); 
+          
+                        model.Players.updateScoreDraw(player);
             
 
         } else {
