@@ -184,7 +184,7 @@ public class Session extends Thread{
         aiGame = new AIGame(player.getUsername());
     }
      private void handleMove(Message message) {
-         if(message.getData("target").equals("computer")){
+         if(message.getData("target")!=null&&message.getData("target").equals("computer")){
              aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
          }else{
             if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
@@ -195,8 +195,12 @@ public class Session extends Thread{
 //                        System.out.println(message.getType()+" "+moveNum+moveNum%2);
                         if(moveNum%2==0){
                             connectedPlayers.get(game.getPlayer1()).SendMessage(message);
+                           
+                           
                         }else{
                             connectedPlayers.get(game.getPlayer2()).SendMessage(message);
+                            
+                          
                         }
                     
                         break;
