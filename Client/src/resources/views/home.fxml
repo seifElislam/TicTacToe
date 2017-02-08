@@ -94,9 +94,9 @@
                  <Label  text="                               " GridPane.columnIndex="1" GridPane.rowIndex="2"  />
                   <TableView  fx:id="allPlayersTable"  styleClass="table" prefHeight="500" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3">
                     <columns>
-                         <TableColumn fx:id="colUsername" text="Player" prefWidth="140">
+                         <TableColumn fx:id="colUsername" text="Player" prefWidth="100">
                          </TableColumn>
-                         <TableColumn fx:id="colStatus" text="Status" prefWidth="60">
+                         <TableColumn fx:id="colStatus" text="Status" prefWidth="80">
                          </TableColumn>
                          <TableColumn fx:id="colScore"  text="Score" prefWidth="60">
                          </TableColumn>

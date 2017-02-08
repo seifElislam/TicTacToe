@@ -94,9 +94,6 @@ public class HomeController implements Initializable {
     }   
      
      private class RowSelectChangeListener implements ChangeListener {
-        
-        
-
         @Override
         public void changed(ObservableValue observable, Object oldValue, Object newValue) {
             System.out.println("seif");
