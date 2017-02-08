@@ -10,7 +10,7 @@ package assets;
  * @author Ehab
  */
 public class Status {
-    public static final String ONLINE = "online";
-    public static final String OFFLINE = "offline";
-    public static final String PLAYING = "playing";
+    public static final String ONLINE = "Available";
+    public static final String OFFLINE = "Offline";
+    public static final String PLAYING = "Playing";
 }

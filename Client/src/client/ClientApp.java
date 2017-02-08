@@ -69,6 +69,10 @@ public class ClientApp extends Application {
         stage.setMaxWidth(800);
         stage.setMinHeight(600);
         stage.setMaxHeight(600);
+        primaryStage.setOnCloseRequest((event) -> {
+            if(session.connected)
+                session.closeConnection();
+        });
     }
     
     public void setPrimaryStage(Stage primaryStage){
