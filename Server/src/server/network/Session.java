@@ -58,7 +58,7 @@ public class Session extends Thread{
             downLink.close();
             socket.close();
             Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
-            pushNotification();
+            pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         }catch(IOException ioex){
             //error connection already closed
         }
@@ -79,7 +79,7 @@ public class Session extends Thread{
             this.connectedPlayers.put(player.getUsername(), this);
             SendMessage(loginResult);
             initConnection();
-            pushNotification();
+            pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         }else{
             loginResult.setData("signal", MsgSignal.FAILURE);
             SendMessage(loginResult);
@@ -89,7 +89,7 @@ public class Session extends Thread{
     private void playerLogout(){
         connectedPlayers.remove(this);
         Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
-        pushNotification();
+        pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         closeConnection();
     }
     private void MessageHandler(Message message){
@@ -188,12 +188,10 @@ public class Session extends Thread{
              aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
          }else{
             if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-                moveNum++;
             
                 switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                     case "gameOn":
-//                        System.out.println(message.getType()+" "+moveNum+moveNum%2);
-                        if(moveNum%2==0){
+                        if(game.incMove%2==0){
                             connectedPlayers.get(game.getPlayer1()).SendMessage(message);
                            
                            
@@ -209,11 +207,13 @@ public class Session extends Thread{
                         Message lose=new Message(MsgType.GAME_OVER,"line","You lose !");
                         String username=player.getUsername();
                         model.Players.updateScoreWin(username);
+                        ServerApp.server.allPlayers.get(this.player.getUsername()).setScore(ServerApp.server.allPlayers.get(this.player.getUsername()).getScore()+10);
+                        ServerApp.serverController.bindPlayersTable();
                         lose.setData("x", message.getData("x"));
                         lose.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
                         game=null;
-                        moveNum=0;
+                        
                         break;
                     case "draw":
                         
@@ -221,11 +221,12 @@ public class Session extends Thread{
                         Message draw=new Message(MsgType.GAME_OVER,"line","Draw !");
                          String username2=player.getUsername();
                         model.Players.updateScoreDraw(username2);
+                        ServerApp.server.allPlayers.get(this.player.getUsername()).setScore(ServerApp.server.allPlayers.get(this.player.getUsername()).getScore()+5);
+                        ServerApp.serverController.bindPlayersTable();
                         draw.setData("x", message.getData("x"));
                         draw.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
                         game=null;
-                        moveNum=0;
                         break;
                 }
             }
@@ -233,12 +234,12 @@ public class Session extends Thread{
 
         }
     }
-    
-    private void pushNotification(){
+    public void pushNotification(String key, String value){
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
             Message notification = new Message(MsgType.NOTIFY);
             notification.setData("username", player.getUsername());
-            notification.setData("status", Server.allPlayers.get(player.getUsername()).getStatus());
+            notification.setData("key", key);
+            notification.setData("value", value);
             session.getValue().SendMessage(notification);
         }
         ServerApp.serverController.bindPlayersTable();

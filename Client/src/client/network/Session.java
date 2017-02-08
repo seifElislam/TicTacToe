@@ -302,26 +302,22 @@ public class Session {
                if(message.getData("line").equals("You lose !")||message.getData("line").equals("Draw !")){
                    btns[Integer.parseInt(message.getData("x"))][Integer.parseInt(message.getData("y"))].setGraphic(new ImageView(IAmX?"/resources/images/o.png":"/resources/images/x.png"));
                }
-                System.out.println("last move");
         }});        
         String msg=message.getData("line");
         
         
         Platform.runLater(new Runnable(){
             public void run(){
+                if(player2!=null&&player2.equals("computer")){
                     Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("cancel", ButtonData.NO));
                     alert.showAndWait();
                     if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
-                        if(player2.equals("computer")){
-                            for(int i=0;i<3;i++){
-                                for(int j=0;j<3;j++){
-                                    btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
-                                }
+                        for(int i=0;i<3;i++){
+                            for(int j=0;j<3;j++){
+                                btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
                             }
-                            playWithAI();
-                        }else{
-                            requestGame(player2);                            
-                        }            
+                        }
+                        playWithAI();
                     }else{
                         for(int i=0;i<3;i++){
                             for(int j=0;j<3;j++){
@@ -329,7 +325,21 @@ public class Session {
                             }
                         }
                         ClientApp.primaryStage.setScene(client.ClientApp.home);
-                    }    
+                    }
+                }else{
+                    Alert alert = new Alert(AlertType.INFORMATION, msg, new ButtonType("Ok", ButtonData.OK_DONE));
+                    alert.setTitle("Game over");
+                    alert.setContentText(msg+"2");
+                    alert.showAndWait();
+                    if (alert.getResult().getButtonData() == ButtonData.OK_DONE){
+                        for(int i=0;i<3;i++){
+                            for(int j=0;j<3;j++){
+                                btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                            }
+                        }
+                        ClientApp.primaryStage.setScene(client.ClientApp.home);
+                    }
+                }
             }});
 //        player1=null;
 //        player2=null;
@@ -347,7 +357,14 @@ public class Session {
                 newPlayer.setPicPath(message.getData("picpath"));
                 allPlayers.put(message.getData("username"), newPlayer);
             }else if(message.getType() == MsgType.NOTIFY){
-                allPlayers.get(message.getData("username")).setStatus(message.getData("status"));
+                switch(message.getData("key")){
+                    case "status":
+                        allPlayers.get(message.getData("username")).setStatus(message.getData("value"));
+                        break;
+                    case "score":
+                        allPlayers.get(message.getData("username")).setScore(Integer.parseInt(message.getData("value")));
+                        break;
+                }
             }
             Platform.runLater(ClientApp.homeController::bindPlayersTable);
         }

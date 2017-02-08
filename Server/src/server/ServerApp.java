@@ -30,6 +30,7 @@ public class ServerApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        primaryStage = stage;
         FXMLLoader serverLoader = new FXMLLoader();
         serverLoader.setLocation(getClass().getResource("/resources/FXMLDocument.fxml"));
         Parent serverParent = serverLoader.load();
@@ -38,9 +39,11 @@ public class ServerApp extends Application {
         stage.setTitle("TicTacToe Server");
         stage.setScene(serverScene);
         stage.show();
-//        primaryStage.setOnCloseRequest((event) -> {
-//            server.stopServer();
-//        });
+
+        primaryStage.setOnCloseRequest((event) -> {
+            if(server.running)
+                server.stopServer();
+        });
     }
 
     /**
