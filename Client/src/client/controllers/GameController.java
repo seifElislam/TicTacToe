@@ -58,9 +58,9 @@ public class GameController implements Initializable {
       txt_field.setText("");
       
     }
-    @FXML protected void handleButton_surrend_Action(ActionEvent event) {
-      System.out.println("surrend");
-    }
+//    @FXML protected void handleButton_surrend_Action(ActionEvent event) {
+//      System.out.println("surrend");
+//    }
      @FXML protected void handleButton1Action(ActionEvent event) {
        if(flag1==0 && ClientApp.session.myTurn)
         {
