@@ -17,7 +17,7 @@ public class Game {
     private final String player2;
     //"currentGame" will store game status
     private final String[][] currentGame ;
-    public static int incMove;
+    public  int incMove;
     public boolean Horizontal = true, Vertical = true, DiagonalOne = true, DiagonalTwo = true;
 
     //class constructor initiates new current game table with 3*3 dimensions
