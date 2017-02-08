@@ -152,8 +152,13 @@ public class AIGame {
             message.setData("line", stats);
             Session.connectedPlayers.get(player).SendMessage(message); 
           
-                        model.Players.updateScoreDraw(player);
+            model.Players.updateScoreDraw(player);
+            int score = ServerApp.server.allPlayers.get(player).getScore();
+            ServerApp.server.allPlayers.get(player).setScore(score+5);
+            Session.connectedPlayers.get(player).pushNotification("score", String.valueOf(score+5));
+            ServerApp.serverController.bindPlayersTable();
             
+            ServerApp.server.allPlayers.get(player).setScore(ServerApp.server.allPlayers.get(player).getScore()+5);
 
         } else {
             stats = "gameon";
