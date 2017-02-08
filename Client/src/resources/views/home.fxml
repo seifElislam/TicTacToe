@@ -20,7 +20,7 @@
              
               <GridPane id="human"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="250" prefWidth="500">
              <padding><Insets top="10"  bottom="10" left="50" right="10" /></padding>
-               <ImageView fx:id="playerImgView" fitHeight="150" fitWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0" >
+               <ImageView fx:id="playerImgView"  fitHeight="150" fitWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0" >
                      
                      <image>
                         <Image  url="@../images/human.png"   />
@@ -61,7 +61,7 @@
                 <ImageView fx:id="opponentImgView" fitHeight="150" fitWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0" >
                      
                      <image>
-                        <Image  url="@../images/human.png"   />
+                        <Image fx:id="img" url="@../images/human.png"   />
                      </image>
                   </ImageView>
                   
