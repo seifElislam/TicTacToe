@@ -41,12 +41,16 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        player1Name.setText("seif");
-        player2Name.setText("ehab");
-        flag1=flag2=flag3=flag4=flag5=flag6=flag7=flag8=flag9=0;
+        
         //src="/resources/images/x.png";//:"/resources/images/o.png";
         
     }   
+    public void resetScene(){
+        player1Name.setText(ClientApp.session.player.getUsername());
+        player2Name.setText("opponent");
+        flag1=flag2=flag3=flag4=flag5=flag6=flag7=flag8=flag9=0;
+        System.out.println("gamecontroller init");
+    }
     @FXML protected void handleButton_send_Action(ActionEvent event) {
 //      System.out.println("send");
 //      txt_area.appendText(player1Name.getText()+" : "+txt_field.getText() + "\n

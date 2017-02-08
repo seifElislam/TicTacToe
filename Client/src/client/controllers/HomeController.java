@@ -119,6 +119,7 @@ public class HomeController implements Initializable {
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
         ClientApp.session.playWithAI();
         primaryStage.setScene(client.ClientApp.game);
+        ClientApp.gameController.resetScene();
     }
    
     @FXML protected void playerInfo() {
@@ -155,7 +156,10 @@ public class HomeController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, playerName+" wants to play with you", ButtonType.NO, ButtonType.YES);
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
+            ClientApp.gameController.resetScene();
+
             ClientApp.primaryStage.setScene(client.ClientApp.game);
+            System.out.println("play again");
             ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/o.png"));
         }else{
             ClientApp.session.sendResponse(false);

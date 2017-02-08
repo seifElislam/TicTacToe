@@ -244,6 +244,7 @@ public class Session {
 //        sendMessage(outgoing);
     }
     public void sendResponse(boolean response){
+                IAmX=false;
         Message outgoing=new Message(MsgType.GAME_RES,"destination",player1);
         outgoing.setData("response",response?"accept":"deny");
         sendMessage(outgoing);
@@ -252,12 +253,14 @@ public class Session {
     
     public void handleResponse(Message incoming){
         if(incoming.getData("response").equals("accept")){
+            
             IAmX=true;         
             myTurn=true;
             player2=incoming.getData("source");
              //incoming.setData("target", player2);
             Platform.runLater(() -> {
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
+                ClientApp.gameController.resetScene();
                 ClientApp.gameController.img = new Image(Session.this.getClass().getResourceAsStream("/resources/images/x.png"));
             });
         }else{
@@ -266,6 +269,7 @@ public class Session {
     }
     
     public void playWithAI(){
+        ClientApp.gameController.resetScene();
         sendMessage(new Message(MsgType.AIGAME_REQ));
         player1=player.getUsername();
         player2="computer";
@@ -342,13 +346,17 @@ public class Session {
                             requestGame(player2);                            
                         }            
                     }else{
+                        for(int i=0;i<3;i++){
+                            for(int j=0;j<3;j++){
+                                btns[i][j].setGraphic(new ImageView("/resources/images/empty.png"));
+                            }
+                        }
                         ClientApp.primaryStage.setScene(client.ClientApp.home);
                     }    
             }});
 //        player1=null;
 //        player2=null;
         myTurn=false;
-        IAmX=false;
         
     }
     
