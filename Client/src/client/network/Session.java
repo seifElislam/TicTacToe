@@ -30,8 +30,8 @@ import javafx.scene.image.ImageView;
 public class Session {
     public static HashMap<String, Player> allPlayers = new HashMap<String, Player>();
     public Player player;
-    private String player1;
-    private String player2;
+    private  String player1;
+    private  String  player2;
     private Socket socket;
     private final int portNumber;
     private final String ipAddress;
@@ -252,6 +252,7 @@ public class Session {
             IAmX=true;         
             myTurn=true;
             player2=incoming.getData("source");
+             //incoming.setData("target", player2);
             Platform.runLater(() -> {
                 ClientApp.primaryStage.setScene(client.ClientApp.game);
                 ClientApp.gameController.img = new Image(Session.this.getClass().getResourceAsStream("/resources/images/x.png"));
@@ -275,7 +276,9 @@ public class Session {
         Message message=new Message(MsgType.MOVE);
         message.setData("x", x);
         message.setData("y", y);
+            
         message.setData("target", player2);
+//      message.setData("target", player1)
         sendMessage(message);
         
         
