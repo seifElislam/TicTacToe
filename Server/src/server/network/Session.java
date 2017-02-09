@@ -88,6 +88,7 @@ public class Session extends Thread{
     private void playerLogout(){
         connectedPlayers.remove(this);
         Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
+        ServerApp.serverController.bindPlayersTable();
         pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         closeConnection();
     }

@@ -29,6 +29,7 @@ public class ClientApp extends Application {
     public static Scene game;
     public static GameController gameController;
     public static HomeController homeController;
+    public static FXMLClientController loginController;
     public static Session session;
    
     @Override
@@ -42,6 +43,7 @@ public class ClientApp extends Application {
         Parent signInParent = signInLoader.load();
         signIn = new Scene(signInParent,700,500);
         signIn.getStylesheets().add(ClientApp.class.getResource("/resources/style/Login.css").toExternalForm());
+        loginController = (FXMLClientController)signInLoader.getController();
         //sign up
         FXMLLoader signUpLoader=new FXMLLoader();
         signUpLoader.setLocation(getClass().getResource("/resources/views/sinup.fxml"));

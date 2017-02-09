@@ -70,8 +70,7 @@ public class Session {
         }
     }
     public void closeConnection(){
-        if(loggedin)
-            sendMessage(new Message(MsgType.LOGOUT));
+        sendMessage(new Message(MsgType.LOGOUT));
         connected = false;
         try {
             upLink.close();
@@ -159,6 +158,9 @@ public class Session {
                 break;
             case CHAT:
                 chatHandler(message);
+                break;
+            case TERM:
+                terminateConnection();
                 break;
             default:
                 System.out.println("server sent unhandled message "+message.getType());
@@ -393,5 +395,12 @@ public class Session {
         if(player2 == null)
             return player1;
         return player2;
+    }
+    public void terminateConnection(){
+        closeConnection();
+        Platform.runLater(() -> {
+            ClientApp.primaryStage.setScene(ClientApp.signIn);
+            ClientApp.loginController.terminateConnectino();
+        });
     }
 }
