@@ -17,6 +17,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javax.management.Notification;
 import server.AIGame;
+import server.AutoReply;
 import server.Game;
 import server.ServerApp;
 import static server.network.Server.allPlayers;
@@ -131,10 +132,20 @@ public class Session extends Thread{
         }
     }
     public void chatHandler(Message message){
-        if(connectedPlayers.containsKey(message.getData("receiver")))
-            connectedPlayers.get(message.getData("receiver")).SendMessage(message);
-        if(connectedPlayers.containsKey(message.getData("sender")))
-            connectedPlayers.get(message.getData("sender")).SendMessage(message);
+        connectedPlayers.get(message.getData("sender")).SendMessage(message);
+        if(!message.getData("sender").equals(message.getData("receiver"))){
+            if(connectedPlayers.containsKey(message.getData("receiver")))
+                connectedPlayers.get(message.getData("receiver")).SendMessage(message);    
+        }else{
+            //message.setData("sender", "compo");
+            //message.setData("text", "this is autoreply from computer");
+            //System.out.println("inside else sender "+message.getData("sender")+" : "+message.getData("text"));
+            Message autoReply = new Message(MsgType.CHAT);
+            autoReply.setData("sender", "compo");
+            autoReply.setData("text", AutoReply.getReply());
+            connectedPlayers.get(message.getData("receiver")).SendMessage(autoReply);
+        }
+            
     }
     public void run(){
         while(connected){

@@ -70,13 +70,13 @@
                      
                       <GridPane id="name" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="0" >
                      <padding><Insets top="10"  bottom="10" left="10" right="10" /></padding>
-                   <Label fx:id="opponentName" text="XXXXXX " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                   <Label fx:id="opponentName" text="Computer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                    </GridPane>
                    
                    <GridPane id="score" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="1" >
                      <padding><Insets top="10"  bottom="10" left="00" right="10" /></padding>
                          <Label id="lbl" text="Score:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                         <Label fx:id="opponentScore" text="XXXX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <Label fx:id="opponentScore" text="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         
                      </GridPane>
                  </GridPane>

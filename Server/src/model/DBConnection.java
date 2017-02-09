@@ -29,9 +29,9 @@ public class DBConnection {
 
                 //con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "");
 
-                con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "Noneshallpass");
+                //con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "Noneshallpass");
 
-                //con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "root");
+                con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "root");
 
 //                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "R00t_123");
           } catch (SQLException ex) {
