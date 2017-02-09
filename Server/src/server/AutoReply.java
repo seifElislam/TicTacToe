@@ -12,16 +12,19 @@ import java.util.Random;
  */
 public class AutoReply {
     private static String[] replies = {
-        "auto reply 1",
-        "auto reply 2",
-        "auto reply 3",
-        "auto reply 4",
-        "auto reply 5",
-        "auto reply 6",
-        "auto reply 7",
-        "auto reply 8",
-        "auto reply 9",
-        "auto reply 10",
+        "Hello",
+        "Nice to meet u",
+        "Yes!",
+        "How about u?",
+        "speak for your self",
+        "I enjoy playing with u ",
+        "you are a nice human",
+        "i am listnening to music now",
+        "what is your favourite food?",
+        "nice try",
+        "no i don't",
+        "i am sad",
+        "i love java"
     };
     private static Random index = new Random();
     public static String getReply(){
