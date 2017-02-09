@@ -103,7 +103,7 @@ public class HomeController implements Initializable {
      
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
 //        opponent=getOpponentFromtable;
-        if(allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
+        if(allPlayersTable.getSelectionModel().getSelectedItem()!=null&&allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
         ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
         }else{
             Alert alert = new Alert(AlertType.ERROR);

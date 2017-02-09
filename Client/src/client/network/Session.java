@@ -311,6 +311,7 @@ public class Session {
             public void run(){
                 if(player2!=null&&player2.equals("computer")){
                     Alert alert = new Alert(AlertType.CONFIRMATION, msg, new ButtonType("Play again", ButtonData.OK_DONE), new ButtonType("cancel", ButtonData.NO));
+                    alert.setTitle("Game over");
                     alert.showAndWait();
                     if (alert.getResult().getButtonData() == ButtonData.OK_DONE) {
                         for(int i=0;i<3;i++){
@@ -330,7 +331,8 @@ public class Session {
                 }else{
                     Alert alert = new Alert(AlertType.INFORMATION, msg, new ButtonType("Ok", ButtonData.OK_DONE));
                     alert.setTitle("Game over");
-                    alert.setContentText(msg+"2");
+                    alert.setHeaderText("Game over");
+                    alert.setContentText(msg);
                     alert.showAndWait();
                     if (alert.getResult().getButtonData() == ButtonData.OK_DONE){
                         for(int i=0;i<3;i++){

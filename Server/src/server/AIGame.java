@@ -1,7 +1,6 @@
 package server;
 
-import assets.Message;
-import assets.MsgType;
+import assets.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -140,6 +139,10 @@ public class AIGame {
             message.setData("line", stats);
             Session.connectedPlayers.get(player).SendMessage(message); 
             
+            ServerApp.server.allPlayers.get(player).setStatus(Status.ONLINE);
+            Session.connectedPlayers.get(player).pushNotification("status", Status.ONLINE);
+            ServerApp.serverController.bindPlayersTable();
+            
         } else if (this.hasOWon()) {
             message.setType(MsgType.GAME_OVER);
             stats = "You win !";
@@ -156,6 +159,10 @@ public class AIGame {
             int score = ServerApp.server.allPlayers.get(player).getScore();
             ServerApp.server.allPlayers.get(player).setScore(score+5);
             Session.connectedPlayers.get(player).pushNotification("score", String.valueOf(score+5));
+            
+            
+            ServerApp.server.allPlayers.get(player).setStatus(Status.ONLINE);
+            Session.connectedPlayers.get(player).pushNotification("status", Status.ONLINE);
             ServerApp.serverController.bindPlayersTable();
         } else {
             stats = "gameon";

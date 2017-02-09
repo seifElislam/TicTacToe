@@ -181,7 +181,13 @@ public class Session extends Thread{
         //handle request from client 1 and forward it to client2
         Message outgoing=new Message(MsgType.GAME_REQ,"source",player.getUsername());
         if(connectedPlayers.containsKey(incoming.getData("destination"))){
-            connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);        
+            connectedPlayers.get(incoming.getData("destination")).SendMessage(outgoing);
+            
+            ServerApp.server.allPlayers.get(player.getUsername()).setStatus(Status.PLAYING);
+            Session.connectedPlayers.get(player.getUsername()).pushNotification("status", Status.PLAYING);
+            ServerApp.server.allPlayers.get(incoming.getData("destination")).setStatus(Status.PLAYING);
+            Session.connectedPlayers.get(incoming.getData("destination")).pushNotification("status", Status.PLAYING);
+            ServerApp.serverController.bindPlayersTable();
         }
     }
     public void respondGame(Message incoming){
@@ -189,6 +195,12 @@ public class Session extends Thread{
         if(incoming.getData("response").equals("accept")){
                 game=new Game(incoming.getData("destination"),player.getUsername());
                 connectedPlayers.get(incoming.getData("destination")).game=game;
+        }else{
+            ServerApp.server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
+            Session.connectedPlayers.get("destination").pushNotification("status", Status.ONLINE);
+            ServerApp.server.allPlayers.get(player.getUsername()).setStatus(Status.ONLINE);
+            Session.connectedPlayers.get("destination").pushNotification("status", Status.ONLINE);
+            ServerApp.serverController.bindPlayersTable();
         }
         Message outgoing=new Message(MsgType.GAME_RES,"source",player.getUsername());
         outgoing.setData("response", incoming.getData("response"));
@@ -198,6 +210,9 @@ public class Session extends Thread{
     }
     private void AIrequestGame(){
         aiGame = new AIGame(player.getUsername());
+        ServerApp.server.allPlayers.get(player.getUsername()).setStatus(Status.PLAYING);
+            Session.connectedPlayers.get(player.getUsername()).pushNotification("status", Status.PLAYING);
+            ServerApp.serverController.bindPlayersTable();
     }
     private void handleMove(Message message) {
          if(message.getData("target")!=null&&message.getData("target").equals("computer")){
@@ -228,9 +243,15 @@ public class Session extends Thread{
                         lose.setData("x", message.getData("x"));
                         lose.setData("y", message.getData("y"));
                         connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
-                        game=null;
                         
+                        ServerApp.server.allPlayers.get(game.getPlayer1()).setStatus(Status.ONLINE);
+                        Session.connectedPlayers.get(game.getPlayer1()).pushNotification("status", Status.ONLINE);
+                        ServerApp.server.allPlayers.get(game.getPlayer2()).setStatus(Status.ONLINE);
+                        Session.connectedPlayers.get(game.getPlayer2()).pushNotification("status", Status.ONLINE);
+                        ServerApp.serverController.bindPlayersTable();
+                        game=null;
                         break;
+                        
                     case "draw":
                         
                         SendMessage(new Message(MsgType.GAME_OVER,"line","Draw !"));
@@ -242,6 +263,11 @@ public class Session extends Thread{
                         draw.setData("x", message.getData("x"));
                         draw.setData("y", message.getData("y"));
                         connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                        ServerApp.server.allPlayers.get(game.getPlayer1()).setStatus(Status.ONLINE);
+                        Session.connectedPlayers.get(game.getPlayer1()).pushNotification("status", Status.ONLINE);
+                        ServerApp.server.allPlayers.get(game.getPlayer2()).setStatus(Status.ONLINE);
+                        Session.connectedPlayers.get(game.getPlayer2()).pushNotification("status", Status.ONLINE);
+                        ServerApp.serverController.bindPlayersTable();
                         game=null;
                         break;
                 }
