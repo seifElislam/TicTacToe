@@ -65,8 +65,6 @@ public class sinupController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         //validation here
-        System.out.println("person"+imglist.getSelectionModel().getSelectedIndex()+".png");
-        
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Registration error!");
         if( userName.getText().equals("") || 
@@ -78,7 +76,10 @@ public class sinupController implements Initializable {
             alert.showAndWait();
             alert.showAndWait();
         }else if(!userPassword.getText().equals(confirmPassword.getText())){
-            alert.setContentText("password doesn't match the confirmation!");
+            alert.setContentText("Password doesn't match the confirmation!");
+            alert.showAndWait();
+        }else if(imglist.getSelectionModel().getSelectedIndex()<0){
+            alert.setContentText("Please select profile picture!");
             alert.showAndWait();
         }else{
             if(ClientApp.session == null){
@@ -86,10 +87,13 @@ public class sinupController implements Initializable {
             }
             ClientApp.session.openConnection();
             if(ClientApp.session.connected){
-                boolean regResult = ClientApp.session.signUpToServer(firstName.getText(), lastName.getText(), userName.getText(), userPassword.getText(), "person1.png");
+                String avatar = "person"+imglist.getSelectionModel().getSelectedIndex()+".png";
+                boolean regResult = ClientApp.session.signUpToServer(firstName.getText(), lastName.getText(), userName.getText(), userPassword.getText(), avatar);
                 if(regResult){
-                    alert.setContentText("Congratulations! you've registered successfully!\nYou will be redirected to login page");
-                    alert.showAndWait();
+                    Alert success = new Alert(AlertType.INFORMATION);
+                    success.setTitle("Registration succeded!");
+                    success.setContentText("Congratulations! you've registered successfully!\nYou will be redirected to login page");
+                    success.showAndWait();
                     primaryStage.hide();
                     primaryStage.setScene(client.ClientApp.signIn);
                     primaryStage.show();

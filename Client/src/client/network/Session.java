@@ -70,8 +70,7 @@ public class Session {
         }
     }
     public void closeConnection(){
-        if(loggedin)
-            sendMessage(new Message(MsgType.LOGOUT));
+        sendMessage(new Message(MsgType.LOGOUT));
         connected = false;
         try {
             upLink.close();
@@ -160,6 +159,9 @@ public class Session {
             case CHAT:
                 chatHandler(message);
                 break;
+            case TERM:
+                terminateConnection();
+                break;
             default:
                 System.out.println("server sent unhandled message "+message.getType());
                 break;
@@ -192,8 +194,7 @@ public class Session {
                             regResult = true;
                         }
                         break;
-                    }else
-                        MessageHandler(response);
+                    }
                 }catch(IOException ioex){
                     
                 }catch(ClassNotFoundException cnfex){
@@ -356,6 +357,7 @@ public class Session {
                 newPlayer.setScore(Integer.parseInt(message.getData("score")));
                 newPlayer.setPicPath(message.getData("picpath"));
                 allPlayers.put(message.getData("username"), newPlayer);
+                System.out.println("init "+message.getData("username"));
             }else if(message.getType() == MsgType.NOTIFY){
                 switch(message.getData("key")){
                     case "status":
@@ -393,5 +395,12 @@ public class Session {
         if(player2 == null)
             return player1;
         return player2;
+    }
+    public void terminateConnection(){
+        closeConnection();
+        Platform.runLater(() -> {
+            ClientApp.primaryStage.setScene(ClientApp.signIn);
+            ClientApp.loginController.terminateConnectino();
+        });
     }
 }

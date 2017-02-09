@@ -78,5 +78,11 @@ public class FXMLClientController implements Initializable {
             primaryStage = ClientApp.primaryStage;
         
     }    
-    
+    public void terminateConnectino(){
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Connection lost");
+        alert.setHeaderText("Server disconnected!");
+        alert.setContentText("Opps! you've lost the connection with server, try reconnecting later");
+        alert.showAndWait();
+    }
 }
