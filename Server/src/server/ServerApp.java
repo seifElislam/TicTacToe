@@ -39,6 +39,7 @@ public class ServerApp extends Application {
         stage.setTitle("TicTacToe Server");
         stage.setScene(serverScene);
         stage.show();
+
         primaryStage.setOnCloseRequest((event) -> {
             if(server.running)
                 server.stopServer();

@@ -6,7 +6,7 @@
 package client.controllers;
 
 
-
+import assets.*;
 import client.ClientApp;
 
 import static client.ClientApp.session;
@@ -33,6 +33,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -91,9 +92,6 @@ public class HomeController implements Initializable {
     }   
      
      private class RowSelectChangeListener implements ChangeListener {
-        
-        
-
         @Override
         public void changed(ObservableValue observable, Object oldValue, Object newValue) {
             System.out.println("seif");
@@ -105,8 +103,16 @@ public class HomeController implements Initializable {
      
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
 //        opponent=getOpponentFromtable;
+        if(allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
         ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
-        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
+        }else{
+            Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Player not available");
+                    alert.setContentText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername()+" not available");
+                    alert.showAndWait();
+                    
+        }
+//        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
 
     };
     
@@ -128,6 +134,7 @@ public class HomeController implements Initializable {
         ClientApp.session.playWithAI();
         primaryStage.setScene(client.ClientApp.game);
         ClientApp.gameController.resetScene();
+        
     }
    
     @FXML protected void playerInfo() {
@@ -138,17 +145,12 @@ public class HomeController implements Initializable {
         allPlayersTable.getSelectionModel().selectFirst();
     }
     @FXML protected void opponentInfo() {
-//      opponentName.setText("ehab gamal");
-//     opponentScore.setText("1000");
-    opponentName.setText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
-      opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
-       opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
-        opponentImgView.setImage(opponentImg);
-        
-          
-
-        
-
+        if(allPlayersTable.getSelectionModel().getSelectedItem() != null){
+            opponentName.setText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
+            opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
+            opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
+            opponentImgView.setImage(opponentImg);
+        }
     }
     public void bindPlayersTable(){
         playersData.clear(); 

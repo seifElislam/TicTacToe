@@ -119,6 +119,7 @@ public class sinupController implements Initializable {
     private void handleButton_back_Action(ActionEvent event) {
         //back button
         System.out.println("back");
+        ClientApp.primaryStage.setScene(ClientApp.signIn);
     }
     
 }

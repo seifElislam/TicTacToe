@@ -44,5 +44,6 @@ and open the template in the editor.
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: whitesmoke;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
 }

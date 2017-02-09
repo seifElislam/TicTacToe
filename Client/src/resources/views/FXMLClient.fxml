@@ -42,7 +42,7 @@
         GridPane.columnIndex="2" GridPane.rowIndex="2"/>
     <TilePane   hgap="30" GridPane.columnIndex="2" GridPane.rowIndex="4" prefHeight="100" prefWidth="200">
     
-        <Button text="Sign In"  onAction="#handleSignInButtonAction"/>   
+        <Button text="Sign In"  defaultButton="true"  onAction="#handleSignInButtonAction"/>   
    
         <Button fx:id="signUp" text="Sign Up" onAction="#handleSignUpButtonAction"/>    
   

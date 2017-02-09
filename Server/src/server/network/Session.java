@@ -17,6 +17,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javax.management.Notification;
 import server.AIGame;
+import server.AutoReply;
 import server.Game;
 import server.ServerApp;
 import static server.network.Server.allPlayers;
@@ -131,10 +132,20 @@ public class Session extends Thread{
         }
     }
     public void chatHandler(Message message){
-        if(connectedPlayers.containsKey(message.getData("receiver")))
-            connectedPlayers.get(message.getData("receiver")).SendMessage(message);
-        if(connectedPlayers.containsKey(message.getData("sender")))
-            connectedPlayers.get(message.getData("sender")).SendMessage(message);
+        connectedPlayers.get(message.getData("sender")).SendMessage(message);
+        if(!message.getData("sender").equals(message.getData("receiver"))){
+            if(connectedPlayers.containsKey(message.getData("receiver")))
+                connectedPlayers.get(message.getData("receiver")).SendMessage(message);    
+        }else{
+            //message.setData("sender", "compo");
+            //message.setData("text", "this is autoreply from computer");
+            //System.out.println("inside else sender "+message.getData("sender")+" : "+message.getData("text"));
+            Message autoReply = new Message(MsgType.CHAT);
+            autoReply.setData("sender", "compo");
+            autoReply.setData("text", AutoReply.getReply());
+            connectedPlayers.get(message.getData("receiver")).SendMessage(autoReply);
+        }
+            
     }
     public void run(){
         while(connected){
@@ -188,12 +199,10 @@ public class Session extends Thread{
              aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
          }else{
             if(game.validateMove(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
-                moveNum++;
             
                 switch (game.checkForWin(player.getUsername(), Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")))){
                     case "gameOn":
-//                        System.out.println(message.getType()+" "+moveNum+moveNum%2);
-                        if(moveNum%2==0){
+                        if(game.incMove%2==0){
                             connectedPlayers.get(game.getPlayer1()).SendMessage(message);
                            
                            
@@ -213,9 +222,9 @@ public class Session extends Thread{
                         ServerApp.serverController.bindPlayersTable();
                         lose.setData("x", message.getData("x"));
                         lose.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(lose);
                         game=null;
-                        moveNum=0;
+                        
                         break;
                     case "draw":
                         
@@ -227,9 +236,8 @@ public class Session extends Thread{
                         ServerApp.serverController.bindPlayersTable();
                         draw.setData("x", message.getData("x"));
                         draw.setData("y", message.getData("y"));
-                        connectedPlayers.get(moveNum%2==0?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
+                        connectedPlayers.get(game.incMove%2==1?game.getPlayer1():game.getPlayer2()).SendMessage(draw);
                         game=null;
-                        moveNum=0;
                         break;
                 }
             }

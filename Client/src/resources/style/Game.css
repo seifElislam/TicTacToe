@@ -71,3 +71,26 @@
  -fx-background-size:cover;
   
 }
+#player1Name{
+    -fx-text-fill: whitesmoke;
+    
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
+
+}
+#player2Name{
+    -fx-text-fill: whitesmoke;
+
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
+}
+#massge{
+     -fx-text-fill: whitesmoke;
+
+/*     -fx-effect:  dropshadow( one-pass-box, rgba(255,255,255,0.5) , 0,0,0,1 )*/
+    
+}
+#vs{
+     -fx-text-fill:whitesmoke ;
+
+/*         -fx-effect:  dropshadow( gaussian, rgba(255,255,255,0.5) , 0,0,0,1 )*/
+
+}

@@ -47,20 +47,21 @@ public class GameController implements Initializable {
     }   
     public void resetScene(){
         player1Name.setText(ClientApp.session.player.getUsername());
-        player2Name.setText("opponent");
+        //player2Name.setText("opponent");
+        player2Name.setText(ClientApp.session.getOpponentName());
         flag1=flag2=flag3=flag4=flag5=flag6=flag7=flag8=flag9=0;
         System.out.println("gamecontroller init");
     }
     @FXML protected void handleButton_send_Action(ActionEvent event) {
 //      System.out.println("send");
 //      txt_area.appendText(player1Name.getText()+" : "+txt_field.getText() + "\n
-        ClientApp.session.sendChatMessage(txt_area.getText());
-      txt_field.setText("");
+        ClientApp.session.sendChatMessage(txt_field.getText());
+        txt_field.setText("");
       
     }
-    @FXML protected void handleButton_surrend_Action(ActionEvent event) {
-      System.out.println("surrend");
-    }
+//    @FXML protected void handleButton_surrend_Action(ActionEvent event) {
+//      System.out.println("surrend");
+//    }
      @FXML protected void handleButton1Action(ActionEvent event) {
        if(flag1==0 && ClientApp.session.myTurn)
         {

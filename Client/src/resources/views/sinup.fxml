@@ -140,12 +140,10 @@
           
                 
     <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="1" GridPane.rowIndex="8">
-        <Button  text="Sign up"     
-                 onAction="#handleButtonAction"/>
+        <Button  text="Sign up"   defaultButton="true"   onAction="#handleButtonAction"/>
     </HBox>
     <HBox spacing="10" alignment="bottom_left" GridPane.columnIndex="0" GridPane.rowIndex="8">
-        <Button  text="Back"     
-                 onAction="#handleButton_back_Action"/>
+        <Button  text="Back"  onAction="#handleButton_back_Action"/>
     </HBox>
     
    

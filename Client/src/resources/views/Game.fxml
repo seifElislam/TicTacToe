@@ -67,16 +67,16 @@
                   </ImageView> -->
                    <GridPane id="info"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="300" prefWidth="400">
              <padding><Insets top="5"  bottom="5" left="10" right="10" /></padding>
-                <Label  text="Player 1 :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label  text="Player 2 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label fx:id="player1Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label fx:id="player2Name"  text=" XXXX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label fx:id="time"  text="00:00" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+               <!-- <Label  text="Player 1 :" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label  text="Player 2 :" GridPane.columnIndex="0" GridPane.rowIndex="1" />-->
+                <Label fx:id="player1Name"  text=" XXXX" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="player2Name"  text=" XXXX" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label fx:id="vs"  text="        vs" alignment="center" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                 <Label fx:id="massge"  text="It's your turn " GridPane.columnIndex="1" GridPane.rowIndex="2" />
                
-                 <HBox spacing="10" alignment="CENTER"  GridPane.columnIndex="2" GridPane.rowIndex="2" >
-                 <Button fx:id="surrend" text="Surrend" onAction="#handleButton_surrend_Action" />    
-                </HBox>     
+                <!-- <HBox spacing="10" alignment="CENTER"  GridPane.columnIndex="2" GridPane.rowIndex="2" >
+                 <Button fx:id="surrend" text="Surrend" onAction="" />    
+                </HBox>     -->
            </GridPane>
                
         </GridPane>
@@ -89,7 +89,7 @@
                 <TextField fx:id="txt_field" GridPane.columnIndex="0" GridPane.rowIndex="3" prefWidth="220"/>
                  <HBox spacing="1" alignment="bottom_right" 
                 GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <Button fx:id="send" text="Send" onAction="#handleButton_send_Action" />
+                <Button fx:id="send" text="Send" defaultButton="true" onAction="#handleButton_send_Action" />
                  </HBox>
                  
         </GridPane>
