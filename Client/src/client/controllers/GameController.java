@@ -42,6 +42,7 @@ public class GameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         txt_area.setEditable(false);
+        txt_area.setWrapText(true);
         //src="/resources/images/x.png";//:"/resources/images/o.png";
         
     }   
