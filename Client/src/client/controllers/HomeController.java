@@ -134,6 +134,7 @@ public class HomeController implements Initializable {
         ClientApp.session.playWithAI();
         primaryStage.setScene(client.ClientApp.game);
         ClientApp.gameController.resetScene();
+        
     }
    
     @FXML protected void playerInfo() {
@@ -144,17 +145,12 @@ public class HomeController implements Initializable {
         allPlayersTable.getSelectionModel().selectFirst();
     }
     @FXML protected void opponentInfo() {
-//      opponentName.setText("ehab gamal");
-//     opponentScore.setText("1000");
-    opponentName.setText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
-      opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
-       opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
-        opponentImgView.setImage(opponentImg);
-        
-          
-
-        
-
+        if(allPlayersTable.getSelectionModel().getSelectedItem() != null){
+            opponentName.setText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
+            opponentScore.setText(Integer.toString(allPlayersTable.getSelectionModel().getSelectedItem().getScore()));
+            opponentImg=new Image(getClass().getResourceAsStream("/resources/images/"+allPlayersTable.getSelectionModel().getSelectedItem().getPicPath()));
+            opponentImgView.setImage(opponentImg);
+        }
     }
     public void bindPlayersTable(){
         playersData.clear(); 

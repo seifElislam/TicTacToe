@@ -378,7 +378,6 @@ public class Session {
     public void sendChatMessage(String text){
         if(!text.equals("")){
             Message message = new Message(MsgType.CHAT);
-            System.out.println("player1 "+player1+" player2 "+player2);
             String receiver;
             if(player1 == null)
                 receiver = player2;
@@ -389,5 +388,10 @@ public class Session {
             message.setData("text", ClientApp.gameController.txt_field.getText());
             sendMessage(message);
         }
+    }
+    public String getOpponentName(){
+        if(player2 == null)
+            return player1;
+        return player2;
     }
 }
