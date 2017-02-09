@@ -83,7 +83,7 @@
 /*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
 }
 #massge{
-     -fx-text-fill: green;
+     -fx-text-fill: whitesmoke;
 
 /*     -fx-effect:  dropshadow( one-pass-box, rgba(255,255,255,0.5) , 0,0,0,1 )*/
     
