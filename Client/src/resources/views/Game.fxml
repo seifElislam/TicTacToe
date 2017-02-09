@@ -89,7 +89,7 @@
                 <TextField fx:id="txt_field" GridPane.columnIndex="0" GridPane.rowIndex="3" prefWidth="220"/>
                  <HBox spacing="1" alignment="bottom_right" 
                 GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <Button fx:id="send" text="Send" onAction="#handleButton_send_Action" />
+                <Button fx:id="send" text="Send" defaultButton="true" onAction="#handleButton_send_Action" />
                  </HBox>
                  
         </GridPane>
