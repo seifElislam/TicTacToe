@@ -58,8 +58,6 @@ public class Session extends Thread{
             upLink.close();
             downLink.close();
             socket.close();
-            Server.allPlayers.get(player.getUsername()).setStatus(Status.OFFLINE);
-            pushNotification("status", Server.allPlayers.get(player.getUsername()).getStatus());
         }catch(IOException ioex){
             //error connection already closed
         }
@@ -166,6 +164,8 @@ public class Session extends Thread{
             if(model.Players.signUp(fname,lname ,username,password, picpath)){
                 result.setData("signal", MsgSignal.SUCCESS);
                 Player newPlayer = new Player(fname, lname, username, 0, password, picpath);
+                newPlayer.setStatus(Status.OFFLINE);
+                broadcastNewPlayer(newPlayer);
                 Server.allPlayers.put(username, newPlayer);
                 ServerApp.serverController.bindPlayersTable();
             }
@@ -267,6 +267,16 @@ public class Session extends Thread{
             message.setData("picpath", player.getValue().getPicPath());
             message.setData("status", player.getValue().getStatus());
             this.SendMessage(message);
+        }
+    }
+    private void broadcastNewPlayer(Player newPlayer){
+        for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
+            Message message = new Message(MsgType.INIT);
+            message.setData("username", newPlayer.getUsername());
+            message.setData("score", String.valueOf(newPlayer.getScore()));
+            message.setData("picpath", newPlayer.getPicPath());
+            message.setData("status", newPlayer.getStatus());
+            session.getValue().SendMessage(message);
         }
     }
 }

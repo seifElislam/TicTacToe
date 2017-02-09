@@ -192,8 +192,7 @@ public class Session {
                             regResult = true;
                         }
                         break;
-                    }else
-                        MessageHandler(response);
+                    }
                 }catch(IOException ioex){
                     
                 }catch(ClassNotFoundException cnfex){
@@ -356,6 +355,7 @@ public class Session {
                 newPlayer.setScore(Integer.parseInt(message.getData("score")));
                 newPlayer.setPicPath(message.getData("picpath"));
                 allPlayers.put(message.getData("username"), newPlayer);
+                System.out.println("init "+message.getData("username"));
             }else if(message.getType() == MsgType.NOTIFY){
                 switch(message.getData("key")){
                     case "status":
