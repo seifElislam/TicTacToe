@@ -165,11 +165,15 @@ public class Session extends Thread{
         if(!model.Players.playerExisted(username)){
             if(model.Players.signUp(fname,lname ,username,password, picpath)){
                 result.setData("signal", MsgSignal.SUCCESS);
+                Player newPlayer = new Player(fname, lname, username, 0, password, picpath);
+                Server.allPlayers.put(username, newPlayer);
+                ServerApp.serverController.bindPlayersTable();
             }
         }
         else{
            result.setData("signal", MsgSignal.FAILURE);}
         SendMessage(result);
+        
     }
     
     public void requestGame(Message incoming){
@@ -194,7 +198,7 @@ public class Session extends Thread{
     private void AIrequestGame(){
         aiGame = new AIGame(player.getUsername());
     }
-     private void handleMove(Message message) {
+    private void handleMove(Message message) {
          if(message.getData("target")!=null&&message.getData("target").equals("computer")){
              aiGame.takeMove(Integer.parseInt(message.getData("x")), Integer.parseInt(message.getData("y")));
          }else{
