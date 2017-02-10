@@ -371,6 +371,11 @@ public class Session {
                 }
             }
             Platform.runLater(ClientApp.homeController::bindPlayersTable);
+        }else{
+            if(message.getType() == MsgType.NOTIFY && message.getData("key").equals("score")){
+                player.setScore(Integer.parseInt(message.getData("value")));
+                Platform.runLater(ClientApp.homeController::playerInfo);
+            }
         }
     }
     public void chatHandler(Message message){

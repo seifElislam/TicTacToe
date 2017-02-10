@@ -134,7 +134,7 @@ public class HomeController implements Initializable {
         
     }
    
-    @FXML protected void playerInfo() {
+    @FXML public void playerInfo() {
       playerName.setText(ClientApp.session.player.getUsername());
       playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
      playerImg=new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
