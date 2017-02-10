@@ -29,38 +29,26 @@ import javafx.scene.image.ImageView;
  *
  * @author mhesham
  */
-public class FXMLDocumentController implements Initializable {
+public class ServerController implements Initializable {
 
-    @FXML
-    private ToggleGroup myToggleGroup;
-    @FXML
-    private TableView<Player> tableView;
-    @FXML
-    private TableColumn fNameColumn;
-    @FXML
-    private TableColumn lNameColumn;
-    @FXML
-    private TableColumn loginColumn;
-    @FXML
-    private TableColumn scoreColumn;
-    @FXML
-    private TableColumn statusColumn;
-    @FXML
-    private ObservableList<Player> data;
-    private ObservableList<Player> playersList = FXCollections.observableArrayList();
+    @FXML private ToggleGroup myToggleGroup;
+    @FXML private TableView<Player> tableView;
+    @FXML private TableColumn fNameColumn;
+    @FXML private TableColumn lNameColumn;
+    @FXML private TableColumn loginColumn;
+    @FXML private TableColumn scoreColumn;
+    @FXML private TableColumn statusColumn;
+    @FXML private ObservableList<Player> data;
     @FXML private Button key;
-    //@FXML String src="/resources/images/swithon.png";
-    //@FXML String src2="/resources/images/swithoff.png";
     @FXML  Image switchOn = new Image(getClass().getResourceAsStream("/resources/images/swithon.png"));
     @FXML  Image switchOff = new Image(getClass().getResourceAsStream("/resources/images/swithoff.png"));
-
+    private ObservableList<Player> playersList = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
         fNameColumn.setCellValueFactory(
             new PropertyValueFactory<>("fname")
         );
@@ -76,13 +64,9 @@ public class FXMLDocumentController implements Initializable {
         statusColumn.setCellValueFactory(
             new PropertyValueFactory<>("status")
         );
-        
         data = FXCollections.observableArrayList();
-        
     }
-    
-    @FXML
-    protected void handleToggleOnAction(ActionEvent t) {
+    @FXML protected void handleToggleOnAction(ActionEvent t) {
         if(!ServerApp.server.running)
         {
             if(ServerApp.server.startServer(5555)){
@@ -99,16 +83,12 @@ public class FXMLDocumentController implements Initializable {
             bindPlayersTable();
             key.setGraphic(new ImageView(switchOff));
         }
-        
     }
-
-
     public void bindPlayersTable(){
         playersList.clear();
         ServerApp.server.allPlayers.entrySet().forEach((player) -> {
             playersList.add(player.getValue());
         });
         tableView.setItems(playersList);
-
     }
 }

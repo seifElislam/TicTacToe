@@ -5,51 +5,38 @@
  */
 package model;
 
-import java.sql.Driver;
-
-import java.sql.*;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author Ehab
  */
 public class DBConnection {
-    Connection con;
-    ResultSet rs;
+    private Connection connection;
+    //ResultSet rs;
     public Connection Connection(){
-    
           try {
-                rs=null;
+                //rs = null;
                 DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-
-
-
-                //con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "");
-
-                //con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "Noneshallpass");
-
-                con = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "root");
-
-                //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "root", "R00t_123");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost/TicTacToeDB?autoReconnect=true&useSSL=false", "root", "root");
           } catch (SQLException ex) {
-              Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+                //throw sql exception
           }
-   
-    return con;
+    return connection;
     }
     
     /**
      *
-     * @param con
+     * @param connection
      */
-    public void CloseConnection(Connection con){
+    public void CloseConnection(Connection connection){
           try {
-              con.close();
+              connection.close();
           } catch (SQLException ex) {
-              Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+              //throw sql exception
           }
     
     }

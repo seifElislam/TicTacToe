@@ -11,23 +11,23 @@ import java.util.Random;
  * @author Ehab
  */
 public class AutoReply {
-    private static String[] replies = {
+    private static final String[] REPLIES = {
         "Hello",
         "Nice to meet u",
         "Yes!",
         "How about u?",
-        "speak for your self",
-        "I enjoy playing with u ",
+        "Speak for your self",
+        "I enjoy playing with you ",
         "you are a nice human",
-        "i am listnening to music now",
-        "what is your favourite food?",
-        "nice try",
-        "no i don't",
-        "i am sad",
-        "i love java"
+        "I am listnening to music now",
+        "What is your favourite food?",
+        "Nice try",
+        "No I don't",
+        "I am sad",
+        "I love ♥ java ☻"
     };
     private static Random index = new Random();
     public static String getReply(){
-        return replies[index.nextInt(replies.length)];
+        return REPLIES[index.nextInt(REPLIES.length)];
     }
 }

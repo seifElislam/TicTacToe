@@ -7,17 +7,11 @@ package server.network;
 
 import assets.Message;
 import assets.MsgType;
-import server.*;
-import server.network.Session;
 import model.Player;
 import java.io.IOException;
 import java.net.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import server.network.Session;
 import static server.network.Session.connectedPlayers;
 
 /**
@@ -51,12 +45,11 @@ public class Server {
         running = false;
         Message notification = new Message(MsgType.TERM);
         for(Map.Entry<String, Session> session : connectedPlayers.entrySet()){
-            session.getValue().SendMessage(notification);
+            session.getValue().sendMessage(notification);
         }
         try{
             serverSocket.close();
         }catch(IOException ioex){
-            
         }
     }
     private void startCommunication(){

@@ -19,31 +19,26 @@ public class Player {
     private String password;
     private String picpath;
 
+    public Player(){}
+    public Player(String fname, String lname, String username, int score, String password, String picpath) {
+        this.fname = fname;
+        this.lname = lname;
+        this.username = username;
+        this.password = password;
+        this.picpath = picpath;
+        this.score = score;
+    }
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
-    }
-//    private String picPath;
-    
-    public Player(){
-        
-    }
-    public void setID(int id){
-        this.id = id;
-    }
-    public int getID(){
-        return id;
     }
     public void setUsername(String username){
         this.username = username;
@@ -84,15 +79,4 @@ public class Player {
     public String getStatus(){
         return status;
     }
-     public Player(String fname, String lname, String username, int score, String password, String picpath) {
-//        this.id = id;
-        this.fname = fname;
-        this.lname = lname;
-        this.username = username;
-        this.password = password;
-        this.picpath = picpath;
-        this.score = score;
-    }
-
-    
 }

@@ -7,17 +7,9 @@ package client.controllers;
 
 
 import assets.*;
-import client.ClientApp;
-
-import static client.ClientApp.session;
-
-import static client.ClientApp.primaryStage;
-
-import client.Player;
+import client.*;
 import client.network.Session;
-import java.io.IOException;
 import java.net.URL;
-
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,24 +17,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -64,20 +49,17 @@ public class HomeController implements Initializable {
     @FXML private TableColumn colUsername;
     @FXML private TableColumn colScore;
     @FXML private TableColumn colStatus;
-    private ObservableList<Player> playersData = FXCollections.observableArrayList();
     @FXML private ImageView imgView;
-    
     @FXML public ImageView playerImgView;
     @FXML public ImageView opponentImgView;
     @FXML public Image playerImg;
     @FXML public Image opponentImg;
+    private ObservableList<Player> playersData = FXCollections.observableArrayList();
     private Stage primaryStage;
     private String opponent;
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-       
         colUsername.setCellValueFactory(
             new PropertyValueFactory<>("username")
         );
@@ -90,55 +72,41 @@ public class HomeController implements Initializable {
         primaryStage = ClientApp.primaryStage;
         allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());        
     }   
-     
-     private class RowSelectChangeListener implements ChangeListener {
+    private class RowSelectChangeListener implements ChangeListener {
         @Override
         public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-            System.out.println("seif");
             opponentInfo();
         }
     };
-
-     
-     
     @FXML protected void handleButton_invite_Action(ActionEvent event) {
-//        opponent=getOpponentFromtable;
-        if(allPlayersTable.getSelectionModel().getSelectedItem()!=null&&allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
-        ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
-        }else{
-            Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Player not available");
-                    alert.setContentText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername()+" not available");
-                    alert.showAndWait();
-                    
+        if(allPlayersTable.getSelectionModel().getSelectedItem()!= null){
+            if(allPlayersTable.getSelectionModel().getSelectedItem().getStatus().equals(Status.ONLINE)){
+                ClientApp.session.requestGame(allPlayersTable.getSelectionModel().getSelectedItem().getUsername());
+                ClientApp.gameController.txt_area.setText("");
+            }else{
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("Player not available");
+                alert.setHeaderText("Player not available");
+                alert.setContentText(allPlayersTable.getSelectionModel().getSelectedItem().getUsername()+" not available");
+                alert.showAndWait();      
+            }
         }
-//        allPlayersTable.getSelectionModel().selectedIndexProperty().addListener(new RowSelectChangeListener());
-
     };
-    
-//    @FXML protected void handle_table_Action(ActionEvent event) {
-//         System.out.println("error");
-//        opponentInfo();
-//       
-//
-//    };
-    
     @FXML protected void handleButton_logout_Action(ActionEvent event) {
         ClientApp.session.closeConnection();
         primaryStage.setScene(client.ClientApp.signIn);
     }
     @FXML protected void handleButton_arcade_Action(ActionEvent event) {
         ClientApp.session.playWithAI();
+        ClientApp.gameController.txt_area.setText("");
         primaryStage.setScene(client.ClientApp.game);
         ClientApp.gameController.resetScene();
-        
     }
-   
     @FXML public void playerInfo() {
-      playerName.setText(ClientApp.session.player.getUsername());
-      playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
-     playerImg=new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
-      ClientApp.homeController.playerImgView.setImage(playerImg);
+        playerName.setText(ClientApp.session.player.getUsername());
+        playerScore.setText(Integer.toString(ClientApp.session.player.getScore()));
+        playerImg = new Image(getClass().getResourceAsStream("/resources/images/"+ClientApp.session.player.getPicPath()));
+        ClientApp.homeController.playerImgView.setImage(playerImg);
         allPlayersTable.getSelectionModel().selectFirst();
     }
     @FXML protected void opponentInfo() {
@@ -161,7 +129,6 @@ public class HomeController implements Initializable {
         if (alert.showAndWait().get() == ButtonType.YES) {
             ClientApp.session.sendResponse(true);
             ClientApp.gameController.resetScene();
-
             ClientApp.primaryStage.setScene(client.ClientApp.game);
             System.out.println("play again");
             ClientApp.gameController.img = new Image(getClass().getResourceAsStream("/resources/images/o.png"));

@@ -5,17 +5,12 @@
  */
 package server;
 
-import server.network.Session;
-import model.Player;
-import java.io.IOException;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.util.Scanner;
-import server.controllers.FXMLDocumentController;
+import server.controllers.ServerController;
 import server.network.Server;
 
 /**
@@ -26,16 +21,16 @@ public class ServerApp extends Application {
     public static Server server = new Server();
     public static Stage primaryStage ;
     public static Scene serverScene;
-    public static FXMLDocumentController serverController;
+    public static ServerController serverController;
     
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         FXMLLoader serverLoader = new FXMLLoader();
-        serverLoader.setLocation(getClass().getResource("/resources/FXMLDocument.fxml"));
+        serverLoader.setLocation(getClass().getResource("/resources/views/ServerView.fxml"));
         Parent serverParent = serverLoader.load();
         serverScene = new Scene(serverParent);
-        serverController = (FXMLDocumentController)serverLoader.getController();
+        serverController = (ServerController)serverLoader.getController();
         stage.setTitle("TicTacToe Server");
         stage.setScene(serverScene);
         stage.show();

@@ -19,10 +19,8 @@ import java.util.logging.Logger;
  * @author Amira
  */
 public class Players {
-
     public static DBConnection Obj = new DBConnection();
     public static HashMap<String, Player> getAllPlayers() {
-
         HashMap<String, Player> hashmap = new HashMap<>();
         try {
             Connection conn = Obj.Connection();
@@ -48,7 +46,7 @@ public class Players {
             String queryString = "SELECT * FROM players WHERE username = '" + username + "'";
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
-                player.setID(rs.getInt("id"));
+                player.setId(rs.getInt("id"));
                 player.setFname(rs.getString("fname"));
                 player.setLname(rs.getString("lname"));
                 player.setUsername(rs.getString("username"));
@@ -111,8 +109,7 @@ public class Players {
             return false;
         }
     }
-    
-       public static boolean updateScoreDraw(String username) {
+    public static boolean updateScoreDraw(String username) {
         try {
             Connection conn = Obj.Connection();
             Statement stmt = conn.createStatement();
@@ -127,7 +124,7 @@ public class Players {
             return false;
         }
     }
-    public static synchronized boolean signUp(String fname,String lname ,String username,String password,String picpath) {
+    public static synchronized boolean insertPlayer(String fname,String lname ,String username,String password,String picpath) {
         try {
             Connection conn = Obj.Connection();
             Statement stmt = conn.createStatement();
