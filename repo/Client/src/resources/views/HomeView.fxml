@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.collections.*?>
+
+<GridPane id="home"   hgap="5" vgap="5"  styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.HomeController" >
+    <padding>
+        <Insets top="10"  bottom="10" left="10" right="10"/>
+    </padding>
+    <GridPane id="Info"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="600" prefWidth="500">
+        <padding>
+            <Insets top="10"  bottom="10" left="10" right="10" />
+        </padding>
+        <GridPane id="human"  hgap="10" vgap="10" alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="250" prefWidth="500">
+            <padding>
+                <Insets top="10"  bottom="10" left="50" right="10" />
+            </padding>
+            <ImageView fx:id="playerImgView"  fitHeight="150" fitWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0" >   
+                <image>
+                    <Image  url="@../images/human.png"   />
+                </image>
+            </ImageView>
+            <GridPane id="all" prefHeight="300" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="CENTER">
+                <padding>
+                    <Insets top="10"  bottom="10" left="00" right="10" />
+                </padding>
+                <GridPane id="name" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="0" >
+                    <padding>
+                        <Insets top="10"  bottom="10" left="10" right="10" />
+                    </padding>
+                    <Label fx:id="playerName" text="XXXXXX " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                </GridPane>
+                <GridPane id="score" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="1" >
+                    <padding>
+                        <Insets top="10"  bottom="10" left="00" right="10" />
+                    </padding>
+                    <Label id="lbl" text="Score:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="playerScore" text="XXXX" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                </GridPane>
+            </GridPane>
+        </GridPane>
+        <GridPane id="buttons"  hgap="30" vgap="10"  alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="100" prefWidth="500">
+            <padding>
+                <Insets top="5"  bottom="5" left="10" right="10" />
+            </padding>
+            <HBox spacing="1" GridPane.columnIndex="0" GridPane.rowIndex="0"   >
+                <Button fx:id="invite" text="    Invite Player    " onAction="#handleButton_invite_Action" />
+            </HBox>
+            <HBox spacing="1" GridPane.columnIndex="1" GridPane.rowIndex="0"   >
+                <Button fx:id="arcade" text="Play VS Computer" onAction="#handleButton_arcade_Action" />
+            </HBox>
+        </GridPane>
+        <GridPane id="opponent"  hgap="10" vgap="10"  alignment="CENTER"  GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="250" prefWidth="500">
+            <padding>
+                <Insets top="10"  bottom="10" left="50" right="10" />
+            </padding>
+            <ImageView fx:id="opponentImgView" fitHeight="150" fitWidth="150" GridPane.columnIndex="0" GridPane.rowIndex="0" >  
+                <image>
+                    <Image fx:id="img" url="@../images/human.png"   />
+                </image>
+            </ImageView>
+            <GridPane id="all" prefHeight="300" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="1" GridPane.rowIndex="0" alignment="CENTER">
+                <padding>
+                    <Insets top="10"  bottom="10" left="00" right="10" />
+                </padding>
+                <GridPane id="name" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="0" >
+                    <padding>
+                        <Insets top="10"  bottom="10" left="10" right="10" />
+                    </padding>
+                    <Label fx:id="opponentName" text="Computer" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                </GridPane>
+                <GridPane id="score" prefHeight="150" prefWidth="250" hgap="10" vgap="10"  GridPane.columnIndex="0" GridPane.rowIndex="1" >
+                    <padding>
+                        <Insets top="10"  bottom="10" left="00" right="10" />
+                    </padding>
+                    <Label id="lbl" text="Score:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="opponentScore" text="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1" /> 
+                </GridPane>
+            </GridPane>
+        </GridPane>
+    </GridPane>
+    <GridPane id="playersList"  hgap="10" vgap="5"  GridPane.columnIndex="1" GridPane.rowIndex="0" prefHeight="600" prefWidth="300">
+        <padding>
+            <Insets top="5"  bottom="5" left="10" right="10" />
+        </padding>
+        <Label  text="Players List :" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3" />
+        <Label  text="                               " GridPane.columnIndex="1" GridPane.rowIndex="2"  />
+        <TableView  fx:id="allPlayersTable"  styleClass="table" prefHeight="500" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="3">
+            <columns>
+                <TableColumn fx:id="colUsername" text="Player" prefWidth="100">
+                </TableColumn>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="80">
+                </TableColumn>
+                <TableColumn fx:id="colScore"  text="Score" prefWidth="60">
+                </TableColumn>
+            </columns>    
+        </TableView>
+        <HBox spacing="1" GridPane.columnIndex="2" GridPane.rowIndex="2"   >
+            <Button fx:id="logout" text="logout" onAction="#handleButton_logout_Action" />
+        </HBox>
+    </GridPane>
+    <stylesheets>
+        <URL value="@../style/home.css"/>
+    </stylesheets>
+</GridPane>

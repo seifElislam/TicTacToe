@@ -1,0 +1,96 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    
+
+}
+#GridPane2 {
+    
+  -fx-background-image: url("../images/wood2.jpg") ;
+     -fx-background-repeat: no-repeat;
+     -fx-background-position:left  ;
+     -fx-margin-top: 50px;  
+    
+}
+#chat{
+    -fx-background-image: url("../images/wood-texture.jpg") ;
+}
+#info{
+   -fx-background-image: url("../images/wood-texture.jpg") ;
+     /*-fx-background-repeat: no-repeat;*/
+     
+      /*-fx-background-size:auto;*/
+     /*-fx-margin-top: 50px;*/
+}
+#buttons{
+    -fx-background-image: url("../images/board2.png") ;
+     -fx-background-repeat: no-repeat;
+     -fx-background-size:stretch;
+     -fx-halignment: center;
+  -fx-valignment: center;
+ -fx-background-position: center;
+/*   -fx-border-width: 2;
+    -fx-border-color: gray;
+    -fx-background-color: gainsboro;*/
+    
+}
+.label{
+    
+     -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill:white;
+/*    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
+}
+#send,#surrend {
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 10 10 10 10;
+    -fx-margin-Top:50px;
+   
+}
+#send:hover ,#surrend:hover {
+     -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
+}
+#b1,#b2,#b3,#b4,#b5,#b6,#b7,#b8,#b9{
+    
+   -fx-graphic: url("../images/null.png");
+   -fx-background-color: transparent;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+ -fx-background-size:cover;
+  
+}
+#player1Name{
+    -fx-text-fill: whitesmoke;
+    
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
+
+}
+#player2Name{
+    -fx-text-fill: whitesmoke;
+
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
+}
+#massge{
+     -fx-text-fill: whitesmoke;
+
+/*     -fx-effect:  dropshadow( one-pass-box, rgba(255,255,255,0.5) , 0,0,0,1 )*/
+    
+}
+#vs{
+     -fx-text-fill:whitesmoke ;
+
+/*         -fx-effect:  dropshadow( gaussian, rgba(255,255,255,0.5) , 0,0,0,1 )*/
+
+}
