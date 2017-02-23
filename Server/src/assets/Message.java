@@ -5,18 +5,20 @@
  */
 package assets;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  *
  * @author Ehab
  */
-public class Message {
+public class Message implements Serializable{
     private String type;
     private HashMap<String,String> data;
     
     public Message(String type){
         this.type = type;
+        data = new HashMap<String,String>();
     }
     public Message(String type, int DestID){
         this.type = type;
@@ -29,8 +31,8 @@ public class Message {
         return type; 
     }
     public void setData(String key, String value){
-        if(!data.containsKey(key))
-            data.put(key,value);
+        //if(!data.containsKey(key))
+        data.put(key,value);
     }
     public String getData(String key){
         if(data.containsKey(key))

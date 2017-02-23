@@ -40,12 +40,6 @@ public boolean signin(String username,String password){
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/TicTacToeDB", "amira", "Amera_123");
 
             Statement stmt = con.createStatement();
-
-            
-
-            
-            
-            
             String queryString = "select * from players where username ='"+username+"' and password='"+password+"'";
         rs = stmt.executeQuery(queryString);
         if (rs.next()){return true;}
