@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 28, 2017, 3:57:32 AM
+    Author     : khaledgamal
+*/
+#root {
+     -fx-background-image: url("../images/wood2.jpg") ;
+     -fx-background-repeat: no-repeat;
+     
+      -fx-background-size:stretch;
+     -fx-margin-top: 50px;
+}
+#img {
+     -fx-background-image: url("../images/tic_tac_toe.png") ;
+     -fx-background-repeat: no-repeat;
+     
+      -fx-background-size:stretch;
+     -fx-margin-top: 50px;
+}
+
+.button {
+    -fx-background-color: 
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 10 10 10 10;
+    -fx-margin-Top:50px;
+}
+.button:hover {
+     -fx-background-color: linear-gradient(#ffea6a, #efaa22),linear-gradient(#ffd65b, #e68400);
+}
+.label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: whitesmoke;
+
+/*   -fx-effect:  dropshadow( two-pass-box, rgba(255,255,255,0.5) , 1,1,1,1 )*/
+}
